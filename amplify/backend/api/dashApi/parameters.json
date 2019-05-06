@@ -1,0 +1,10 @@
+{
+    "AppSyncApiName": "dashApi",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authcognitodc1b6d32",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

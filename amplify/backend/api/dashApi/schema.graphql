@@ -1,0 +1,402 @@
+type User
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        queries: null
+        mutations: [update, create]
+      }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  articles: [Article] @connection(name: "userArticles", sortField: "updatedAt")
+  conversations: [ConvoLink] @connection(name: "UserLinks")
+  createdAt: String
+  ideas: [Task] @connection(name: "userIdeas", sortField: "updatedAt")
+  messages: [Message] @connection(name: "UserMessages")
+  quiz: [Quiz] @connection(name: "userQuiz", sortField: "updatedAt")
+  siteName: SiteName
+  slideShows: [SlideShow]
+    @connection(name: "userSlideShows", sortField: "updatedAt")
+  updatedAt: String
+  username: String!
+}
+
+type Site
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: groups, groups: ["Admin"] }]) {
+  id: ID
+  articles: [Article] @connection(name: "siteArticles", sortField: "updatedAt")
+  createdAt: String
+  ideas: [Project] @connection(name: "siteIdeas", sortField: "updatedAt")
+  name: SiteName
+  quiz: [Quiz] @connection(name: "siteQuiz", sortField: "updatedAt")
+  slideShows: [SlideShow]
+    @connection(name: "siteSlideShows", sortField: "updatedAt")
+  updatedAt: String
+}
+
+type Quiz
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", mutations: [update, create] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @searchable {
+  id: ID!
+  category: String
+  closingTitle: String
+  closingImage: String
+  closingImageAlt: String
+  closingImageAttribution: String
+  closingImageAttributionLink: String
+  closingImageType: String
+  createdAt: String!
+  development: Boolean!
+  longQuizUrl: String
+  longMobileQuizUrl: String
+  metaTag: String
+  numberOfQuestions: Int
+  opening: String
+  openingBlurb: String
+  openingImage: String
+  openingImageAlt: String
+  openingImageAttributionLink: String
+  openingImageAttribution: String
+  openingImageType: String
+  production: Boolean!
+  productionId: String
+  questions: [Question] @connection(name: "quiz", sortField: "order")
+  schedule: Boolean
+  scheduleTime: String
+  scoreCommentOne: String
+  scoreCommmentTwo: String
+  scoreCommmentThree: String
+  shortMobileQuizUrl: String
+  shortQuizUrl: String
+  site: Site @connection(name: "siteQuiz")
+  siteId: ID
+  tags: [String]
+  title: String!
+  updatedAt: String!
+  user: User @connection(name: "userQuiz")
+  userId: ID
+  urlDescription: String
+}
+
+type Question
+  @model(subscriptions: null, queries: null)
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        queries: null
+        mutations: [update, create]
+      }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  answer: String!
+  closingImage: String
+  closingImageAttribution: String
+  closingImageAttributionLink: String
+  closingImageAltTag: String
+  closingImageType: String
+  incorrectAnswers: [String]
+  longAnswer: String
+  longIncorrectAnswer: String
+  openingImage: String!
+  openingImageAttribution: String
+  openingImageAttributionLink: String
+  openingImageAltTag: String
+  openingImageType: String
+  order: Int
+  question: String!
+  quiz: Quiz @connection(name: "quiz")
+  quizId: ID
+}
+
+type Article
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", mutations: [update, create] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @searchable {
+  id: ID!
+  authorId: String
+  authorName: String
+  brief: String
+  category: String
+  createdAt: String!
+  content: String
+  development: Boolean!
+  headline: String!
+  headlineSummary: String
+  headlineImage: String
+  headlineImageAlt: String
+  headlineImageAttribution: String
+  headlineImageAttributionLink: String
+  instantDevelopmentCheck: String
+  instantPublishCheck: String
+  kicker: String
+  longUrl: String
+  longMobileUrl: String
+  production: Boolean!
+  productionId: Boolean
+  pushDate: String
+  schedule: Boolean
+  scheduleTime: String
+  shareCount: Int
+  shortUrl: String
+  shortMobileUrl: String
+  site: Site @connection(name: "siteArticles")
+  siteId: ID
+  tags: [String]
+  updatedAt: String!
+  urlDescription: String!
+  user: User @connection(name: "userArticles")
+  userId: ID
+}
+
+type SlideShow
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", mutations: [update, create] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @searchable {
+  id: ID!
+  category: String
+  createdAt: String!
+  development: Boolean!
+  longSlideUrl: String
+  longMobileSlideUrl: String
+  metaTag: String
+  numberOfSlides: Int
+  opening: String
+  openingBlurb: String
+  openingImage: String
+  openingImageAlt: String
+  openingImageAttributionLink: String
+  openingImageAttribution: String
+  openingImageType: String
+  production: Boolean!
+  productionId: String
+  slides: [Slide] @connection(name: "slideshow")
+  schedule: Boolean
+  scheduleTime: String
+  shortMobileSlideUrl: String
+  shortSlideUrl: String
+  site: Site @connection(name: "siteSlideShows")
+  siteId: ID
+  tags: [String]
+  title: String!
+  updatedAt: String!
+  urlDescription: String
+  user: User @connection(name: "userSlideShows")
+  userId: ID
+}
+
+type Slide
+  @model(subscriptions: null, queries: null)
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        queries: null
+        mutations: [update, create]
+      }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  media: String!
+  mediaAttribution: String
+  mediaAttributionLink: String
+  mediaAltTag: String
+  slideTitle: String
+  slideShow: SlideShow @connection(name: "slideshow")
+  slideShowId: String
+  content: String
+  order: Int
+}
+
+type CalendarYear
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  createdAt: String
+  month: [CalendarMonth]
+    @connection(name: "calendarMonth", sortField: "createdAt")
+  year: String
+  updatedAt: String
+}
+
+type CalendarMonth
+  @model(subscriptions: null, queries: null)
+  @auth(rules: [{ allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  createdAt: String
+  day: [CalendarDay] @connection(name: "calendarDay", sortField: "createdAt")
+  month: String
+  year: CalendarYear @connection(name: "calendarMonth")
+  yearId: ID
+  updatedAt: String
+}
+
+type CalendarDay
+  @model(subscriptions: null, queries: null)
+  @auth(rules: [{ allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  calendarMonth: CalendarMonth @connection(name: "calendarDay")
+  category: String
+  createdAt: String
+  description: String!
+  eventName: String!
+  lastUpdated: String
+  monthId: ID
+}
+
+type Conversation
+  @model(
+    mutations: { create: "createConvo" }
+    queries: { get: "getConvo" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "members" }]) {
+  id: ID!
+  associated: [ConvoLink] @connection(name: "AssociatedLinks")
+  createdAt: String
+  members: [String!]!
+  messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
+  name: String!
+  updatedAt: String
+}
+
+type Message
+  @model(subscriptions: null, queries: null)
+  @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+  id: ID!
+  author: User @connection(name: "UserMessages", keyField: "authorId")
+  authorId: String
+  content: String!
+  conversation: Conversation! @connection(name: "ConvoMsgs")
+  createdAt: String
+  messageConversationId: ID!
+  updatedAt: String
+}
+
+type ConvoLink
+  @model(
+    mutations: { create: "createConvoLink", update: "updateConvoLink" }
+    queries: null
+    subscriptions: null
+  ) {
+  id: ID!
+  convoLinkUserId: ID
+  conversation: Conversation! @connection(name: "AssociatedLinks")
+  convoLinkConversationId: ID!
+  createdAt: String
+  updatedAt: String
+  user: User! @connection(name: "UserLinks")
+}
+
+type Project
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID
+  createdAt: String
+  headCols: [ColTitle] @connection(name: "colTitle", sortField: "order")
+  owner: ID
+  ownerName: String
+  members: [String]
+  name: String
+  site: Site @connection(name: "siteIdeas")
+  siteId: ID
+  task: [Task] @connection(name: "tasks", sortField: "createdAt")
+  updatedAt: String
+}
+
+type ColTitle
+  @model(subscriptions: null, queries: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: String
+  label: String
+  numeric: Boolean
+  order: Int
+  project: Project @connection(name: "colTitle")
+  projectName: String
+  projectId: ID
+}
+
+type Task
+  @model(
+    subscriptions: null
+    queries: null
+    mutations: { create: "createTask", update: "updateTask" }
+  )
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  category: Category
+  createdAt: String
+  description: String
+  details: [TaskDetail] @connection(name: "taskDetail", sortField: "order")
+  project: Project @connection(name: "tasks")
+  projectId: ID
+  updatedAt: String
+  user: User @connection(name: "userIdeas")
+  userId: ID
+}
+
+type TaskDetail
+  @model(subscriptions: null, queries: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID
+  order: Int
+  task: Task @connection(name: "taskDetail")
+  taskDetailLabel: String
+  taskDetailContent: String
+  taskId: ID
+  taskType: String
+}
+
+type Subscription {
+  onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+    @aws_subscribe(mutations: ["createConvoLink"])
+  onCreateMessage(messageConversationId: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+  onCreateTask(projectId: ID!): Task @aws_subscribe(mutations: ["createTask"])
+}
+
+enum PostType {
+  slideshow
+  article
+  quiz
+}
+
+enum Category {
+  News
+  Film
+  TV
+  Celebrity
+  Gossip
+  Sport
+}
+
+enum SiteName {
+  filmMack
+  sportsMack
+}
