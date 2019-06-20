@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { taskStyles } from "./styles/taskStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";

@@ -5,12 +5,7 @@
 			"providerPlugin": "awscloudformation"
 		}
 	},
-	"analytics": {
-		"amplifystack": {
-			"service": "Pinpoint",
-			"providerPlugin": "awscloudformation"
-		}
-	},
+	"analytics": {},
 	"api": {
 		"dashboardApi": {
 			"service": "AppSync",

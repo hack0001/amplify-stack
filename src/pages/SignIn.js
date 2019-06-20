@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import AuthContext from "../context/authContext";
 import SignIn from "../components/signIn/signIn";
 import ChangePass from "../components/signIn/newPassword";
@@ -52,7 +52,7 @@ class AuthSignIn extends Component {
           "cognito:groups"
         ].includes("Admin");
 
-        this.context.login(user,admin);
+        this.context.login(user, admin);
       }
     } catch (err) {
       this.setState({
