@@ -1,0 +1,209 @@
+type Site
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: groups, groups: ["Admin"] }]) {
+  id: ID
+  articles: [Article] @connection(name: "siteArticles", sortField: "updatedAt")
+  createdAt: String
+  description: String
+  tasks: [Task] @connection(name: "siteTasks", sortField: "updatedAt")
+  name: String
+  type: String
+  quiz: [Quiz] @connection(name: "siteQuiz", sortField: "updatedAt")
+  slideShows: [SlideShow]
+    @connection(name: "siteSlideShows", sortField: "updatedAt")
+  updatedAt: String
+}
+
+type Quiz
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", mutations: [update, create] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @searchable {
+  id: ID!
+  category: String
+  closingTitle: String
+  closingImage: String
+  closingImageAlt: String
+  closingImageAttribution: String
+  closingImageAttributionLink: String
+  closingImageType: String
+  createdAt: String!
+  development: Boolean!
+  longQuizUrl: String
+  longMobileQuizUrl: String
+  metaTag: String
+  numberOfQuestions: Int
+  opening: String
+  openingBlurb: String
+  openingImage: String
+  openingImageAlt: String
+  openingImageAttributionLink: String
+  openingImageAttribution: String
+  openingImageType: String
+  production: Boolean!
+  productionId: String
+  questions: [Question] @connection(name: "quiz", sortField: "order")
+  schedule: Boolean
+  scheduleTime: String
+  scoreCommentOne: String
+  scoreCommmentTwo: String
+  scoreCommmentThree: String
+  shortMobileQuizUrl: String
+  shortQuizUrl: String
+  site: Site @connection(name: "siteQuiz")
+  tags: [String]
+  title: String!
+  updatedAt: String!
+  user: User @connection(name: "userQuiz")
+  userId: ID
+  urlDescription: String
+}
+
+type Question
+  @model(subscriptions: null, queries: null)
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        queries: null
+        mutations: [update, create]
+      }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  answer: Answer!
+  closingImage: String
+  closingImageAttribution: String
+  closingImageAttributionLink: String
+  closingImageAltTag: String
+  closingImageType: String
+  incorrectAnswers: [Answer]
+  longAnswer: String
+  longIncorrectAnswer: String
+  openingImage: String!
+  openingImageAttribution: String
+  openingImageAttributionLink: String
+  openingImageAltTag: String
+  openingImageType: String
+  order: Int
+  question: String!
+  quiz: Quiz @connection(name: "quiz")
+}
+
+type Article
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", mutations: [update, create] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @searchable {
+  id: ID!
+  authorId: String
+  authorName: String
+  brief: String
+  category: String
+  createdAt: String!
+  content: String
+  development: Boolean!
+  headline: String!
+  headlineSummary: String
+  headlineImage: String
+  headlineImageAlt: String
+  headlineImageAttribution: String
+  headlineImageAttributionLink: String
+  instantDevelopmentCheck: String
+  instantPublishCheck: String
+  kicker: String
+  longUrl: String
+  longMobileUrl: String
+  production: Boolean!
+  productionId: Boolean
+  pushDate: String
+  schedule: Boolean
+  scheduleTime: String
+  shareCount: Int
+  shortUrl: String
+  shortMobileUrl: String
+  site: Site @connection(name: "siteArticles")
+  tags: [String]
+  updatedAt: String!
+  urlDescription: String!
+  user: User @connection(name: "userArticles")
+}
+
+type SlideShow
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", mutations: [update, create] }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @searchable {
+  id: ID!
+  category: String
+  createdAt: String!
+  development: Boolean!
+  longSlideUrl: String
+  longMobileSlideUrl: String
+  metaTag: String
+  numberOfSlides: Int
+  opening: String
+  openingBlurb: String
+  openingImage: String
+  openingImageAlt: String
+  openingImageAttributionLink: String
+  openingImageAttribution: String
+  openingImageType: String
+  production: Boolean!
+  productionId: String
+  slides: [Slide] @connection(name: "slideshow")
+  schedule: Boolean
+  scheduleTime: String
+  shortMobileSlideUrl: String
+  shortSlideUrl: String
+  site: Site @connection(name: "siteSlideShows")
+  tags: [String]
+  title: String!
+  updatedAt: String!
+  urlDescription: String
+  user: User @connection(name: "userSlideShows")
+}
+
+type Slide
+  @model(subscriptions: null, queries: null)
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        queries: null
+        mutations: [update, create]
+      }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  media: String!
+  mediaAttribution: String
+  mediaAttributionLink: String
+  mediaAltTag: String
+  slideTitle: String
+  slideShow: SlideShow @connection(name: "slideshow")
+  slideShowId: String
+  content: String
+  order: Int
+}
+
+type Answer {
+  answer: String
+  votes: Int
+}

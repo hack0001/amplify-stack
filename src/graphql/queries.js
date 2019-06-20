@@ -1,47 +1,102 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
-export const getUser = `query GetUser($id: ID!) {
-  getUser(id: $id) {
+export const getCalendarMonth = `query GetCalendarMonth($id: ID!) {
+  getCalendarMonth(id: $id) {
     id
-    articles {
+    createdAt
+    day {
       items {
         id
-        authorId
-        authorName
-        brief
         category
         createdAt
-        content
-        development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
-        production
-        productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        siteId
-        tags
+        description
+        eventName
         updatedAt
-        urlDescription
-        userId
+        site
+        year
+        day
       }
       nextToken
     }
-    conversations {
+    month
+    updatedAt
+  }
+}
+`;
+export const listCalendarMonths = `query ListCalendarMonths(
+  $filter: ModelCalendarMonthFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCalendarMonths(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      createdAt
+      day {
+        nextToken
+      }
+      month
+      updatedAt
+    }
+    nextToken
+  }
+}
+`;
+export const getCalendarDay = `query GetCalendarDay($id: ID!) {
+  getCalendarDay(id: $id) {
+    id
+    calendarMonth {
+      id
+      createdAt
+      day {
+        nextToken
+      }
+      month
+      updatedAt
+    }
+    category
+    createdAt
+    description
+    eventName
+    updatedAt
+    site
+    year
+    day
+  }
+}
+`;
+export const listCalendarDays = `query ListCalendarDays(
+  $filter: ModelCalendarDayFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCalendarDays(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      calendarMonth {
+        id
+        createdAt
+        month
+        updatedAt
+      }
+      category
+      createdAt
+      description
+      eventName
+      updatedAt
+      site
+      year
+      day
+    }
+    nextToken
+  }
+}
+`;
+export const getConversation = `query GetConversation($id: ID!) {
+  getConversation(id: $id) {
+    id
+    associated {
       items {
         id
         convoLinkUserId
@@ -52,15 +107,62 @@ export const getUser = `query GetUser($id: ID!) {
       nextToken
     }
     createdAt
-    ideas {
+    members
+    messages {
       items {
         id
-        category
+        authorId
+        content
         createdAt
-        description
-        projectId
+        messageConversationId
         updatedAt
-        userId
+      }
+      nextToken
+    }
+    name
+    updatedAt
+    subject
+    conversationCreator
+  }
+}
+`;
+export const listConversations = `query ListConversations(
+  $filter: ModelConversationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    nextToken
+  }
+}
+`;
+export const getChatUser = `query GetChatUser($id: ID!) {
+  getChatUser(id: $id) {
+    id
+    username
+    creator
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -75,106 +177,26 @@ export const getUser = `query GetUser($id: ID!) {
       }
       nextToken
     }
-    quiz {
-      items {
-        id
-        category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
-        createdAt
-        development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        siteId
-        tags
-        title
-        updatedAt
-        userId
-        urlDescription
-      }
-      nextToken
-    }
-    siteName
-    slideShows {
-      items {
-        id
-        category
-        createdAt
-        development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        siteId
-        tags
-        title
-        updatedAt
-        urlDescription
-        userId
-      }
-      nextToken
-    }
+    createdAt
     updatedAt
-    username
-  }
-}
-`;
-export const listUsers = `query ListUsers(
-  $filter: ModelUserFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
+    alias
+    imageLink
+    user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -184,6 +206,61 @@ export const listUsers = `query ListUsers(
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
+    }
+  }
+}
+`;
+export const listChatUsers = `query ListChatUsers(
+  $filter: ModelChatUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listChatUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
     }
     nextToken
   }
@@ -221,29 +298,33 @@ export const getSite = `query GetSite($id: ID!) {
         shareCount
         shortUrl
         shortMobileUrl
-        siteId
         tags
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
     createdAt
-    ideas {
+    description
+    tasks {
       items {
         id
+        category
         createdAt
-        owner
-        ownerName
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
       nextToken
     }
     name
+    type
     quiz {
       items {
         id
@@ -276,7 +357,6 @@ export const getSite = `query GetSite($id: ID!) {
         scoreCommmentThree
         shortMobileQuizUrl
         shortQuizUrl
-        siteId
         tags
         title
         updatedAt
@@ -308,12 +388,10 @@ export const getSite = `query GetSite($id: ID!) {
         scheduleTime
         shortMobileSlideUrl
         shortSlideUrl
-        siteId
         tags
         title
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
@@ -333,10 +411,12 @@ export const listSites = `query ListSites(
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -377,13 +457,11 @@ export const getQuiz = `query GetQuiz($id: ID!) {
     questions {
       items {
         id
-        answer
         closingImage
         closingImageAttribution
         closingImageAttributionLink
         closingImageAltTag
         closingImageType
-        incorrectAnswers
         longAnswer
         longIncorrectAnswer
         openingImage
@@ -393,7 +471,6 @@ export const getQuiz = `query GetQuiz($id: ID!) {
         openingImageType
         order
         question
-        quizId
       }
       nextToken
     }
@@ -410,10 +487,12 @@ export const getQuiz = `query GetQuiz($id: ID!) {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -422,25 +501,25 @@ export const getQuiz = `query GetQuiz($id: ID!) {
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -450,6 +529,19 @@ export const getQuiz = `query GetQuiz($id: ID!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
     userId
     urlDescription
@@ -499,19 +591,31 @@ export const listQuizs = `query ListQuizs(
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
       userId
       urlDescription
@@ -555,10 +659,12 @@ export const getArticle = `query GetArticle($id: ID!) {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -567,25 +673,25 @@ export const getArticle = `query GetArticle($id: ID!) {
       }
       updatedAt
     }
-    siteId
     tags
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -595,8 +701,20 @@ export const getArticle = `query GetArticle($id: ID!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -637,21 +755,32 @@ export const listArticles = `query ListArticles(
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     nextToken
   }
@@ -700,10 +829,12 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -712,26 +843,26 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -741,8 +872,20 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -780,125 +923,56 @@ export const listSlideShows = `query ListSlideShows(
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     nextToken
   }
 }
 `;
-export const getCalendarYear = `query GetCalendarYear($id: ID!) {
-  getCalendarYear(id: $id) {
+export const getTask = `query GetTask($id: ID!) {
+  getTask(id: $id) {
     id
+    category
     createdAt
-    month {
-      items {
-        id
-        createdAt
-        month
-        yearId
-        updatedAt
-      }
-      nextToken
-    }
-    year
-    updatedAt
-  }
-}
-`;
-export const listCalendarYears = `query ListCalendarYears(
-  $filter: ModelCalendarYearFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listCalendarYears(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      createdAt
-      month {
-        nextToken
-      }
-      year
-      updatedAt
-    }
-    nextToken
-  }
-}
-`;
-export const getConvo = `query GetConvo($id: ID!) {
-  getConvo(id: $id) {
-    id
-    associated {
-      items {
-        id
-        convoLinkUserId
-        convoLinkConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    members
-    messages {
-      items {
-        id
-        authorId
-        content
-        createdAt
-        messageConversationId
-        updatedAt
-      }
-      nextToken
-    }
-    name
-    updatedAt
-  }
-}
-`;
-export const getProject = `query GetProject($id: ID!) {
-  getProject(id: $id) {
-    id
-    createdAt
-    headCols {
-      items {
-        id
-        label
-        numeric
-        order
-        projectName
-        projectId
-      }
-      nextToken
-    }
-    owner
-    ownerName
-    members
-    name
+    content
     site {
       id
       articles {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -908,49 +982,325 @@ export const getProject = `query GetProject($id: ID!) {
       updatedAt
     }
     siteId
-    task {
+    userId
+    members
+    name
+    updatedAt
+    type
+    title
+    status
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
+    }
+  }
+}
+`;
+export const listTasks = `query ListTasks(
+  $filter: ModelTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      category
+      createdAt
+      content
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        updatedAt
+      }
+      siteId
+      userId
+      members
+      name
+      updatedAt
+      type
+      title
+      status
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+    nextToken
+  }
+}
+`;
+export const getUser = `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    userId
+    creator
+    articles {
+      items {
+        id
+        authorId
+        authorName
+        brief
+        category
+        createdAt
+        content
+        development
+        headline
+        headlineSummary
+        headlineImage
+        headlineImageAlt
+        headlineImageAttribution
+        headlineImageAttributionLink
+        instantDevelopmentCheck
+        instantPublishCheck
+        kicker
+        longUrl
+        longMobileUrl
+        production
+        productionId
+        pushDate
+        schedule
+        scheduleTime
+        shareCount
+        shortUrl
+        shortMobileUrl
+        tags
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    createdAt
+    ideas {
       items {
         id
         category
         createdAt
-        description
-        projectId
+        content
+        siteId
+        userId
+        members
+        name
+        updatedAt
+        type
+        title
+        status
+      }
+      nextToken
+    }
+    lastLoggedIn
+    twitterProfile
+    facebookProfile
+    linkedinProfile
+    instagramProfile
+    quiz {
+      items {
+        id
+        category
+        closingTitle
+        closingImage
+        closingImageAlt
+        closingImageAttribution
+        closingImageAttributionLink
+        closingImageType
+        createdAt
+        development
+        longQuizUrl
+        longMobileQuizUrl
+        metaTag
+        numberOfQuestions
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        scoreCommentOne
+        scoreCommmentTwo
+        scoreCommmentThree
+        shortMobileQuizUrl
+        shortQuizUrl
+        tags
+        title
         updatedAt
         userId
+        urlDescription
+      }
+      nextToken
+    }
+    siteName
+    slideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        longSlideUrl
+        longMobileSlideUrl
+        metaTag
+        numberOfSlides
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        shortMobileSlideUrl
+        shortSlideUrl
+        tags
+        title
+        updatedAt
+        urlDescription
       }
       nextToken
     }
     updatedAt
+    username
+    alias
+    phoneNumber
+    imageLink
+    numberPosts
+    chatUser {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
   }
 }
 `;
-export const listProjects = `query ListProjects(
-  $filter: ModelProjectFilterInput
+export const listUsers = `query ListUsers(
+  $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      createdAt
-      headCols {
+      userId
+      creator
+      articles {
         nextToken
       }
-      owner
-      ownerName
-      members
-      name
-      site {
-        id
-        createdAt
-        name
-        updatedAt
+      createdAt
+      ideas {
+        nextToken
       }
-      siteId
-      task {
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
         nextToken
       }
       updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
     nextToken
   }
@@ -1005,19 +1355,31 @@ export const searchQuizs = `query SearchQuizs(
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
       userId
       urlDescription
@@ -1069,21 +1431,32 @@ export const searchArticles = `query SearchArticles(
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     nextToken
   }
@@ -1129,22 +1502,33 @@ export const searchSlideShows = `query SearchSlideShows(
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     nextToken
   }

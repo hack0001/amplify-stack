@@ -1,0 +1,26 @@
+type User
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID
+  userId: ID
+  creator: ID
+  articles: [Article] @connection(name: "userArticles", sortField: "updatedAt")
+  createdAt: String
+  ideas: [Task] @connection(name: "userIdeas", sortField: "updatedAt")
+  lastLoggedIn: String
+  twitterProfile: String
+  facebookProfile: String
+  linkedinProfile: String
+  instagramProfile: String
+  quiz: [Quiz] @connection(name: "userQuiz", sortField: "updatedAt")
+  siteName: String
+  slideShows: [SlideShow]
+    @connection(name: "userSlideShows", sortField: "updatedAt")
+  updatedAt: String
+  username: String!
+  alias: String
+  phoneNumber: String
+  imageLink: String
+  numberPosts: Int
+  chatUser: ChatUser @connection(name: "chatUsers")
+}

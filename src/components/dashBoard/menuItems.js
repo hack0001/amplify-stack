@@ -31,6 +31,7 @@ class MenuItems extends Component {
             <ListItem
               button
               onClick={this.handleClick.bind(this, `${newLabel}`)}
+              style={{ textDecoration: "none", color: "grey" }}
             >
               <ListItemIcon>
                 <Icon />
@@ -40,6 +41,7 @@ class MenuItems extends Component {
             {subComponents.map(({ subLabel, SubIcon }) => {
               return (
                 <Link
+                  style={{ textDecoration: "none", color: "grey" }}
                   className={classes.link}
                   to={`/${newLabel}/${subLabel.toLowerCase()}`}
                   key={subLabel}
@@ -90,7 +92,7 @@ class MenuItems extends Component {
         return (
           <Fragment key={label}>
             <Link
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", color: "grey" }}
               to={`/${label.toLowerCase()}`}
               key={label}
               onClick={context.handleCurrentTab.bind(this, label)}

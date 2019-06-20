@@ -1,353 +1,148 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
-export const createUser = `mutation CreateUser($input: CreateUserInput!) {
-  createUser(input: $input) {
+export const createCalendarMonth = `mutation CreateCalendarMonth($input: CreateCalendarMonthInput!) {
+  createCalendarMonth(input: $input) {
     id
-    articles {
-      items {
-        id
-        authorId
-        authorName
-        brief
-        category
-        createdAt
-        content
-        development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
-        production
-        productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        siteId
-        tags
-        updatedAt
-        urlDescription
-        userId
-      }
-      nextToken
-    }
-    conversations {
-      items {
-        id
-        convoLinkUserId
-        convoLinkConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
-    ideas {
+    day {
       items {
         id
         category
         createdAt
         description
-        projectId
+        eventName
         updatedAt
-        userId
+        site
+        year
+        day
       }
       nextToken
     }
-    messages {
-      items {
-        id
-        authorId
-        content
-        createdAt
-        messageConversationId
-        updatedAt
-      }
-      nextToken
-    }
-    quiz {
-      items {
-        id
-        category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
-        createdAt
-        development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        siteId
-        tags
-        title
-        updatedAt
-        userId
-        urlDescription
-      }
-      nextToken
-    }
-    siteName
-    slideShows {
-      items {
-        id
-        category
-        createdAt
-        development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        siteId
-        tags
-        title
-        updatedAt
-        urlDescription
-        userId
-      }
-      nextToken
-    }
+    month
     updatedAt
-    username
   }
 }
 `;
-export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
-  updateUser(input: $input) {
+export const updateCalendarMonth = `mutation UpdateCalendarMonth($input: UpdateCalendarMonthInput!) {
+  updateCalendarMonth(input: $input) {
     id
-    articles {
-      items {
-        id
-        authorId
-        authorName
-        brief
-        category
-        createdAt
-        content
-        development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
-        production
-        productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        siteId
-        tags
-        updatedAt
-        urlDescription
-        userId
-      }
-      nextToken
-    }
-    conversations {
-      items {
-        id
-        convoLinkUserId
-        convoLinkConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
-    ideas {
+    day {
       items {
         id
         category
         createdAt
         description
-        projectId
+        eventName
         updatedAt
-        userId
+        site
+        year
+        day
       }
       nextToken
     }
-    messages {
-      items {
-        id
-        authorId
-        content
-        createdAt
-        messageConversationId
-        updatedAt
-      }
-      nextToken
-    }
-    quiz {
-      items {
-        id
-        category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
-        createdAt
-        development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        siteId
-        tags
-        title
-        updatedAt
-        userId
-        urlDescription
-      }
-      nextToken
-    }
-    siteName
-    slideShows {
-      items {
-        id
-        category
-        createdAt
-        development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        siteId
-        tags
-        title
-        updatedAt
-        urlDescription
-        userId
-      }
-      nextToken
-    }
+    month
     updatedAt
-    username
   }
 }
 `;
-export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
-  deleteUser(input: $input) {
+export const deleteCalendarMonth = `mutation DeleteCalendarMonth($input: DeleteCalendarMonthInput!) {
+  deleteCalendarMonth(input: $input) {
     id
-    articles {
+    createdAt
+    day {
       items {
         id
-        authorId
-        authorName
-        brief
         category
         createdAt
-        content
-        development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
-        production
-        productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        siteId
-        tags
+        description
+        eventName
         updatedAt
-        urlDescription
-        userId
+        site
+        year
+        day
       }
       nextToken
     }
-    conversations {
+    month
+    updatedAt
+  }
+}
+`;
+export const createCalendarDay = `mutation CreateCalendarDay($input: CreateCalendarDayInput!) {
+  createCalendarDay(input: $input) {
+    id
+    calendarMonth {
+      id
+      createdAt
+      day {
+        nextToken
+      }
+      month
+      updatedAt
+    }
+    category
+    createdAt
+    description
+    eventName
+    updatedAt
+    site
+    year
+    day
+  }
+}
+`;
+export const updateCalendarDay = `mutation UpdateCalendarDay($input: UpdateCalendarDayInput!) {
+  updateCalendarDay(input: $input) {
+    id
+    calendarMonth {
+      id
+      createdAt
+      day {
+        nextToken
+      }
+      month
+      updatedAt
+    }
+    category
+    createdAt
+    description
+    eventName
+    updatedAt
+    site
+    year
+    day
+  }
+}
+`;
+export const deleteCalendarDay = `mutation DeleteCalendarDay($input: DeleteCalendarDayInput!) {
+  deleteCalendarDay(input: $input) {
+    id
+    calendarMonth {
+      id
+      createdAt
+      day {
+        nextToken
+      }
+      month
+      updatedAt
+    }
+    category
+    createdAt
+    description
+    eventName
+    updatedAt
+    site
+    year
+    day
+  }
+}
+`;
+export const createConversation = `mutation CreateConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
+    id
+    associated {
       items {
         id
         convoLinkUserId
@@ -358,15 +153,454 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       nextToken
     }
     createdAt
-    ideas {
+    members
+    messages {
       items {
         id
-        category
+        authorId
+        content
         createdAt
-        description
-        projectId
+        messageConversationId
         updatedAt
+      }
+      nextToken
+    }
+    name
+    updatedAt
+    subject
+    conversationCreator
+  }
+}
+`;
+export const updateConversation = `mutation UpdateConversation($input: UpdateConversationInput!) {
+  updateConversation(input: $input) {
+    id
+    associated {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    members
+    messages {
+      items {
+        id
+        authorId
+        content
+        createdAt
+        messageConversationId
+        updatedAt
+      }
+      nextToken
+    }
+    name
+    updatedAt
+    subject
+    conversationCreator
+  }
+}
+`;
+export const deleteConversation = `mutation DeleteConversation($input: DeleteConversationInput!) {
+  deleteConversation(input: $input) {
+    id
+    associated {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    members
+    messages {
+      items {
+        id
+        authorId
+        content
+        createdAt
+        messageConversationId
+        updatedAt
+      }
+      nextToken
+    }
+    name
+    updatedAt
+    subject
+    conversationCreator
+  }
+}
+`;
+export const createMessage = `mutation CreateMessage($input: CreateMessageInput!) {
+  createMessage(input: $input) {
+    id
+    author {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
         userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+    authorId
+    content
+    conversation {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    createdAt
+    messageConversationId
+    updatedAt
+  }
+}
+`;
+export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!) {
+  updateMessage(input: $input) {
+    id
+    author {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+    authorId
+    content
+    conversation {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    createdAt
+    messageConversationId
+    updatedAt
+  }
+}
+`;
+export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!) {
+  deleteMessage(input: $input) {
+    id
+    author {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+    authorId
+    content
+    conversation {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    createdAt
+    messageConversationId
+    updatedAt
+  }
+}
+`;
+export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLinkInput!) {
+  createConvoLink(input: $input) {
+    id
+    convoLinkUserId
+    conversation {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    convoLinkConversationId
+    createdAt
+    updatedAt
+    user {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+  }
+}
+`;
+export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLinkInput!) {
+  updateConvoLink(input: $input) {
+    id
+    convoLinkUserId
+    conversation {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    convoLinkConversationId
+    createdAt
+    updatedAt
+    user {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+  }
+}
+`;
+export const deleteConvoLink = `mutation DeleteConvoLink($input: DeleteConvoLinkInput!) {
+  deleteConvoLink(input: $input) {
+    id
+    convoLinkUserId
+    conversation {
+      id
+      associated {
+        nextToken
+      }
+      createdAt
+      members
+      messages {
+        nextToken
+      }
+      name
+      updatedAt
+      subject
+      conversationCreator
+    }
+    convoLinkConversationId
+    createdAt
+    updatedAt
+    user {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      alias
+      imageLink
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+      }
+    }
+  }
+}
+`;
+export const createChatUser = `mutation CreateChatUser($input: CreateChatUserInput!) {
+  createChatUser(input: $input) {
+    id
+    username
+    creator
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -381,82 +615,193 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       }
       nextToken
     }
-    quiz {
-      items {
-        id
-        category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
-        createdAt
-        development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        siteId
-        tags
-        title
-        updatedAt
-        userId
-        urlDescription
-      }
-      nextToken
-    }
-    siteName
-    slideShows {
-      items {
-        id
-        category
-        createdAt
-        development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
-        production
-        productionId
-        schedule
-        scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        siteId
-        tags
-        title
-        updatedAt
-        urlDescription
-        userId
-      }
-      nextToken
-    }
+    createdAt
     updatedAt
+    alias
+    imageLink
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
+    }
+  }
+}
+`;
+export const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInput!) {
+  updateChatUser(input: $input) {
+    id
     username
+    creator
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        authorId
+        content
+        createdAt
+        messageConversationId
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    alias
+    imageLink
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
+    }
+  }
+}
+`;
+export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInput!) {
+  deleteChatUser(input: $input) {
+    id
+    username
+    creator
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        authorId
+        content
+        createdAt
+        messageConversationId
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    alias
+    imageLink
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
+    }
   }
 }
 `;
@@ -492,29 +837,33 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         shareCount
         shortUrl
         shortMobileUrl
-        siteId
         tags
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
     createdAt
-    ideas {
+    description
+    tasks {
       items {
         id
+        category
         createdAt
-        owner
-        ownerName
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
       nextToken
     }
     name
+    type
     quiz {
       items {
         id
@@ -547,7 +896,6 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         scoreCommmentThree
         shortMobileQuizUrl
         shortQuizUrl
-        siteId
         tags
         title
         updatedAt
@@ -579,12 +927,10 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         scheduleTime
         shortMobileSlideUrl
         shortSlideUrl
-        siteId
         tags
         title
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
@@ -624,29 +970,33 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         shareCount
         shortUrl
         shortMobileUrl
-        siteId
         tags
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
     createdAt
-    ideas {
+    description
+    tasks {
       items {
         id
+        category
         createdAt
-        owner
-        ownerName
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
       nextToken
     }
     name
+    type
     quiz {
       items {
         id
@@ -679,7 +1029,6 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         scoreCommmentThree
         shortMobileQuizUrl
         shortQuizUrl
-        siteId
         tags
         title
         updatedAt
@@ -711,12 +1060,10 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         scheduleTime
         shortMobileSlideUrl
         shortSlideUrl
-        siteId
         tags
         title
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
@@ -756,29 +1103,33 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         shareCount
         shortUrl
         shortMobileUrl
-        siteId
         tags
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
     createdAt
-    ideas {
+    description
+    tasks {
       items {
         id
+        category
         createdAt
-        owner
-        ownerName
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
       nextToken
     }
     name
+    type
     quiz {
       items {
         id
@@ -811,7 +1162,6 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         scoreCommmentThree
         shortMobileQuizUrl
         shortQuizUrl
-        siteId
         tags
         title
         updatedAt
@@ -843,12 +1193,10 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         scheduleTime
         shortMobileSlideUrl
         shortSlideUrl
-        siteId
         tags
         title
         updatedAt
         urlDescription
-        userId
       }
       nextToken
     }
@@ -884,13 +1232,11 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
     questions {
       items {
         id
-        answer
         closingImage
         closingImageAttribution
         closingImageAttributionLink
         closingImageAltTag
         closingImageType
-        incorrectAnswers
         longAnswer
         longIncorrectAnswer
         openingImage
@@ -900,7 +1246,6 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
         openingImageType
         order
         question
-        quizId
       }
       nextToken
     }
@@ -917,10 +1262,12 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -929,25 +1276,25 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -957,6 +1304,19 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
     userId
     urlDescription
@@ -991,13 +1351,11 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
     questions {
       items {
         id
-        answer
         closingImage
         closingImageAttribution
         closingImageAttributionLink
         closingImageAltTag
         closingImageType
-        incorrectAnswers
         longAnswer
         longIncorrectAnswer
         openingImage
@@ -1007,7 +1365,6 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
         openingImageType
         order
         question
-        quizId
       }
       nextToken
     }
@@ -1024,10 +1381,12 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1036,25 +1395,25 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1064,6 +1423,19 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
     userId
     urlDescription
@@ -1098,13 +1470,11 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
     questions {
       items {
         id
-        answer
         closingImage
         closingImageAttribution
         closingImageAttributionLink
         closingImageAltTag
         closingImageType
-        incorrectAnswers
         longAnswer
         longIncorrectAnswer
         openingImage
@@ -1114,7 +1484,6 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
         openingImageType
         order
         question
-        quizId
       }
       nextToken
     }
@@ -1131,10 +1500,12 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1143,25 +1514,25 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1171,6 +1542,19 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
     userId
     urlDescription
@@ -1180,13 +1564,19 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
 export const createQuestion = `mutation CreateQuestion($input: CreateQuestionInput!) {
   createQuestion(input: $input) {
     id
-    answer
+    answer {
+      answer
+      votes
+    }
     closingImage
     closingImageAttribution
     closingImageAttributionLink
     closingImageAltTag
     closingImageType
-    incorrectAnswers
+    incorrectAnswers {
+      answer
+      votes
+    }
     longAnswer
     longIncorrectAnswer
     openingImage
@@ -1233,37 +1623,54 @@ export const createQuestion = `mutation CreateQuestion($input: CreateQuestionInp
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
       userId
       urlDescription
     }
-    quizId
   }
 }
 `;
 export const updateQuestion = `mutation UpdateQuestion($input: UpdateQuestionInput!) {
   updateQuestion(input: $input) {
     id
-    answer
+    answer {
+      answer
+      votes
+    }
     closingImage
     closingImageAttribution
     closingImageAttributionLink
     closingImageAltTag
     closingImageType
-    incorrectAnswers
+    incorrectAnswers {
+      answer
+      votes
+    }
     longAnswer
     longIncorrectAnswer
     openingImage
@@ -1310,37 +1717,54 @@ export const updateQuestion = `mutation UpdateQuestion($input: UpdateQuestionInp
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
       userId
       urlDescription
     }
-    quizId
   }
 }
 `;
 export const deleteQuestion = `mutation DeleteQuestion($input: DeleteQuestionInput!) {
   deleteQuestion(input: $input) {
     id
-    answer
+    answer {
+      answer
+      votes
+    }
     closingImage
     closingImageAttribution
     closingImageAttributionLink
     closingImageAltTag
     closingImageType
-    incorrectAnswers
+    incorrectAnswers {
+      answer
+      votes
+    }
     longAnswer
     longIncorrectAnswer
     openingImage
@@ -1387,24 +1811,35 @@ export const deleteQuestion = `mutation DeleteQuestion($input: DeleteQuestionInp
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
       userId
       urlDescription
     }
-    quizId
   }
 }
 `;
@@ -1443,10 +1878,12 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1455,25 +1892,25 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
       }
       updatedAt
     }
-    siteId
     tags
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1483,8 +1920,20 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -1523,10 +1972,12 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1535,25 +1986,25 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
       }
       updatedAt
     }
-    siteId
     tags
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1563,8 +2014,20 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -1603,10 +2066,12 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1615,25 +2080,25 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
       }
       updatedAt
     }
-    siteId
     tags
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1643,8 +2108,20 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -1691,10 +2168,12 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1703,26 +2182,26 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1732,8 +2211,20 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -1780,10 +2271,12 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1792,26 +2285,26 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1821,8 +2314,20 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -1869,10 +2374,12 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
         nextToken
       }
       createdAt
-      ideas {
+      description
+      tasks {
         nextToken
       }
       name
+      type
       quiz {
         nextToken
       }
@@ -1881,26 +2388,26 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
       }
       updatedAt
     }
-    siteId
     tags
     title
     updatedAt
     urlDescription
     user {
       id
+      userId
+      creator
       articles {
-        nextToken
-      }
-      conversations {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -1910,8 +2417,20 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -1951,22 +2470,33 @@ export const createSlide = `mutation CreateSlide($input: CreateSlideInput!) {
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     slideShowId
     content
@@ -2010,22 +2540,33 @@ export const updateSlide = `mutation UpdateSlide($input: UpdateSlideInput!) {
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     slideShowId
     content
@@ -2069,795 +2610,37 @@ export const deleteSlide = `mutation DeleteSlide($input: DeleteSlideInput!) {
       site {
         id
         createdAt
+        description
         name
+        type
         updatedAt
       }
-      siteId
       tags
       title
       updatedAt
       urlDescription
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
     slideShowId
     content
     order
-  }
-}
-`;
-export const createCalendarYear = `mutation CreateCalendarYear($input: CreateCalendarYearInput!) {
-  createCalendarYear(input: $input) {
-    id
-    createdAt
-    month {
-      items {
-        id
-        createdAt
-        month
-        yearId
-        updatedAt
-      }
-      nextToken
-    }
-    year
-    updatedAt
-  }
-}
-`;
-export const updateCalendarYear = `mutation UpdateCalendarYear($input: UpdateCalendarYearInput!) {
-  updateCalendarYear(input: $input) {
-    id
-    createdAt
-    month {
-      items {
-        id
-        createdAt
-        month
-        yearId
-        updatedAt
-      }
-      nextToken
-    }
-    year
-    updatedAt
-  }
-}
-`;
-export const deleteCalendarYear = `mutation DeleteCalendarYear($input: DeleteCalendarYearInput!) {
-  deleteCalendarYear(input: $input) {
-    id
-    createdAt
-    month {
-      items {
-        id
-        createdAt
-        month
-        yearId
-        updatedAt
-      }
-      nextToken
-    }
-    year
-    updatedAt
-  }
-}
-`;
-export const createCalendarMonth = `mutation CreateCalendarMonth($input: CreateCalendarMonthInput!) {
-  createCalendarMonth(input: $input) {
-    id
-    createdAt
-    day {
-      items {
-        id
-        category
-        createdAt
-        description
-        eventName
-        lastUpdated
-        monthId
-      }
-      nextToken
-    }
-    month
-    year {
-      id
-      createdAt
-      month {
-        nextToken
-      }
-      year
-      updatedAt
-    }
-    yearId
-    updatedAt
-  }
-}
-`;
-export const updateCalendarMonth = `mutation UpdateCalendarMonth($input: UpdateCalendarMonthInput!) {
-  updateCalendarMonth(input: $input) {
-    id
-    createdAt
-    day {
-      items {
-        id
-        category
-        createdAt
-        description
-        eventName
-        lastUpdated
-        monthId
-      }
-      nextToken
-    }
-    month
-    year {
-      id
-      createdAt
-      month {
-        nextToken
-      }
-      year
-      updatedAt
-    }
-    yearId
-    updatedAt
-  }
-}
-`;
-export const deleteCalendarMonth = `mutation DeleteCalendarMonth($input: DeleteCalendarMonthInput!) {
-  deleteCalendarMonth(input: $input) {
-    id
-    createdAt
-    day {
-      items {
-        id
-        category
-        createdAt
-        description
-        eventName
-        lastUpdated
-        monthId
-      }
-      nextToken
-    }
-    month
-    year {
-      id
-      createdAt
-      month {
-        nextToken
-      }
-      year
-      updatedAt
-    }
-    yearId
-    updatedAt
-  }
-}
-`;
-export const createCalendarDay = `mutation CreateCalendarDay($input: CreateCalendarDayInput!) {
-  createCalendarDay(input: $input) {
-    id
-    calendarMonth {
-      id
-      createdAt
-      day {
-        nextToken
-      }
-      month
-      year {
-        id
-        createdAt
-        year
-        updatedAt
-      }
-      yearId
-      updatedAt
-    }
-    category
-    createdAt
-    description
-    eventName
-    lastUpdated
-    monthId
-  }
-}
-`;
-export const updateCalendarDay = `mutation UpdateCalendarDay($input: UpdateCalendarDayInput!) {
-  updateCalendarDay(input: $input) {
-    id
-    calendarMonth {
-      id
-      createdAt
-      day {
-        nextToken
-      }
-      month
-      year {
-        id
-        createdAt
-        year
-        updatedAt
-      }
-      yearId
-      updatedAt
-    }
-    category
-    createdAt
-    description
-    eventName
-    lastUpdated
-    monthId
-  }
-}
-`;
-export const deleteCalendarDay = `mutation DeleteCalendarDay($input: DeleteCalendarDayInput!) {
-  deleteCalendarDay(input: $input) {
-    id
-    calendarMonth {
-      id
-      createdAt
-      day {
-        nextToken
-      }
-      month
-      year {
-        id
-        createdAt
-        year
-        updatedAt
-      }
-      yearId
-      updatedAt
-    }
-    category
-    createdAt
-    description
-    eventName
-    lastUpdated
-    monthId
-  }
-}
-`;
-export const createConvo = `mutation CreateConvo($input: CreateConversationInput!) {
-  createConvo(input: $input) {
-    id
-    associated {
-      items {
-        id
-        convoLinkUserId
-        convoLinkConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    members
-    messages {
-      items {
-        id
-        authorId
-        content
-        createdAt
-        messageConversationId
-        updatedAt
-      }
-      nextToken
-    }
-    name
-    updatedAt
-  }
-}
-`;
-export const createMessage = `mutation CreateMessage($input: CreateMessageInput!) {
-  createMessage(input: $input) {
-    id
-    author {
-      id
-      articles {
-        nextToken
-      }
-      conversations {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      messages {
-        nextToken
-      }
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-    }
-    authorId
-    content
-    conversation {
-      id
-      associated {
-        nextToken
-      }
-      createdAt
-      members
-      messages {
-        nextToken
-      }
-      name
-      updatedAt
-    }
-    createdAt
-    messageConversationId
-    updatedAt
-  }
-}
-`;
-export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!) {
-  updateMessage(input: $input) {
-    id
-    author {
-      id
-      articles {
-        nextToken
-      }
-      conversations {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      messages {
-        nextToken
-      }
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-    }
-    authorId
-    content
-    conversation {
-      id
-      associated {
-        nextToken
-      }
-      createdAt
-      members
-      messages {
-        nextToken
-      }
-      name
-      updatedAt
-    }
-    createdAt
-    messageConversationId
-    updatedAt
-  }
-}
-`;
-export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!) {
-  deleteMessage(input: $input) {
-    id
-    author {
-      id
-      articles {
-        nextToken
-      }
-      conversations {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      messages {
-        nextToken
-      }
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-    }
-    authorId
-    content
-    conversation {
-      id
-      associated {
-        nextToken
-      }
-      createdAt
-      members
-      messages {
-        nextToken
-      }
-      name
-      updatedAt
-    }
-    createdAt
-    messageConversationId
-    updatedAt
-  }
-}
-`;
-export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLinkInput!) {
-  createConvoLink(input: $input) {
-    id
-    convoLinkUserId
-    conversation {
-      id
-      associated {
-        nextToken
-      }
-      createdAt
-      members
-      messages {
-        nextToken
-      }
-      name
-      updatedAt
-    }
-    convoLinkConversationId
-    createdAt
-    updatedAt
-    user {
-      id
-      articles {
-        nextToken
-      }
-      conversations {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      messages {
-        nextToken
-      }
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-    }
-  }
-}
-`;
-export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLinkInput!) {
-  updateConvoLink(input: $input) {
-    id
-    convoLinkUserId
-    conversation {
-      id
-      associated {
-        nextToken
-      }
-      createdAt
-      members
-      messages {
-        nextToken
-      }
-      name
-      updatedAt
-    }
-    convoLinkConversationId
-    createdAt
-    updatedAt
-    user {
-      id
-      articles {
-        nextToken
-      }
-      conversations {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      messages {
-        nextToken
-      }
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-    }
-  }
-}
-`;
-export const createProject = `mutation CreateProject($input: CreateProjectInput!) {
-  createProject(input: $input) {
-    id
-    createdAt
-    headCols {
-      items {
-        id
-        label
-        numeric
-        order
-        projectName
-        projectId
-      }
-      nextToken
-    }
-    owner
-    ownerName
-    members
-    name
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      name
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    siteId
-    task {
-      items {
-        id
-        category
-        createdAt
-        description
-        projectId
-        updatedAt
-        userId
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-`;
-export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!) {
-  updateProject(input: $input) {
-    id
-    createdAt
-    headCols {
-      items {
-        id
-        label
-        numeric
-        order
-        projectName
-        projectId
-      }
-      nextToken
-    }
-    owner
-    ownerName
-    members
-    name
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      name
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    siteId
-    task {
-      items {
-        id
-        category
-        createdAt
-        description
-        projectId
-        updatedAt
-        userId
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-`;
-export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!) {
-  deleteProject(input: $input) {
-    id
-    createdAt
-    headCols {
-      items {
-        id
-        label
-        numeric
-        order
-        projectName
-        projectId
-      }
-      nextToken
-    }
-    owner
-    ownerName
-    members
-    name
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      name
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    siteId
-    task {
-      items {
-        id
-        category
-        createdAt
-        description
-        projectId
-        updatedAt
-        userId
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-`;
-export const createColTitle = `mutation CreateColTitle($input: CreateColTitleInput!) {
-  createColTitle(input: $input) {
-    id
-    label
-    numeric
-    order
-    project {
-      id
-      createdAt
-      headCols {
-        nextToken
-      }
-      owner
-      ownerName
-      members
-      name
-      site {
-        id
-        createdAt
-        name
-        updatedAt
-      }
-      siteId
-      task {
-        nextToken
-      }
-      updatedAt
-    }
-    projectName
-    projectId
-  }
-}
-`;
-export const updateColTitle = `mutation UpdateColTitle($input: UpdateColTitleInput!) {
-  updateColTitle(input: $input) {
-    id
-    label
-    numeric
-    order
-    project {
-      id
-      createdAt
-      headCols {
-        nextToken
-      }
-      owner
-      ownerName
-      members
-      name
-      site {
-        id
-        createdAt
-        name
-        updatedAt
-      }
-      siteId
-      task {
-        nextToken
-      }
-      updatedAt
-    }
-    projectName
-    projectId
-  }
-}
-`;
-export const deleteColTitle = `mutation DeleteColTitle($input: DeleteColTitleInput!) {
-  deleteColTitle(input: $input) {
-    id
-    label
-    numeric
-    order
-    project {
-      id
-      createdAt
-      headCols {
-        nextToken
-      }
-      owner
-      ownerName
-      members
-      name
-      site {
-        id
-        createdAt
-        name
-        updatedAt
-      }
-      siteId
-      task {
-        nextToken
-      }
-      updatedAt
-    }
-    projectName
-    projectId
   }
 }
 `;
@@ -2866,57 +2649,51 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
     id
     category
     createdAt
-    description
-    details {
-      items {
-        id
-        order
-        taskDetailLabel
-        taskDetailContent
-        taskId
-        taskType
-      }
-      nextToken
-    }
-    project {
-      id
-      createdAt
-      headCols {
-        nextToken
-      }
-      owner
-      ownerName
-      members
-      name
-      site {
-        id
-        createdAt
-        name
-        updatedAt
-      }
-      siteId
-      task {
-        nextToken
-      }
-      updatedAt
-    }
-    projectId
-    updatedAt
-    user {
+    content
+    site {
       id
       articles {
         nextToken
       }
-      conversations {
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    siteId
+    userId
+    members
+    name
+    updatedAt
+    type
+    title
+    status
+    user {
+      id
+      userId
+      creator
+      articles {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -2926,8 +2703,20 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
-    userId
   }
 }
 `;
@@ -2936,57 +2725,51 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
     id
     category
     createdAt
-    description
-    details {
-      items {
-        id
-        order
-        taskDetailLabel
-        taskDetailContent
-        taskId
-        taskType
-      }
-      nextToken
-    }
-    project {
-      id
-      createdAt
-      headCols {
-        nextToken
-      }
-      owner
-      ownerName
-      members
-      name
-      site {
-        id
-        createdAt
-        name
-        updatedAt
-      }
-      siteId
-      task {
-        nextToken
-      }
-      updatedAt
-    }
-    projectId
-    updatedAt
-    user {
+    content
+    site {
       id
       articles {
         nextToken
       }
-      conversations {
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    siteId
+    userId
+    members
+    name
+    updatedAt
+    type
+    title
+    status
+    user {
+      id
+      userId
+      creator
+      articles {
         nextToken
       }
       createdAt
       ideas {
         nextToken
       }
-      messages {
-        nextToken
-      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
       quiz {
         nextToken
       }
@@ -2996,128 +2779,624 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
       }
       updatedAt
       username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
     }
+  }
+}
+`;
+export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
+  deleteTask(input: $input) {
+    id
+    category
+    createdAt
+    content
+    site {
+      id
+      articles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    siteId
     userId
+    members
+    name
+    updatedAt
+    type
+    title
+    status
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+      }
+    }
   }
 }
 `;
-export const createTaskDetail = `mutation CreateTaskDetail($input: CreateTaskDetailInput!) {
-  createTaskDetail(input: $input) {
+export const createUser = `mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
     id
-    order
-    task {
-      id
-      category
-      createdAt
-      description
-      details {
-        nextToken
-      }
-      project {
+    userId
+    creator
+    articles {
+      items {
         id
+        authorId
+        authorName
+        brief
+        category
         createdAt
-        owner
-        ownerName
+        content
+        development
+        headline
+        headlineSummary
+        headlineImage
+        headlineImageAlt
+        headlineImageAttribution
+        headlineImageAttributionLink
+        instantDevelopmentCheck
+        instantPublishCheck
+        kicker
+        longUrl
+        longMobileUrl
+        production
+        productionId
+        pushDate
+        schedule
+        scheduleTime
+        shareCount
+        shortUrl
+        shortMobileUrl
+        tags
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    createdAt
+    ideas {
+      items {
+        id
+        category
+        createdAt
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
-      projectId
+      nextToken
+    }
+    lastLoggedIn
+    twitterProfile
+    facebookProfile
+    linkedinProfile
+    instagramProfile
+    quiz {
+      items {
+        id
+        category
+        closingTitle
+        closingImage
+        closingImageAlt
+        closingImageAttribution
+        closingImageAttributionLink
+        closingImageType
+        createdAt
+        development
+        longQuizUrl
+        longMobileQuizUrl
+        metaTag
+        numberOfQuestions
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        scoreCommentOne
+        scoreCommmentTwo
+        scoreCommmentThree
+        shortMobileQuizUrl
+        shortQuizUrl
+        tags
+        title
+        updatedAt
+        userId
+        urlDescription
+      }
+      nextToken
+    }
+    siteName
+    slideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        longSlideUrl
+        longMobileSlideUrl
+        metaTag
+        numberOfSlides
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        shortMobileSlideUrl
+        shortSlideUrl
+        tags
+        title
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    updatedAt
+    username
+    alias
+    phoneNumber
+    imageLink
+    numberPosts
+    chatUser {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
       updatedAt
+      alias
+      imageLink
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
-    taskDetailLabel
-    taskDetailContent
-    taskId
-    taskType
   }
 }
 `;
-export const updateTaskDetail = `mutation UpdateTaskDetail($input: UpdateTaskDetailInput!) {
-  updateTaskDetail(input: $input) {
+export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
     id
-    order
-    task {
-      id
-      category
-      createdAt
-      description
-      details {
-        nextToken
-      }
-      project {
+    userId
+    creator
+    articles {
+      items {
         id
+        authorId
+        authorName
+        brief
+        category
         createdAt
-        owner
-        ownerName
+        content
+        development
+        headline
+        headlineSummary
+        headlineImage
+        headlineImageAlt
+        headlineImageAttribution
+        headlineImageAttributionLink
+        instantDevelopmentCheck
+        instantPublishCheck
+        kicker
+        longUrl
+        longMobileUrl
+        production
+        productionId
+        pushDate
+        schedule
+        scheduleTime
+        shareCount
+        shortUrl
+        shortMobileUrl
+        tags
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    createdAt
+    ideas {
+      items {
+        id
+        category
+        createdAt
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
-      projectId
+      nextToken
+    }
+    lastLoggedIn
+    twitterProfile
+    facebookProfile
+    linkedinProfile
+    instagramProfile
+    quiz {
+      items {
+        id
+        category
+        closingTitle
+        closingImage
+        closingImageAlt
+        closingImageAttribution
+        closingImageAttributionLink
+        closingImageType
+        createdAt
+        development
+        longQuizUrl
+        longMobileQuizUrl
+        metaTag
+        numberOfQuestions
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        scoreCommentOne
+        scoreCommmentTwo
+        scoreCommmentThree
+        shortMobileQuizUrl
+        shortQuizUrl
+        tags
+        title
+        updatedAt
+        userId
+        urlDescription
+      }
+      nextToken
+    }
+    siteName
+    slideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        longSlideUrl
+        longMobileSlideUrl
+        metaTag
+        numberOfSlides
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        shortMobileSlideUrl
+        shortSlideUrl
+        tags
+        title
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    updatedAt
+    username
+    alias
+    phoneNumber
+    imageLink
+    numberPosts
+    chatUser {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
       updatedAt
+      alias
+      imageLink
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
-    taskDetailLabel
-    taskDetailContent
-    taskId
-    taskType
   }
 }
 `;
-export const deleteTaskDetail = `mutation DeleteTaskDetail($input: DeleteTaskDetailInput!) {
-  deleteTaskDetail(input: $input) {
+export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) {
     id
-    order
-    task {
-      id
-      category
-      createdAt
-      description
-      details {
-        nextToken
-      }
-      project {
+    userId
+    creator
+    articles {
+      items {
         id
+        authorId
+        authorName
+        brief
+        category
         createdAt
-        owner
-        ownerName
+        content
+        development
+        headline
+        headlineSummary
+        headlineImage
+        headlineImageAlt
+        headlineImageAttribution
+        headlineImageAttributionLink
+        instantDevelopmentCheck
+        instantPublishCheck
+        kicker
+        longUrl
+        longMobileUrl
+        production
+        productionId
+        pushDate
+        schedule
+        scheduleTime
+        shareCount
+        shortUrl
+        shortMobileUrl
+        tags
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    createdAt
+    ideas {
+      items {
+        id
+        category
+        createdAt
+        content
+        siteId
+        userId
         members
         name
-        siteId
         updatedAt
+        type
+        title
+        status
       }
-      projectId
+      nextToken
+    }
+    lastLoggedIn
+    twitterProfile
+    facebookProfile
+    linkedinProfile
+    instagramProfile
+    quiz {
+      items {
+        id
+        category
+        closingTitle
+        closingImage
+        closingImageAlt
+        closingImageAttribution
+        closingImageAttributionLink
+        closingImageType
+        createdAt
+        development
+        longQuizUrl
+        longMobileQuizUrl
+        metaTag
+        numberOfQuestions
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        scoreCommentOne
+        scoreCommmentTwo
+        scoreCommmentThree
+        shortMobileQuizUrl
+        shortQuizUrl
+        tags
+        title
+        updatedAt
+        userId
+        urlDescription
+      }
+      nextToken
+    }
+    siteName
+    slideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        longSlideUrl
+        longMobileSlideUrl
+        metaTag
+        numberOfSlides
+        opening
+        openingBlurb
+        openingImage
+        openingImageAlt
+        openingImageAttributionLink
+        openingImageAttribution
+        openingImageType
+        production
+        productionId
+        schedule
+        scheduleTime
+        shortMobileSlideUrl
+        shortSlideUrl
+        tags
+        title
+        updatedAt
+        urlDescription
+      }
+      nextToken
+    }
+    updatedAt
+    username
+    alias
+    phoneNumber
+    imageLink
+    numberPosts
+    chatUser {
+      id
+      username
+      creator
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      createdAt
       updatedAt
+      alias
+      imageLink
       user {
         id
+        userId
+        creator
         createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
         siteName
         updatedAt
         username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
       }
-      userId
     }
-    taskDetailLabel
-    taskDetailContent
-    taskId
-    taskType
   }
 }
 `;

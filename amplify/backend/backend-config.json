@@ -12,7 +12,7 @@
 		}
 	},
 	"api": {
-		"dashApi": {
+		"dashboardApi": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {

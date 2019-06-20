@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import AuthContext from "../context/authContext";
 import SignIn from "../components/signIn/signIn";
 import ChangePass from "../components/signIn/newPassword";
@@ -48,10 +48,11 @@ class AuthSignIn extends Component {
           header: "Change Password"
         });
       } else {
-        this.context.login(
-          user.signInUserSession.accessToken.jwtToken,
-          user.username
-        );
+        const admin = user.signInUserSession.accessToken.payload[
+          "cognito:groups"
+        ].includes("Admin");
+
+        this.context.login(user,admin);
       }
     } catch (err) {
       this.setState({
@@ -70,7 +71,7 @@ class AuthSignIn extends Component {
         this.setState({
           header: "Password Changed Successfully, Please Re-Enter Your Details"
         });
-        this.props.history.push("/dashboard");
+        this.props.history.push("/home");
       } else {
         this.setState({
           error: "Passwords don't match, please try again"

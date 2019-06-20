@@ -8,7 +8,17 @@ import SideMenu from "../components/dashBoard/drawer";
 import AuthContext from "../context/authContext";
 import styles from "../styles/Dashboard";
 import { Route } from "react-router-dom";
-import { Home, WhiteBoard, User } from "../components/dashComponents";
+import {
+  Calendar,
+  CalendarEvent,
+  Site,
+  WhiteBoard,
+  User,
+  SiteContent,
+  UserContent,
+  UserSettings,
+  Chat
+} from "../components/dashComponents";
 import {
   Article,
   Quiz,
@@ -75,13 +85,48 @@ class Dashboard extends React.Component {
           ) : (
             ""
           )}
-
-          <Route path="/home" component={props => <Home />} />
-          <Route path="/whiteboard" component={props => <WhiteBoard />} />
-          <Route path="/create/article" component={props => <Article />} />
-          <Route path="/create/quiz" component={props => <Quiz />} />
-          <Route path="/create/slideshow" component={props => <SlideShow />} />
-          <Route path="/user" component={props => <User />} />
+          <Route
+            exact
+            path="/calendar"
+            component={props => <Calendar {...props} />}
+          />
+          <Route
+            path="/calendar/:id"
+            component={props => <CalendarEvent {...props} />}
+          />
+          <Route exact path="/sites" component={props => <Site {...props} />} />
+          <Route
+            path="/sites/:id"
+            component={props => <SiteContent {...props} />}
+          />
+          <Route
+            path="/whiteboard"
+            component={props => <WhiteBoard {...props} />}
+          />
+          <Route
+            exact
+            path="/discussion"
+            component={props => <Chat {...props} />}
+          />
+          <Route
+            path="/create/article"
+            component={props => <Article {...props} />}
+          />
+          <Route path="/create/quiz" component={props => <Quiz {...props} />} />
+          <Route
+            path="/create/slideshow"
+            component={props => <SlideShow {...props} />}
+          />
+          <Route exact path="/users" component={props => <User {...props} />} />
+          <Route
+            path="/users/:id"
+            component={props => <UserContent {...props} />}
+          />
+          <Route
+            exact
+            path="/user"
+            component={props => <UserSettings {...props} />}
+          />
         </main>
       </div>
     );
