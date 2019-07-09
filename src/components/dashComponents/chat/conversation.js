@@ -133,6 +133,7 @@ const Conversation = props => {
         <TextField
           id="outlined-full-width"
           variant="outlined"
+          autoComplete="off"
           value={textMsg}
           placeholder="Message"
           onChange={e => {

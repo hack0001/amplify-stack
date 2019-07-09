@@ -180,8 +180,10 @@ class App extends Component {
               }}
             >
               <Switch>
-                {this.state.token && <Redirect from="/auth" to="/home" exact />}
-                {!this.state.token && <Route path="/auth" component={SignIn} />}
+                {this.state.token && <Redirect from="/auth" to="/user" exact />}
+                {!this.state.token && (
+                  <Route path="/auth" exact component={SignIn} />
+                )}
                 {this.state.token && <Route path="/" component={Dashboard} />}
                 {!this.state.token && <Redirect to="/auth" exact />}
               </Switch>

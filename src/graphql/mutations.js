@@ -805,6 +805,66 @@ export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInp
   }
 }
 `;
+export const createImage = `mutation CreateImage($input: CreateImageInput!) {
+  createImage(input: $input) {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
+export const updateImage = `mutation UpdateImage($input: UpdateImageInput!) {
+  updateImage(input: $input) {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
+export const deleteImage = `mutation DeleteImage($input: DeleteImageInput!) {
+  deleteImage(input: $input) {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
 export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
   createSite(input: $input) {
     id

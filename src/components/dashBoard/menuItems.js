@@ -23,9 +23,9 @@ class MenuItems extends Component {
   getListItems = (data, context) => {
     const { classes } = this.props;
 
-    return data.map(({ label, Icon, subComponents }) => {
+    return data.map(({ label, path, Icon, subComponents }) => {
       if (subComponents) {
-        const newLabel = label.toLowerCase();
+        const newLabel = path.toLowerCase();
         return (
           <Fragment key={label}>
             <ListItem
@@ -38,12 +38,12 @@ class MenuItems extends Component {
               </ListItemIcon>
               <ListItemText primary={`${label}`} />
             </ListItem>
-            {subComponents.map(({ subLabel, SubIcon }) => {
+            {subComponents.map(({ subLabel, subPath, SubIcon }) => {
               return (
                 <Link
                   style={{ textDecoration: "none", color: "grey" }}
                   className={classes.link}
-                  to={`/${newLabel}/${subLabel.toLowerCase()}`}
+                  to={`/${newLabel}/${subPath.toLowerCase()}`}
                   key={subLabel}
                   onClick={context.handleCurrentTab.bind(this, subLabel)}
                 >
@@ -57,7 +57,7 @@ class MenuItems extends Component {
                         <ListItemIcon>
                           <SubIcon />
                         </ListItemIcon>
-                        <ListItemText inset primary={subLabel} />
+                        <ListItemText  primary={subLabel} />
                       </ListItem>
                     </List>
                   </Collapse>
@@ -93,7 +93,7 @@ class MenuItems extends Component {
           <Fragment key={label}>
             <Link
               style={{ textDecoration: "none", color: "grey" }}
-              to={`/${label.toLowerCase()}`}
+              to={`/${path.toLowerCase()}`}
               key={label}
               onClick={context.handleCurrentTab.bind(this, label)}
             >

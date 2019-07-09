@@ -266,6 +266,53 @@ export const listChatUsers = `query ListChatUsers(
   }
 }
 `;
+export const getImage = `query GetImage($id: ID!) {
+  getImage(id: $id) {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
+export const listImages = `query ListImages(
+  $filter: ModelImageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      image
+      category
+      type
+      size
+      height
+      width
+      imageAttribution
+      imageAttributionLink
+      createdAt
+      updatedAt
+      access
+      tags
+    }
+    nextToken
+  }
+}
+`;
 export const getSite = `query GetSite($id: ID!) {
   getSite(id: $id) {
     id

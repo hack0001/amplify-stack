@@ -7,6 +7,7 @@ import UserSettings from "./userSettings/userSettings";
 import Calendar from "./calendar/event";
 import CalendarEvent from "./calendar/eventContent/eventContent";
 import Chat from "./chat/chat";
+import BucketImages from "./bucketImages/bucketImages";
 export {
   Calendar,
   CalendarEvent,
@@ -16,5 +17,6 @@ export {
   User,
   UserContent,
   UserSettings,
-  Chat
+  Chat,
+  BucketImages
 };

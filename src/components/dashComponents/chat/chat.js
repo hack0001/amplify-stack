@@ -24,7 +24,6 @@ class Chat extends Component {
     this.setState({ createChat: false });
   };
 
-
   static contextType = AuthContext;
   render() {
     const { classes, theme } = this.props;
@@ -33,18 +32,22 @@ class Chat extends Component {
         <div className={classes.chatOverview}>
           <Conversations
             chatUser={this.context}
-			handleClearConvo={e => this.setState({ convoId: "", convoUserId: "" })}
+            handleClearConvo={e =>
+              this.setState({ convoId: "", convoUserId: "" })
+            }
             handleConvoId={value => this.setState({ convoId: value })}
             handleConvoUserId={value => this.setState({ convoUserId: value })}
             push={this.props.history.push}
           />
 
-          <Conversation
-            conversationId={this.state.convoId}
-            conversationUserId={this.state.convoUserId}
-            chatUser={this.context}
-            {...this.props}
-          />
+          {this.state.convoId && (
+            <Conversation
+              conversationId={this.state.convoId}
+              conversationUserId={this.state.convoUserId}
+              chatUser={this.context}
+              {...this.props}
+            />
+          )}
         </div>
         <ChatDrawer
           push={this.props.history.push}

@@ -9,6 +9,8 @@ import useFormValidation from "./form/useFormValidation";
 import validateAuth from "./form/validateForm";
 import SnackBar from "../../snackBar/snackBar";
 import { styles } from "./styles/useStyles";
+import Avatar from "@material-ui/core/Avatar";
+import PersonIcon from "@material-ui/icons/Person";
 
 const INITIAL_STATE = {
   id: "",
@@ -154,6 +156,7 @@ const UserSettings = props => {
     return (
       <TextField
         key={index}
+        autoComplete="off"
         label={`${label}`}
         className={classes.textField}
         value={userValues[type]}
@@ -167,6 +170,13 @@ const UserSettings = props => {
   return (
     <div className={classes.root}>
       <TabContainer dir={theme.direction}>
+        <Avatar
+          className={classes.avatar}
+          style={{ width: 150, height: 150, margin: "0 auto" }}
+        >
+          <PersonIcon style={{ margin: 0, width: 80, height: 80 }} />
+        </Avatar>
+
         <form onSubmit={handleSubmit}>
           {textFieldTypes.map((field, index) => {
             return textFields(field, index);

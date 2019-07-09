@@ -15,8 +15,12 @@ const SiteList = props => {
   }, []);
 
   const handleSite = async () => {
-    const { data } = await API.graphql(graphqlOperation(listSites));
-    setSites(data.listSites.items);
+    try {
+      const { data } = await API.graphql(graphqlOperation(listSites));
+      setSites(data.listSites.items);
+    } catch (err) {
+      console.log("Error occurred", err);
+    }
   };
 
   return (

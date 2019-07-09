@@ -451,6 +451,66 @@ export const onDeleteConvoLink = `subscription OnDeleteConvoLink {
   }
 }
 `;
+export const onCreateImage = `subscription OnCreateImage {
+  onCreateImage {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
+export const onUpdateImage = `subscription OnUpdateImage {
+  onUpdateImage {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
+export const onDeleteImage = `subscription OnDeleteImage {
+  onDeleteImage {
+    id
+    name
+    description
+    image
+    category
+    type
+    size
+    height
+    width
+    imageAttribution
+    imageAttributionLink
+    createdAt
+    updatedAt
+    access
+    tags
+  }
+}
+`;
 export const onCreateTask = `subscription OnCreateTask {
   onCreateTask {
     id

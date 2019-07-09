@@ -13,6 +13,8 @@ import { createUser, createChatUser, updateUser } from "./graphql/userGraphql";
 import { TabContainer } from "../../tabs/tabContainer";
 import Dialog from "../../dialog/usernameDialog";
 import AuthContext from "../../../context/authContext";
+import Avatar from "@material-ui/core/Avatar";
+import PersonIcon from "@material-ui/icons/Person";
 
 const INITIAL_STATE = {
   name: "",
@@ -203,6 +205,12 @@ const CreateUser = props => {
         return (
           <Fragment>
             <TabContainer dir={theme.direction}>
+              <Avatar
+                className={classes.avatar}
+                style={{ width: 150, height: 150, margin: "0 auto" }}
+              >
+                <PersonIcon style={{ margin: 0, width: 80, height: 80 }} />
+              </Avatar>
               <form
                 onSubmit={e => {
                   e.preventDefault();

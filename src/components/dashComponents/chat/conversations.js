@@ -141,7 +141,7 @@ const Conversations = props => {
         </Typography>
         <List className={classes.list}>
           {conversations.map(convo => {
-            if (convo.conversation.members.includes(chatUser.userId)) {
+            if (convo.conversation.members.includes(chatUser.username)) {
               const indivConvo = convo.conversation;
               return (
                 <Fragment key={convo.id}>

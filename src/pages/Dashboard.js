@@ -17,7 +17,8 @@ import {
   SiteContent,
   UserContent,
   UserSettings,
-  Chat
+  Chat,
+  BucketImages
 } from "../components/dashComponents";
 import {
   Article,
@@ -126,6 +127,11 @@ class Dashboard extends React.Component {
             exact
             path="/user"
             component={props => <UserSettings {...props} />}
+          />
+          <Route
+            exact
+            path="/bucket-images"
+            component={props => <BucketImages {...props} />}
           />
         </main>
       </div>

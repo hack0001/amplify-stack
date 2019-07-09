@@ -14,6 +14,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { TabContainer } from "../../../tabs/tabContainer";
 import { contentStyles } from "../styles/userStyles";
+import Avatar from "@material-ui/core/Avatar";
 import {
   userDetails,
   deleteUser,
@@ -255,6 +256,12 @@ const UserContent = props => {
         onChangeIndex={handleChangeIndex}
       >
         <TabContainer dir={theme.direction}>
+          <Avatar
+            className={classes.avatar}
+            style={{ width: 150, height: 150, margin: "0 auto" }}
+          >
+            <PersonIcon style={{ margin: 0, width: 80, height: 80 }} />
+          </Avatar>
           <form onSubmit={handleSubmit}>
             {textFieldTypes.map((field, index) => {
               return textFields(field, index);
