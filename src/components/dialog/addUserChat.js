@@ -80,7 +80,15 @@ const DialogComponent = ({
             <ListItem key={value.username} button onClick={handleToggle(value)}>
               <ListItemAvatar>
                 <Avatar alt={`${value.username}`}>
-                  <PersonIcon />
+                  {value.user.profilePic ? (
+                    <img
+                      src={value.user.profilePic}
+                      style={{ width: 40 }}
+                      alt={"profile_pic"}
+                    />
+                  ) : (
+                    <PersonIcon style={{ margin: 0 }} />
+                  )}
                 </Avatar>
               </ListItemAvatar>
               <ListItemText

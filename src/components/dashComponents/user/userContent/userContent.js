@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -14,7 +14,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { TabContainer } from "../../../tabs/tabContainer";
 import { contentStyles } from "../styles/userStyles";
-import Avatar from "@material-ui/core/Avatar";
 import {
   userDetails,
   deleteUser,
@@ -27,74 +26,9 @@ import validateAuth from "../form/validateForm";
 import DialogComponent from "../../../dialog/deleteDialog";
 import SnackBar from "../../../snackBar/snackBar";
 import AuthContext from "../../../../context/authContext";
+import ProfilePic from "../../../profilePic/profilePic";
+import { INITIAL_STATE, textFieldTypes } from "../initialState/initialState";
 const heads = ["Site Details", "Articles", "Ideas", "Quiz", "SlideShows"];
-
-const INITIAL_STATE = {
-  id: "",
-  articles: [],
-  slideShows: [],
-  userId: "",
-  ideas: [],
-  quiz: [],
-  username: "",
-  phone: "",
-  name: "",
-  lastLogged: "",
-  facebookLink: "",
-  twitterLink: "",
-  instagramLink: "",
-  imageLink: "",
-  numberPosts: "",
-  website: "",
-  createdAt: "",
-  updatedAt: "",
-  type: "",
-  description: "",
-  userChatUserId: ""
-};
-
-const textFieldTypes = [
-  {
-    label: "Name",
-    type: "name"
-  },
-  {
-    label: "Username",
-    type: "username"
-  },
-  {
-    label: "Phone Number",
-    type: "phone"
-  },
-  {
-    label: "Last Logged In",
-    type: "lastLogged"
-  },
-  {
-    label: "Facebook Profile Link",
-    type: "facebookLink"
-  },
-  {
-    label: "Twitter Profile Link",
-    type: "twitterLink"
-  },
-  {
-    label: "Instagram Profile Link",
-    type: "instagramLink"
-  },
-  {
-    label: "Image Link",
-    type: "imageLink"
-  },
-  {
-    label: "Number of Posts",
-    type: "numberPosts"
-  },
-  {
-    label: "Website",
-    type: "website"
-  }
-];
 
 const UserContent = props => {
   const { classes, theme } = props;
@@ -106,7 +40,8 @@ const UserContent = props => {
     userValues,
     setUserValues,
     snackBar,
-    setSnackBar
+    setSnackBar,
+    handleImageChange
   } = useFormValidation(INITIAL_STATE, validateAuth);
 
   useEffect(() => {
@@ -155,7 +90,8 @@ const UserContent = props => {
         website: indivUserValues.siteName,
         createdAt: indivUserValues.createdAt,
         updatedAt: indivUserValues.updatedAt,
-        chatUser: indivUserValues.chatUser
+        chatUser: indivUserValues.chatUser,
+        profilePic: indivUserValues.profilePic
       });
     } catch (err) {
       console.log("Error occurred", err);
@@ -175,6 +111,7 @@ const UserContent = props => {
       let newChatUser = {
         alias: userValues.name,
         username: userValues.username,
+        profilePic: userValues.profilePic,
         creator: context.username,
         chatUserUserId: userValues.id
       };
@@ -215,16 +152,29 @@ const UserContent = props => {
     }
   };
 
-  const textFields = ({ label, type }, index) => {
+  const textFields = ({ label, name }, index) => {
     return (
       <TextField
         key={index}
         label={`${label}`}
+        autoComplete="off"
         className={classes.textField}
-        value={userValues[type]}
+        value={userValues[name]}
         onChange={handleChange}
         margin="normal"
-        name={`${type}`}
+        name={`${name}`}
+      />
+    );
+  };
+
+  const image = ({ label, name }, index) => {
+    return (
+      <ProfilePic
+        s3Directory={"profileImages"}
+        userId={userValues.id}
+        handleChange={handleImageChange}
+        itemName={name}
+        imageUrl={userValues[name]}
       />
     );
   };
@@ -256,16 +206,18 @@ const UserContent = props => {
         onChangeIndex={handleChangeIndex}
       >
         <TabContainer dir={theme.direction}>
-          <Avatar
-            className={classes.avatar}
-            style={{ width: 150, height: 150, margin: "0 auto" }}
-          >
-            <PersonIcon style={{ margin: 0, width: 80, height: 80 }} />
-          </Avatar>
           <form onSubmit={handleSubmit}>
             {textFieldTypes.map((field, index) => {
-              return textFields(field, index);
+              switch (field.type) {
+                case "text":
+                  return textFields(field, index);
+                case "image":
+                  return image(field, index);
+                default:
+                  return <div />;
+              }
             })}
+
             <div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
               <Button
                 variant="contained"

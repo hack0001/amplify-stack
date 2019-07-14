@@ -9,74 +9,8 @@ import useFormValidation from "./form/useFormValidation";
 import validateAuth from "./form/validateForm";
 import SnackBar from "../../snackBar/snackBar";
 import { styles } from "./styles/useStyles";
-import Avatar from "@material-ui/core/Avatar";
-import PersonIcon from "@material-ui/icons/Person";
-
-const INITIAL_STATE = {
-  id: "",
-  articles: [],
-  slideShows: [],
-  userId: "",
-  ideas: [],
-  quiz: [],
-  username: "",
-  phone: "",
-  name: "",
-  lastLogged: "",
-  facebookLink: "",
-  twitterLink: "",
-  instagramLink: "",
-  imageLink: "",
-  numberPosts: "",
-  website: "",
-  createdAt: "",
-  updatedAt: "",
-  type: "",
-  description: ""
-};
-
-const textFieldTypes = [
-  {
-    label: "Name",
-    type: "name"
-  },
-  {
-    label: "Username",
-    type: "username"
-  },
-  {
-    label: "Phone Number",
-    type: "phone"
-  },
-  {
-    label: "Last Logged In",
-    type: "lastLogged"
-  },
-  {
-    label: "Facebook Profile Link",
-    type: "facebookLink"
-  },
-  {
-    label: "Twitter Profile Link",
-    type: "twitterLink"
-  },
-  {
-    label: "Instagram Profile Link",
-    type: "instagramLink"
-  },
-  {
-    label: "Image Link",
-    type: "imageLink"
-  },
-  {
-    label: "Number of Posts",
-    type: "numberPosts"
-  },
-  {
-    label: "Website",
-    type: "website"
-  }
-];
+import { textFieldTypes, INITIAL_STATE } from "./initialState";
+import ProfilePic from "../../profilePic/profilePic";
 
 const UserSettings = props => {
   const { classes, theme } = props;
@@ -87,7 +21,8 @@ const UserSettings = props => {
     userValues,
     setUserValues,
     snackBar,
-    setSnackBar
+    setSnackBar,
+    handleImageChange
   } = useFormValidation(INITIAL_STATE, validateAuth);
 
   useEffect(() => {
@@ -123,7 +58,11 @@ const UserSettings = props => {
 					numberPosts
 					siteName
 					createdAt
-					updatedAt
+					updatedAt	
+					profilePic	
+					chatUser{
+						id
+					}
 				}
 			}	
 		}`)
@@ -145,24 +84,38 @@ const UserSettings = props => {
         numberPosts: indivUser.numberPosts,
         website: indivUser.siteName,
         createdAt: indivUser.createdAt,
-        updatedAt: indivUser.updatedAt
+        updatedAt: indivUser.updatedAt,
+        profilePic: indivUser.profilePic,
+        chatUser: indivUser.chatUser.id
       });
     } catch (err) {
       console.log("Error occurred,", err);
     }
   };
 
-  const textFields = ({ label, type }, index) => {
+  const textFields = ({ label, name }, index) => {
     return (
       <TextField
         key={index}
         autoComplete="off"
         label={`${label}`}
         className={classes.textField}
-        value={userValues[type]}
+        value={userValues[name]}
         onChange={handleChange}
         margin="normal"
-        name={`${type}`}
+        name={`${name}`}
+      />
+    );
+  };
+
+  const image = ({ label, name }, index) => {
+    return (
+      <ProfilePic
+        s3Directory={"profileImages"}
+        userId={userValues.id}
+        handleChange={handleImageChange}
+        itemName={name}
+        imageUrl={userValues[name]}
       />
     );
   };
@@ -170,16 +123,16 @@ const UserSettings = props => {
   return (
     <div className={classes.root}>
       <TabContainer dir={theme.direction}>
-        <Avatar
-          className={classes.avatar}
-          style={{ width: 150, height: 150, margin: "0 auto" }}
-        >
-          <PersonIcon style={{ margin: 0, width: 80, height: 80 }} />
-        </Avatar>
-
         <form onSubmit={handleSubmit}>
           {textFieldTypes.map((field, index) => {
-            return textFields(field, index);
+            switch (field.type) {
+              case "text":
+                return textFields(field, index);
+              case "image":
+                return image(field, index);
+              default:
+                return <div />;
+            }
           })}
           <div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
             <Button

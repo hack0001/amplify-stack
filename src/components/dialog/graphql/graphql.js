@@ -29,6 +29,7 @@ const listChatUsers = `query ListChatUsers(
         phoneNumber
         imageLink
         numberPosts
+		profilePic
       }
     }
     nextToken

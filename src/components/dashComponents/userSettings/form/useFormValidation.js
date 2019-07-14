@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { updateUser } from "../graphql/userSettingsGraphql";
+import { updateUser, updateChatUser } from "../graphql/userSettingsGraphql";
 
 const useFormValidation = (initialState, validate) => {
   const [userValues, setUserValues] = useState(initialState);
@@ -25,9 +25,25 @@ const useFormValidation = (initialState, validate) => {
     });
   };
 
+  const handleImageChange = image => {
+    setUserValues({
+      ...userValues,
+      [image.name]: image.value
+    });
+  };
+
   const clean = values => {
     Object.keys(values).forEach(key => {
       (values[key] === null || values[key] === "") && delete values[key];
+    });
+  };
+
+  const cleanChatUser = values => {
+    Object.keys(values).forEach(key => {
+      (values[key] === null ||
+        values[key] === "" ||
+        values[key] === undefined) &&
+        delete values[key];
     });
   };
 
@@ -52,8 +68,23 @@ const useFormValidation = (initialState, validate) => {
         createdAt: userValues.createdAt,
         lastLoggedIn: userValues.lastLogged,
         phoneNumber: userValues.phone,
-        imageLink: userValues.imageLink
+        imageLink: userValues.imageLink,
+        profilePic: userValues.profilePic
       };
+
+      if (userValues.chatUser) {
+        let updateChatUserValues = {
+          id: userValues.chatUser,
+          alias: userValues.name,
+          username: userValues.username,
+          profilePic: userValues.profilePic
+        };
+        cleanChatUser(updateChatUserValues);
+
+        await API.graphql(
+          graphqlOperation(updateChatUser, { input: updateChatUserValues })
+        );
+      }
 
       clean(updateValues);
       await API.graphql(graphqlOperation(updateUser, { input: updateValues }));
@@ -72,7 +103,8 @@ const useFormValidation = (initialState, validate) => {
     isSubmitting,
     setUserValues,
     snackBar,
-    setSnackBar
+    setSnackBar,
+    handleImageChange
   };
 };
 

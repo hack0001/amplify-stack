@@ -10,6 +10,7 @@ import Url from "./url";
 import Upload from "./upload/upload";
 import Giphy from "./giphy";
 import Bucket from "./bucket";
+import Unsplash from "./unsplash";
 
 const ImageDialog = props => {
   const {
@@ -32,6 +33,7 @@ const ImageDialog = props => {
         fullWidth={true}
         onClose={e => setImageDialog(false)}
         aria-labelledby="form-dialog-title"
+        maxWidth={"md"}
       >
         <AppBar position="static" color="default">
           <Tabs
@@ -48,6 +50,8 @@ const ImageDialog = props => {
             <Tab label={"Image Upload"} />;
             <Tab label={"Gif"} />;
             <Tab label={"Bucket"} />;
+            <Tab label={"Unsplash"} />;
+            <Tab label={"Pixabay"} />;
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -81,6 +85,13 @@ const ImageDialog = props => {
             handleOnChange={handleOnChange}
             tab={tab}
             imageAlt={imageAlt}
+            imageAttribution={imageAttribution}
+            imageAttributionLink={imageAttributionLink}
+          />
+          <Unsplash
+            setImageDialog={setImageDialog}
+            handleOnChange={handleOnChange}
+            value={value}
             imageAttribution={imageAttribution}
             imageAttributionLink={imageAttributionLink}
           />

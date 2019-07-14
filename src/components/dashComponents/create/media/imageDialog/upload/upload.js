@@ -44,6 +44,8 @@ const Upload = props => {
     imageAlt,
     imageAttributionLink
   } = props;
+
+  
   const inputEl = useRef(null);
   const imageEl = useRef(null);
   const imageContainerEl = useRef(null);

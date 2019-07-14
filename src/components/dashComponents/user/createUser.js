@@ -13,75 +13,14 @@ import { createUser, createChatUser, updateUser } from "./graphql/userGraphql";
 import { TabContainer } from "../../tabs/tabContainer";
 import Dialog from "../../dialog/usernameDialog";
 import AuthContext from "../../../context/authContext";
-import Avatar from "@material-ui/core/Avatar";
-import PersonIcon from "@material-ui/icons/Person";
-
-const INITIAL_STATE = {
-  name: "",
-  username: "",
-  phone: "",
-  lastLogged: "",
-  facebookLink: "",
-  twitterLink: "",
-  instagramLink: "",
-  imageLink: "",
-  numberPosts: "",
-  website: "",
-  createChatUser: false
-};
-
-const textFieldTypes = [
-  {
-    label: "Name",
-    type: "name"
-  },
-  {
-    label: "Username",
-    type: "username"
-  },
-  {
-    label: "Phone Number",
-    type: "phone"
-  },
-  {
-    label: "Last Logged In",
-    type: "lastLogged"
-  },
-  {
-    label: "Facebook Profile Link",
-    type: "facebookLink"
-  },
-  {
-    label: "Twitter Profile Link",
-    type: "twitterLink"
-  },
-  {
-    label: "Instagram Profile Link",
-    type: "instagramLink"
-  },
-  {
-    label: "Image Link",
-    type: "imageLink"
-  },
-  {
-    label: "Number of Posts",
-    type: "numberPosts"
-  },
-  {
-    label: "Website",
-    type: "website"
-  },
-  {
-    label: "Create Chat User",
-    type: "createChatUser"
-  }
-];
+import ProfilePic from "../../profilePic/profilePic";
+import { INITIAL_STATE, textFieldTypes } from "./initialState/initialState";
 
 const CreateUser = props => {
   const { classes, theme, push } = props;
   const [error, setError] = useState(false);
   const [addChatUser, setAddChatUser] = useState(false);
-  const { handleChange, userValues } = useFormValidation(
+  const { handleChange, userValues, handleImageChange } = useFormValidation(
     INITIAL_STATE,
     validateAuth
   );
@@ -116,7 +55,8 @@ const CreateUser = props => {
       createdAt: userValues.createdAt,
       lastLoggedIn: userValues.lastLogged,
       phoneNumber: userValues.phone,
-      imageLink: userValues.imageLink
+      imageLink: userValues.imageLink,
+      profilePic: userValues.profilePic
     };
     clean(newUser);
 
@@ -139,6 +79,7 @@ const CreateUser = props => {
           alias: userValues.name,
           username: userValues.username,
           creator: context.username,
+          profilePic: userValues.profilePic,
           chatUserUserId: createdUser.data.createUser.id
         };
 
@@ -167,16 +108,17 @@ const CreateUser = props => {
     }
   };
 
-  const textFields = ({ label, type }, index) => {
+  const textFields = ({ label, name }, index) => {
     return (
       <TextField
         key={index}
         label={`${label}`}
+        autoComplete="off"
         className={classes.textField}
-        value={userValues[type]}
+        value={userValues[name]}
         onChange={handleChange}
         margin="normal"
-        name={`${type}`}
+        name={`${name}`}
       />
     );
   };
@@ -199,18 +141,24 @@ const CreateUser = props => {
     );
   };
 
+  const image = ({ label, name }, index) => {
+    return (
+      <ProfilePic
+        s3Directory={"profileImages"}
+        userId={userValues.id}
+        handleChange={handleImageChange}
+        itemName={name}
+        imageUrl={userValues[name]}
+      />
+    );
+  };
+
   return (
     <AuthContext.Consumer>
       {context => {
         return (
           <Fragment>
             <TabContainer dir={theme.direction}>
-              <Avatar
-                className={classes.avatar}
-                style={{ width: 150, height: 150, margin: "0 auto" }}
-              >
-                <PersonIcon style={{ margin: 0, width: 80, height: 80 }} />
-              </Avatar>
               <form
                 onSubmit={e => {
                   e.preventDefault();
@@ -218,9 +166,16 @@ const CreateUser = props => {
                 }}
               >
                 {textFieldTypes.map((field, index) => {
-                  if (field.type === "createChatUser")
-                    return checkBox(field, index);
-                  return textFields(field, index);
+                  switch (field.type) {
+                    case "text":
+                      return textFields(field, index);
+                    case "image":
+                      return image(field, index);
+                    case "createChatUser":
+                      return checkBox(field, index);
+                    default:
+                      return <div />;
+                  }
                 })}
                 <div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
                   <Button

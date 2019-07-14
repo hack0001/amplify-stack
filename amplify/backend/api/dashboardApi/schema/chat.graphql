@@ -62,5 +62,6 @@ type ChatUser
   updatedAt: String
   alias: String
   imageLink: String
+  profilePic: String
   user: User @connection(name: "chatUsers")
 }

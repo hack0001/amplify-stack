@@ -1,19 +1,21 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { useStyles } from "./styles/imageStyles";
+import { useStyles } from "../styles/imageStyles";
 import Dialog from "@material-ui/core/Dialog";
-import { selectLayout, layout } from "./bucketLayout";
+import { selectLayout, layout } from "../bucketLayout";
 import TextField from "@material-ui/core/TextField";
-import Select from "./select";
-import Tags from "./tags";
+import Select from "../select";
+import Tags from "../tags";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SaveIcon from "@material-ui/icons/Save";
-import INITIAL_STATE from "./initialState";
+import INITIAL_STATE from "../initialState";
+import DeleteDialog from "./deleteDialog";
 
 const BucketGridList = props => {
   const classes = useStyles();
   const { data, handleDialog, dialog, deleteBucket, updateBucket } = props;
   const [imageDetails, setImageDetails] = useState({ INITIAL_STATE });
+  const [deleteCheck, setDeleteCheck] = useState(false);
 
   useEffect(() => {
     if (data)
@@ -132,8 +134,7 @@ const BucketGridList = props => {
           variant="contained"
           color="secondary"
           onClick={e => {
-            deleteBucket(imageDetails);
-            handleDialog(false);
+            setDeleteCheck(true);
           }}
           style={{ float: "right", margin: 25 }}
         >
@@ -141,6 +142,12 @@ const BucketGridList = props => {
           <DeleteIcon className={classes.rightIcon} />
         </Button>
       </div>
+      <DeleteDialog
+        deleteImage={e => deleteBucket(imageDetails)}
+        deleteCheck={deleteCheck}
+        closeFunc={setDeleteCheck}
+        handleBucketDialog={e => handleDialog(false)}
+      />
     </Dialog>
   );
 };

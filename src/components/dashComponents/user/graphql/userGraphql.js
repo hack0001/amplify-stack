@@ -14,6 +14,7 @@ const createUser = `mutation CreateUser($input: CreateUserInput!) {
 	siteName
   	createdAt
 	updatedAt
+	profilePic
   }
 }
 `;
@@ -27,11 +28,29 @@ const createChatUser = `mutation CreateChatUser($input: CreateChatUserInput!) {
 	updatedAt
 	alias
 	imageLink
+	profilePic
 	user {
 		id
 	}
   }
 }`;
+
+const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInput!) {
+  updateChatUser(input: $input) {
+	id
+	username
+	creator
+	createdAt
+	updatedAt
+	alias
+	imageLink
+	profilePic
+	user {
+		id
+	}
+  }
+}`;
+
 
 const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInput!) {
   deleteChatUser(input: $input) {
@@ -65,6 +84,7 @@ const userDetails = `query GetUser($id: ID!) {
 	siteName
   	createdAt
 	updatedAt
+	profilePic
 	chatUser{
 		id
 	}
@@ -93,6 +113,7 @@ const listUsers = `query ListUsers(
 		siteName
 		createdAt
 		updatedAt
+		profilePic
 	  }
    }
  }
@@ -134,6 +155,7 @@ const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
 	siteName
   	createdAt
 	updatedAt
+	profilePic
 	chatUser{
 		id
 	}
@@ -148,5 +170,6 @@ export {
   userDetails,
   listUsers,
   createChatUser,
-  deleteChatUser
+  deleteChatUser,
+  updateChatUser
 };

@@ -117,6 +117,7 @@ export const onCreateMessage = `subscription OnCreateMessage {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -134,6 +135,7 @@ export const onCreateMessage = `subscription OnCreateMessage {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     authorId
@@ -176,6 +178,7 @@ export const onUpdateMessage = `subscription OnUpdateMessage {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -193,6 +196,7 @@ export const onUpdateMessage = `subscription OnUpdateMessage {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     authorId
@@ -235,6 +239,7 @@ export const onDeleteMessage = `subscription OnDeleteMessage {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -252,6 +257,7 @@ export const onDeleteMessage = `subscription OnDeleteMessage {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     authorId
@@ -313,6 +319,7 @@ export const onCreateConvoLink = `subscription OnCreateConvoLink {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -330,6 +337,7 @@ export const onCreateConvoLink = `subscription OnCreateConvoLink {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -371,6 +379,7 @@ export const onUpdateConvoLink = `subscription OnUpdateConvoLink {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -388,6 +397,7 @@ export const onUpdateConvoLink = `subscription OnUpdateConvoLink {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -429,6 +439,7 @@ export const onDeleteConvoLink = `subscription OnDeleteConvoLink {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -446,6 +457,7 @@ export const onDeleteConvoLink = `subscription OnDeleteConvoLink {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -574,6 +586,7 @@ export const onCreateTask = `subscription OnCreateTask {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -582,6 +595,7 @@ export const onCreateTask = `subscription OnCreateTask {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -650,6 +664,7 @@ export const onUpdateTask = `subscription OnUpdateTask {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -658,6 +673,7 @@ export const onUpdateTask = `subscription OnUpdateTask {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -726,6 +742,7 @@ export const onDeleteTask = `subscription OnDeleteTask {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -734,6 +751,7 @@ export const onDeleteTask = `subscription OnDeleteTask {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }

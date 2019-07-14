@@ -117,7 +117,7 @@ const BucketList = props => {
       <DialogActions>
         <Button
           onClick={e => {
-            handleBucket(true);
+            setImageDialog(false);
           }}
           color="primary"
         >

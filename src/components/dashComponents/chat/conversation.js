@@ -53,7 +53,7 @@ const Conversation = props => {
 				id 
 				conversationCreator
 				subject
-				name
+				name				
 				messages(${isToken}sortDirection:DESC, limit:${messageLimit}){
 				items{
 					authorId 
@@ -62,6 +62,7 @@ const Conversation = props => {
 					id
 					author{
 						alias
+						profilePic
 					}
 				}
 				nextToken

@@ -14,6 +14,9 @@ const userDetails = `query GetUser($id: ID!) {
 	siteName
   	createdAt
 	updatedAt
+	chatUser{
+		id
+	}
    }
  }
 `;
@@ -35,6 +38,9 @@ const listUser = `query ListUser($filter:ModelUserFilterInput!) {
 		siteName
 		createdAt
 		updatedAt
+		chatUser{
+		id
+		}
 	 }
    }
  }
@@ -60,4 +66,20 @@ const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
 }
 `;
 
-export { updateUser, userDetails, listUser };
+const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInput!) {
+  updateChatUser(input: $input) {
+	id
+	username
+	creator
+	createdAt
+	updatedAt
+	alias
+	imageLink
+	profilePic
+	user {
+		id
+	}
+  }
+}`;
+
+export { updateUser, userDetails, listUser, updateChatUser };

@@ -38,7 +38,15 @@ const Messages = ({ messages, convoUserId, classes }) => {
             <div>
               <div className={classes.avatarBlock}>
                 <Avatar className={classes.avatar}>
-                  <PersonIcon style={{ margin: 0 }} />
+                  {message.author.profilePic ? (
+                    <img
+                      src={message.author.profilePic}
+                      style={{ width: 40 }}
+                      alt={"profile_pic"}
+                    />
+                  ) : (
+                    <PersonIcon style={{ margin: 0 }} />
+                  )}
                 </Avatar>
               </div>
               <p className={classes.msgAuthor}>{message.author.alias}</p>

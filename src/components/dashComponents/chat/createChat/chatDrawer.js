@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
-import Paper from "@material-ui/core/Paper";
 import { API, graphqlOperation } from "aws-amplify";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -19,7 +18,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
 import { createConversation, createConvoLink } from "../graphql/chatGraphql";
-import { Route } from "react-router-dom";
 const textFieldTypes = [
   {
     label: "Chat Group Name",

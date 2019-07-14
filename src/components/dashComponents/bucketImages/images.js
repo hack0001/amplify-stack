@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import { useStyles } from "./styles/imageStyles";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import BucketDialog from "./bucketDialog";
+import BucketDialog from "./dialog/bucketDialog";
 
 const BucketGridList = props => {
   const classes = useStyles();

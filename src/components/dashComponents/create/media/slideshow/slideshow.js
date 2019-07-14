@@ -28,7 +28,7 @@ import _ from "lodash";
 import SimpleStorage, { clearStorage } from "react-simple-storage";
 import ReduceDialog from "../dialog/reduceQuestions";
 import ClearDialog from "../dialog/clearValues";
-
+ 
 class SlideShow extends Component {
   constructor(props) {
     super(props);
@@ -132,7 +132,7 @@ class SlideShow extends Component {
     return (
       <FormControl
         className={classes.formControl}
-        style={{ marginLeft: 20, width: "15%" }}
+        style={{ marginLeft: 20, width: "25%" }}
       >
         <InputLabel htmlFor={`${name}-helper`}>{name}</InputLabel>
         <Select

@@ -132,7 +132,7 @@ class Quiz extends Component {
     return (
       <FormControl
         className={classes.formControl}
-        style={{ marginLeft: 20, width: "15%" }}
+        style={{ marginLeft: 20, width: "25%" }}
       >
         <InputLabel htmlFor={`${name}-helper`}>{name}</InputLabel>
         <Select

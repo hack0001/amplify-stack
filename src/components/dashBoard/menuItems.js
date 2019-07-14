@@ -57,7 +57,7 @@ class MenuItems extends Component {
                         <ListItemIcon>
                           <SubIcon />
                         </ListItemIcon>
-                        <ListItemText  primary={subLabel} />
+                        <ListItemText primary={subLabel} />
                       </ListItem>
                     </List>
                   </Collapse>
@@ -66,7 +66,7 @@ class MenuItems extends Component {
             })}
           </Fragment>
         );
-      } else if (label === "SignOut") {
+      } else if (path === "signout") {
         return (
           <Fragment key={label}>
             <AuthContext.Consumer>

@@ -255,6 +255,7 @@ export const createMessage = `mutation CreateMessage($input: CreateMessageInput!
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -272,6 +273,7 @@ export const createMessage = `mutation CreateMessage($input: CreateMessageInput!
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     authorId
@@ -314,6 +316,7 @@ export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -331,6 +334,7 @@ export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     authorId
@@ -373,6 +377,7 @@ export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -390,6 +395,7 @@ export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     authorId
@@ -451,6 +457,7 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLink
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -468,6 +475,7 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLink
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -509,6 +517,7 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLink
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -526,6 +535,7 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLink
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -567,6 +577,7 @@ export const deleteConvoLink = `mutation DeleteConvoLink($input: DeleteConvoLink
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -584,6 +595,7 @@ export const deleteConvoLink = `mutation DeleteConvoLink($input: DeleteConvoLink
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -619,6 +631,7 @@ export const createChatUser = `mutation CreateChatUser($input: CreateChatUserInp
     updatedAt
     alias
     imageLink
+    profilePic
     user {
       id
       userId
@@ -648,6 +661,7 @@ export const createChatUser = `mutation CreateChatUser($input: CreateChatUserInp
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -656,6 +670,7 @@ export const createChatUser = `mutation CreateChatUser($input: CreateChatUserInp
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -691,6 +706,7 @@ export const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInp
     updatedAt
     alias
     imageLink
+    profilePic
     user {
       id
       userId
@@ -720,6 +736,7 @@ export const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInp
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -728,6 +745,7 @@ export const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInp
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -763,6 +781,7 @@ export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInp
     updatedAt
     alias
     imageLink
+    profilePic
     user {
       id
       userId
@@ -792,6 +811,7 @@ export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInp
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -800,6 +820,7 @@ export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInp
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -1368,6 +1389,7 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -1376,6 +1398,7 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
     userId
@@ -1487,6 +1510,7 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -1495,6 +1519,7 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
     userId
@@ -1606,6 +1631,7 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -1614,6 +1640,7 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
     userId
@@ -1708,6 +1735,7 @@ export const createQuestion = `mutation CreateQuestion($input: CreateQuestionInp
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
       userId
       urlDescription
@@ -1802,6 +1830,7 @@ export const updateQuestion = `mutation UpdateQuestion($input: UpdateQuestionInp
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
       userId
       urlDescription
@@ -1896,6 +1925,7 @@ export const deleteQuestion = `mutation DeleteQuestion($input: DeleteQuestionInp
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
       userId
       urlDescription
@@ -1984,6 +2014,7 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -1992,6 +2023,7 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2078,6 +2110,7 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2086,6 +2119,7 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2172,6 +2206,7 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2180,6 +2215,7 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2275,6 +2311,7 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2283,6 +2320,7 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2378,6 +2416,7 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2386,6 +2425,7 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2481,6 +2521,7 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2489,6 +2530,7 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2556,6 +2598,7 @@ export const createSlide = `mutation CreateSlide($input: CreateSlideInput!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     slideShowId
@@ -2626,6 +2669,7 @@ export const updateSlide = `mutation UpdateSlide($input: UpdateSlideInput!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     slideShowId
@@ -2696,6 +2740,7 @@ export const deleteSlide = `mutation DeleteSlide($input: DeleteSlideInput!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     slideShowId
@@ -2767,6 +2812,7 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2775,6 +2821,7 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2843,6 +2890,7 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2851,6 +2899,7 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -2919,6 +2968,7 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -2927,6 +2977,7 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -3072,6 +3123,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     phoneNumber
     imageLink
     numberPosts
+    profilePic
     chatUser {
       id
       username
@@ -3086,6 +3138,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -3103,6 +3156,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -3248,6 +3302,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     phoneNumber
     imageLink
     numberPosts
+    profilePic
     chatUser {
       id
       username
@@ -3262,6 +3317,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -3279,6 +3335,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -3424,6 +3481,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     phoneNumber
     imageLink
     numberPosts
+    profilePic
     chatUser {
       id
       username
@@ -3438,6 +3496,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -3455,6 +3514,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }

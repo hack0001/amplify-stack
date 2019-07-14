@@ -181,6 +181,7 @@ export const getChatUser = `query GetChatUser($id: ID!) {
     updatedAt
     alias
     imageLink
+    profilePic
     user {
       id
       userId
@@ -210,6 +211,7 @@ export const getChatUser = `query GetChatUser($id: ID!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -218,6 +220,7 @@ export const getChatUser = `query GetChatUser($id: ID!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -243,6 +246,7 @@ export const listChatUsers = `query ListChatUsers(
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -260,6 +264,7 @@ export const listChatUsers = `query ListChatUsers(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     nextToken
@@ -580,6 +585,7 @@ export const getQuiz = `query GetQuiz($id: ID!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -588,6 +594,7 @@ export const getQuiz = `query GetQuiz($id: ID!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
     userId
@@ -663,6 +670,7 @@ export const listQuizs = `query ListQuizs(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
       userId
       urlDescription
@@ -752,6 +760,7 @@ export const getArticle = `query GetArticle($id: ID!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -760,6 +769,7 @@ export const getArticle = `query GetArticle($id: ID!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -827,6 +837,7 @@ export const listArticles = `query ListArticles(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     nextToken
@@ -923,6 +934,7 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -931,6 +943,7 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -996,6 +1009,7 @@ export const listSlideShows = `query ListSlideShows(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     nextToken
@@ -1065,6 +1079,7 @@ export const getTask = `query GetTask($id: ID!) {
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -1073,6 +1088,7 @@ export const getTask = `query GetTask($id: ID!) {
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
   }
@@ -1122,6 +1138,7 @@ export const listTasks = `query ListTasks(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     nextToken
@@ -1268,6 +1285,7 @@ export const getUser = `query GetUser($id: ID!) {
     phoneNumber
     imageLink
     numberPosts
+    profilePic
     chatUser {
       id
       username
@@ -1282,6 +1300,7 @@ export const getUser = `query GetUser($id: ID!) {
       updatedAt
       alias
       imageLink
+      profilePic
       user {
         id
         userId
@@ -1299,6 +1318,7 @@ export const getUser = `query GetUser($id: ID!) {
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
   }
@@ -1339,6 +1359,7 @@ export const listUsers = `query ListUsers(
       phoneNumber
       imageLink
       numberPosts
+      profilePic
       chatUser {
         id
         username
@@ -1347,6 +1368,7 @@ export const listUsers = `query ListUsers(
         updatedAt
         alias
         imageLink
+        profilePic
       }
     }
     nextToken
@@ -1427,6 +1449,7 @@ export const searchQuizs = `query SearchQuizs(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
       userId
       urlDescription
@@ -1503,6 +1526,7 @@ export const searchArticles = `query SearchArticles(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     nextToken
@@ -1575,6 +1599,7 @@ export const searchSlideShows = `query SearchSlideShows(
         phoneNumber
         imageLink
         numberPosts
+        profilePic
       }
     }
     nextToken
