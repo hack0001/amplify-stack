@@ -11,6 +11,7 @@ import Upload from "./upload/upload";
 import Giphy from "./giphy";
 import Bucket from "./bucket";
 import Unsplash from "./unsplash";
+import Pixabay from "./pixabay";
 
 const ImageDialog = props => {
   const {
@@ -89,9 +90,20 @@ const ImageDialog = props => {
             imageAttributionLink={imageAttributionLink}
           />
           <Unsplash
+		              s3Directory={"allImages"}
             setImageDialog={setImageDialog}
             handleOnChange={handleOnChange}
             value={value}
+            imageAlt={imageAlt}
+            imageAttribution={imageAttribution}
+            imageAttributionLink={imageAttributionLink}
+          />
+          <Pixabay
+		              s3Directory={"allImages"}
+            setImageDialog={setImageDialog}
+            handleOnChange={handleOnChange}
+            value={value}
+            imageAlt={imageAlt}
             imageAttribution={imageAttribution}
             imageAttributionLink={imageAttributionLink}
           />

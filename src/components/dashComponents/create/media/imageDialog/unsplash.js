@@ -18,6 +18,7 @@ const UnplashUpload = props => {
     handleOnChange,
     value,
     classes,
+    imageAlt,
     imageAttribution,
     imageAttributionLink
   } = props;
@@ -36,51 +37,54 @@ const UnplashUpload = props => {
       .replace(/\s/g, "+")
       .toLowerCase();
 
-    const url = `https://api.unsplash.com/search/photos/?page=${page}&per_page=${photosPerPage}&query=${searchTerm}&client_id=${
+    const url = `https://api.unsplash.com/search/photos/?page=${updatePage}&per_page=${photosPerPage}&query=${searchTerm}&client_id=${
       process.env.REACT_APP_UNSPLASH_ACCESS_KEY
     }`;
 
     try {
       const unsplashResult = await axios.get(url, { crossdomain: true });
       if (!unsplashImages[0]) {
-        setUnsplashImages(unsplashResult.data.data);
+        setUnsplashImages(unsplashResult.data.results);
       } else {
-        const addGiphyImages = unsplashImages.concat(unsplashResult.data.data);
-        setUnsplashImages(addGiphyImages);
+        const addUnsplashImages = unsplashImages.concat(
+          unsplashResult.data.results
+        );
+        setUnsplashImages(addUnsplashImages);
       }
     } catch (err) {
-      console.log("Error getting Giphy", err);
+      console.log("Error getting Unplash Images", err);
     }
   };
 
   const getUnsplash = async e => {
     const value = e.target.value;
     setUnsplashUrl(value);
+    if (e.keyCode === 13 && unsplashUrl.length > 1) {
+      let searchTerm = value
+        .trim()
+        .replace(/\s/g, "+")
+        .toLowerCase();
 
-    if (value === "") return;
-
-    let searchTerm = value
-      .trim()
-      .replace(/\s/g, "+")
-      .toLowerCase();
-
-    const url = `https://api.giphy.com/v1/gifs/search?q=${searchTerm}&api_key=${
-      process.env.REACT_APP_GIPHY_API
-    }&limit=${limit}&offset=${offset}&lang=en`;
-
-    try {
-      const unsplashResult = await axios.get(url, { crossdomain: true });
-      setUnsplashImages(unsplashResult.data.data);
-    } catch (err) {
-      console.log("Error getting Giphy", err);
+      const url = `https://api.unsplash.com/search/photos/?page=${page}&per_page=${photosPerPage}&query=${searchTerm}&client_id=${
+        process.env.REACT_APP_UNSPLASH_ACCESS_KEY
+      }`;
+      try {
+        const unsplashResult = await axios.get(url, { crossdomain: true });
+        setUnsplashImages(unsplashResult.data.results);
+      } catch (err) {
+        console.log("Error getting Unplash Images", err);
+      }
     }
   };
 
   const handleUnsplash = tile => {
     handleOnChange({
-      [value]: tile.images.downsized.url,
-      [imageAttribution]: "Unsplash",
-      [imageAttributionLink]: tile.bitly_gif_url
+      [value]: tile.urls.regular,
+      [imageAlt]: tile.alt_description,
+      [imageAttribution]: tile.user.name ? tile.user.name : "Unsplash",
+      [imageAttributionLink]: tile.user.links.html
+        ? tile.user.links.html
+        : "https://unsplash.com/"
     });
 
     setImageDialog(false);
@@ -94,6 +98,7 @@ const UnplashUpload = props => {
           autoComplete="off"
           value={unsplashUrl}
           onChange={getUnsplash}
+          onKeyDown={getUnsplash}
           margin="dense"
           id="unsplash"
           label="Search Unsplash"
@@ -129,9 +134,9 @@ const UnplashUpload = props => {
               <GridListTile
                 key={index}
                 onClick={e => handleUnsplash(tile)}
-                cols={tile.cols || 1}
+                cols={1}
               >
-                <img src={tile.images.downsized.url} alt={tile.title} />
+                <img src={tile.urls.regular} alt={tile.alt_description} />
               </GridListTile>
             ))}
             <GridListTile style={{ textAlign: "center", paddingTop: 35 }}>
@@ -139,7 +144,7 @@ const UnplashUpload = props => {
                 aria-label="More"
                 style={{ fontSize: 25 }}
                 size="large"
-                type="Button"
+                type="button"
                 onClick={getMoreUnsplash}
               >
                 <ArrowDownwardIcon style={{ fontSize: 50 }} />
