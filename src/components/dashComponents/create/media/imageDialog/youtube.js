@@ -21,7 +21,7 @@ const {
   aws_user_files_s3_bucket: bucket
 } = config;
 
-const PixaBay = props => {
+const YouTube = props => {
   const {
     setImageDialog,
     handleOnChange,
@@ -33,11 +33,11 @@ const PixaBay = props => {
     s3Directory
   } = props;
   const [validImage, setValidImage] = useState(true);
-  const [pixabayUrl, setPixabayUrl] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
   const uploadImageEl = useRef(null);
   const photosPerPage = 10;
   const [page, setPage] = useState(1);
-  const [pixabayImages, setPixabayImages] = useState([]);
+  const [youtubeImages, setYoutubeImages] = useState([]);
   const [message, setMessage] = useState("");
 
   const uploadToBucket = async (file, width, height, tile, name, ext) => {
@@ -59,7 +59,7 @@ const PixaBay = props => {
 
       const uploadImageApi = {
         name: cleanup(name),
-        description: cleanup(pixabayUrl),
+        description: cleanup(youtubeUrl),
         image: imageUpdate,
         category: tile.type,
         type: file.type,
@@ -78,11 +78,11 @@ const PixaBay = props => {
       );
       handleOnChange({
         [value]: imageUpdate,
-        [imageAlt]: pixabayUrl,
-        [imageAttribution]: tile.user ? tile.user : "Pixbay",
+        [imageAlt]: youtubeUrl,
+        [imageAttribution]: tile.user ? tile.user : "Youtube",
         [imageAttributionLink]: tile.userImageURL
           ? tile.userImageURL
-          : "https://pixabay.com/"
+          : "https://youtube.com/"
       });
       setImageDialog(false);
       setMessage("Success! Click again for another Image");
@@ -92,48 +92,52 @@ const PixaBay = props => {
     }
   };
 
-  const getMorePixabay = async () => {
+  const getMoreYoutube = async () => {
     const updatePage = page + 1;
     setPage(updatePage);
 
-    let searchTerm = pixabayUrl
+    let searchTerm = youtubeUrl
       .trim()
       .replace(/\s/g, "+")
       .toLowerCase();
 
-    const url = `https://pixabay.com/api/?key=${
-      process.env.REACT_APP_PIXABAY_ACCESS_KEY
-    }&q=${searchTerm}&page=${updatePage}&per_page=${photosPerPage}`;
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${
+        process.env.REACT_APP_GOOGLE_ACCESS_KEY
+      }&part=snippet,id&type=video`;
 
     try {
-      const pixabayResult = await axios.get(url, { crossdomain: true });
-      if (!pixabayImages[0]) {
-        setPixabayImages(pixabayResult.data.hits);
+      const youtubeResult = await axios.get(url, { crossdomain: true });
+      if (!youtubeImages[0]) {
+        setYoutubeImages(youtubeResult.data.hits);
       } else {
-        const addPixabayImages = pixabayImages.concat(pixabayResult.data.hits);
-        setPixabayImages(addPixabayImages);
+        const addYoutubeImages = youtubeImages.concat(youtubeResult.data.hits);
+        setYoutubeImages(addYoutubeImages);
       }
     } catch (err) {
       console.log("Error getting Pixabay Images", err);
     }
   };
 
-  const getPixabay = async e => {
+  const getYoutube = async e => {
     const value = e.target.value;
-    setPixabayUrl(value);
-    if (e.keyCode === 13 && pixabayUrl.length > 1) {
+    setYoutubeUrl(value);
+    if (e.keyCode === 13 && youtubeUrl.length > 1) {
       let searchTerm = value
         .trim()
         .replace(/\s/g, "+")
         .toLowerCase();
 
-      const url = `https://pixabay.com/api/?key=${
-        process.env.REACT_APP_PIXABAY_ACCESS_KEY
-      }&q=${searchTerm}&page=${page}&per_page=${photosPerPage}`;
+    //   const url = `https://pixabay.com/api/?key=${
+    //     process.env.REACT_APP_PIXABAY_ACCESS_KEY
+    //   }&q=${searchTerm}&page=${page}&per_page=${photosPerPage}`;
+
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${
+        process.env.REACT_APP_GOOGLE_ACCESS_KEY
+      }&part=snippet,id&type=video`;
 
       try {
-        const pixabayResult = await axios.get(url, { crossdomain: true });
-        setPixabayImages(pixabayResult.data.hits);
+        const youtubeResult = await axios.get(url, { crossdomain: true });
+        setYoutubeImages(youtubeResult.data.hits);
       } catch (err) {
         console.log("Error getting Pixabay Images", err);
       }
@@ -187,13 +191,13 @@ const PixaBay = props => {
         <TextField
           autoFocus
           autoComplete="off"
-          value={pixabayUrl}
+          value={youtubeUrl}
           onChange={getPixabay}
           onKeyDown={getPixabay}
           margin="dense"
-          id="pixabay"
-          label="Search Pixabay"
-          type="pixabay"
+          id="youtube"
+          label="Search Youtube"
+          type="youtube"
           fullWidth
         />
       </DialogContent>
@@ -204,7 +208,7 @@ const PixaBay = props => {
         <Button
           onClick={e => {
             setImageDialog(false);
-            setPixabayUrl("");
+            setYoutubeUrl("");
           }}
           color="primary"
         >
@@ -213,7 +217,7 @@ const PixaBay = props => {
         <Button
           disabled={validImage}
           onClick={e => {
-            handleOnChange({ [value]: pixabayUrl });
+            handleOnChange({ [value]: youtubeUrl });
             setImageDialog(false);
           }}
           color="primary"
@@ -221,10 +225,10 @@ const PixaBay = props => {
           Add
         </Button>
       </DialogActions>
-      {pixabayImages.length > 1 && (
+      {youtubeImages.length > 1 && (
         <Paper style={{ overflow: "hidden" }}>
           <GridList cellHeight={160} className={classes.gridList} cols={3}>
-            {pixabayImages.map((tile, index) => (
+            {youtubeImages.map((tile, index) => (
               <GridListTile
                 key={index}
                 onClick={e => handlePixaBay(tile)}
@@ -254,4 +258,4 @@ const PixaBay = props => {
   );
 };
 
-export default withStyles(imageStyles)(PixaBay);
+export default withStyles(imageStyles)(YouTube);

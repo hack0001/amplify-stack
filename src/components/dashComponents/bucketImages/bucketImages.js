@@ -18,6 +18,7 @@ const BucketList = props => {
   }, []);
 
   const handleBucket = async loadMore => {
+    if (loadMore && !token) return;
     try {
       const isToken = loadMore && token ? `nextToken:"${token}",` : "";
       const selected = await API.graphql(

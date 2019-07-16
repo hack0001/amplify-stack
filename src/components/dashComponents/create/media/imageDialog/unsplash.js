@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -11,6 +11,16 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { API, graphqlOperation, Storage } from "aws-amplify";
+import { formatBytes } from "./upload/formatBytes";
+import config from "../../../../../aws-exports";
+import { createImage } from "./graphql/uploadImages";
+import { clean, cleanup, getMark } from "./clean";
+
+const {
+  aws_user_files_s3_bucket_region: region,
+  aws_user_files_s3_bucket: bucket
+} = config;
 
 const UnplashUpload = props => {
   const {
@@ -20,13 +30,71 @@ const UnplashUpload = props => {
     classes,
     imageAlt,
     imageAttribution,
-    imageAttributionLink
+    imageAttributionLink,
+    s3Directory
   } = props;
   const [validImage, setValidImage] = useState(true);
   const [unsplashUrl, setUnsplashUrl] = useState("");
+  const uploadUnsplashImageEl = useRef(null);
   const photosPerPage = 10;
   const [page, setPage] = useState(1);
   const [unsplashImages, setUnsplashImages] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const uploadToBucket = async (file, width, height, tile, name, ext) => {
+    try {
+      const listImages = await Storage.list(`${s3Directory}/`);
+      const filePath = `${s3Directory}/${name}.${ext}`;
+      if (listImages.filter(e => e.key === filePath).length > 0) {
+        setMessage("Image Already Exists In Bucket - Please Choose Another");
+        return;
+      }
+      await Storage.put(filePath, file, {
+        contentType: file.type,
+        cacheControl: "public, max-age=604800",
+        expires: Date.now() + 60 * 60 * 24 * 7,
+        level: "public"
+      });
+
+      const imageUpdate = `https://${bucket}.s3.${region}.amazonaws.com/public/${filePath}`;
+
+      const uploadImageApi = {
+        name: cleanup(name),
+        description: tile.description, //check here
+        image: imageUpdate,
+        category: tile.categories,
+        type: file.type,
+        size: formatBytes(file.size),
+        height: Math.round(height),
+        width: Math.round(width),
+        tags: tile.tags,
+        imageAttribution: tile.user.name,
+        imageAttributionLink: tile.user.portfolio_url
+          ? tile.user.portfolio_url
+          : "https://unsplash.com/",
+        access: "public"
+      };
+      clean(uploadImageApi);
+      await API.graphql(
+        graphqlOperation(createImage, { input: uploadImageApi })
+      );
+
+      handleOnChange({
+        [value]: tile.urls.regular,
+        [imageAlt]: tile.alt_description,
+        [imageAttribution]: tile.user.name ? tile.user.name : "Unsplash",
+        [imageAttributionLink]: tile.user.links.html
+          ? tile.user.links.html
+          : "https://unsplash.com/"
+      });
+
+      setImageDialog(false);
+      setMessage("Success! Click again for another Image");
+    } catch (err) {
+      console.log("Error", err);
+      setMessage("Uh oh! Something went wrong please try again");
+    }
+  };
 
   const getMoreUnsplash = async () => {
     const updatePage = page + 1;
@@ -78,16 +146,59 @@ const UnplashUpload = props => {
   };
 
   const handleUnsplash = tile => {
-    handleOnChange({
-      [value]: tile.urls.regular,
-      [imageAlt]: tile.alt_description,
-      [imageAttribution]: tile.user.name ? tile.user.name : "Unsplash",
-      [imageAttributionLink]: tile.user.links.html
-        ? tile.user.links.html
-        : "https://unsplash.com/"
-    });
+    const newNameUpload = tile.alt_description
+      ? cleanup(tile.alt_description)
+      : "UnsplashImage" + Date.now();
+    const mark = "jpeg";
 
-    setImageDialog(false);
+    const img = new Image();
+    img.crossorigin = "anonymous";
+    img.setAttribute("crossOrigin", "anonymous");
+    img.src = tile.urls.regular;
+    img.onload = () => {
+      let width = tile.width;
+      let height = tile.height;
+
+      const widthRatio = 1.785;
+      const MAX_WIDTH = 1065;
+      const MAX_HEIGHT = 1065;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        } else {
+          height = width / widthRatio;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+
+      const elem = uploadUnsplashImageEl.current;
+      elem.width = width;
+      elem.height = height;
+
+      //setDimensions
+      const ctx = elem.getContext("2d");
+      ctx.imageSmoothingQuality = "medium";
+
+      // img.width and img.height will contain the original dimensions
+      ctx.drawImage(img, 0, 0, width, height);
+      ctx.canvas.toBlob(
+        blob => {
+          const file = new File([blob], newNameUpload, {
+            type: `image/${mark}`,
+            lastModified: Date.now()
+          });
+          uploadToBucket(file, width, height, tile, newNameUpload, mark);
+        },
+        `image/${mark}`, // imageType,
+        100 // imageQualityRound
+      );
+    };
   };
 
   return (
@@ -106,6 +217,9 @@ const UnplashUpload = props => {
           fullWidth
         />
       </DialogContent>
+      {message && (
+        <div style={{ textAlign: "center", color: "red" }}>{message}</div>
+      )}
       <DialogActions>
         <Button
           onClick={e => {
@@ -153,6 +267,9 @@ const UnplashUpload = props => {
           </GridList>
         </Paper>
       )}
+      <div style={{ display: "none" }}>
+        <canvas ref={uploadUnsplashImageEl} />
+      </div>
     </Fragment>
   );
 };

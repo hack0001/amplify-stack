@@ -90,7 +90,7 @@ const ImageDialog = props => {
             imageAttributionLink={imageAttributionLink}
           />
           <Unsplash
-		              s3Directory={"allImages"}
+            s3Directory={"allImages"}
             setImageDialog={setImageDialog}
             handleOnChange={handleOnChange}
             value={value}
@@ -99,7 +99,7 @@ const ImageDialog = props => {
             imageAttributionLink={imageAttributionLink}
           />
           <Pixabay
-		              s3Directory={"allImages"}
+            s3Directory={"allImages"}
             setImageDialog={setImageDialog}
             handleOnChange={handleOnChange}
             value={value}
