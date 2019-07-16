@@ -12,6 +12,7 @@ import Giphy from "./giphy";
 import Bucket from "./bucket";
 import Unsplash from "./unsplash";
 import Pixabay from "./pixabay";
+import Youtube from "./youtube";
 
 const ImageDialog = props => {
   const {
@@ -53,6 +54,7 @@ const ImageDialog = props => {
             <Tab label={"Bucket"} />;
             <Tab label={"Unsplash"} />;
             <Tab label={"Pixabay"} />;
+            <Tab label={"Youtube"} />;
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -98,7 +100,16 @@ const ImageDialog = props => {
             imageAttribution={imageAttribution}
             imageAttributionLink={imageAttributionLink}
           />
-          <Pixabay
+          {/* <Pixabay
+            s3Directory={"allImages"}
+            setImageDialog={setImageDialog}
+            handleOnChange={handleOnChange}
+            value={value}
+            imageAlt={imageAlt}
+            imageAttribution={imageAttribution}
+            imageAttributionLink={imageAttributionLink}
+          /> */}
+          <Youtube
             s3Directory={"allImages"}
             setImageDialog={setImageDialog}
             handleOnChange={handleOnChange}
