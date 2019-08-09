@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import { withStyles } from "@material-ui/core/styles";
-import { imageStyles } from "./dialogStyles";
+import { imageStyles } from "../dialogStyles";
 import Paper from "@material-ui/core/Paper";
 import { API, graphqlOperation } from "aws-amplify";
 import GridList from "@material-ui/core/GridList";
@@ -64,7 +64,7 @@ const BucketList = props => {
 
       if (!bucketImages[0]) {
         setBucketImages(selected.data.listImages.items);
-      } else {
+      } else if (token) {
         const addBucketImages = bucketImages.concat(
           selected.data.listImages.items
         );
@@ -76,8 +76,8 @@ const BucketList = props => {
     }
   };
 
-  const handleBucketImage = tile => {
-    handleOnChange({
+  const handleBucketImage = async tile => {
+    await handleOnChange({
       [value]: tile.image,
       [imageAlt]: tile.name,
       [imageAttribution]: tile.imageAttribution,
@@ -101,15 +101,17 @@ const BucketList = props => {
               </GridListTile>
             ))}
             <GridListTile style={{ textAlign: "center", paddingTop: 35 }}>
-              <IconButton
-                aria-label="More"
-                style={{ fontSize: 25 }}
-                size="large"
-                type="Button"
-                onClick={e => console.log("SHABBAB")}
-              >
-                <ArrowDownwardIcon style={{ fontSize: 50 }} />
-              </IconButton>
+              {token && (
+                <IconButton
+                  aria-label="More"
+                  style={{ fontSize: 25 }}
+                  size="large"
+                  type="Button"
+                  onClick={e => handleBucket(true)}
+                >
+                  <ArrowDownwardIcon style={{ fontSize: 50 }} />
+                </IconButton>
+              )}
             </GridListTile>
           </GridList>
         </Paper>

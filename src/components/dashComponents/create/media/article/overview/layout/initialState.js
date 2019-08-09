@@ -5,6 +5,8 @@ const INITIAL_ARTICLE_OVERVIEW = {
   brief: "",
   category: "",
   headline: "",
+  bulletHeadlines: "",
+  bulletHeadlinesDetails: {},
   headlineSummary: "",
   headlineImage: "",
   headlineImageAlt: "",
@@ -86,6 +88,15 @@ const initialLayout = [
     gridCol: 2
   },
   {
+    id: "ArticleHeadline",
+    label: "Article Headline",
+    type: "text",
+    name: "articleHeadline",
+    width: "93%",
+    layout: "inline-block",
+    gridCol: 1
+  },
+  {
     id: "HeadlineSummary",
     label: "Headline Summary",
     type: "text",
@@ -95,11 +106,60 @@ const initialLayout = [
     gridCol: 1
   },
   {
+    id: "Bullet Headlines",
+    label: "Bullet Headlines",
+    type: "select",
+    name: "bulletHeadlines",
+    width: "25%",
+    layout: "inline-block",
+    helper: "Enter Number of Bullets",
+    values: [
+      {
+        name: "One",
+        type: 1,
+        desc: "One"
+      },
+      {
+        name: "Two",
+        type: 2,
+        desc: "Two"
+      },
+      {
+        name: "Three",
+        type: 3,
+        desc: "Three"
+      },
+      {
+        name: "Four",
+        type: 4,
+        desc: "Four"
+      },
+      {
+        name: "Five",
+        type: 5,
+        desc: "Five"
+      }
+    ]
+  },
+  {
+    id: "Bullets",
+    type: "bullets",
+    schema: {
+      id: "Bullet Headline",
+      label: "Bullet Headline",
+      type: "text",
+      name: "bulletHeadline",
+      width: "93%",
+      layout: "block",
+      helper: "Enter Bullet Headline"
+    }
+  },
+  {
     id: "UrlDescription",
     label: "Url Description",
     type: "text",
     name: "urlDescription",
-    width: "45%",
+    width: "65%",
     layout: "inline-block",
     gridCol: 2
   },
@@ -111,7 +171,6 @@ const initialLayout = [
     width: "45%",
     layout: "inline-block"
   },
-
   {
     id: "Category",
     label: "Category",

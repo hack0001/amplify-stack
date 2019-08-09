@@ -6,4 +6,8 @@ const hasBlock = (value, type) => {
   return value.blocks.some(node => node.type === type);
 };
 
-export { hasLinks, hasBlock };
+const hasMark = (value, type) => {
+  return value.activeMarks.some(mark => mark.type === type);
+};
+
+export { hasLinks, hasBlock, hasMark };

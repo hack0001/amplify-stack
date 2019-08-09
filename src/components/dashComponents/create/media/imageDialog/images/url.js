@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import { imageStyles } from "./dialogStyles";
+import { imageStyles } from "../dialogStyles";
 
 const urlUpload = props => {
   const { setUrl, setImageDialog, handleOnChange, value, url } = props;
@@ -50,8 +50,8 @@ const urlUpload = props => {
         </Button>
         <Button
           disabled={validImage}
-          onClick={e => {
-            handleOnChange({ [value]: url });
+          onClick={async e => {
+            await handleOnChange({ [value]: url });
             setImageDialog(false);
           }}
           color="primary"

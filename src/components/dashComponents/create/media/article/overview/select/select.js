@@ -17,8 +17,15 @@ const ArticleSelect = props => {
     handleValueChange,
     text,
     helperText,
-    name
+    name,
+    overview
   } = props;
+
+  const range = (start, end) => {
+    return Array(end - start + 1)
+      .fill()
+      .map((_, idx) => start + idx);
+  };
 
   return (
     <FormControl
@@ -34,11 +41,23 @@ const ArticleSelect = props => {
       <InputLabel htmlFor={`${name}-helper`}>{text}</InputLabel>
       <Select
         value={value}
-        onChange={e =>
-          handleValueChange({
-            [e.target.name]: e.target.value
-          })
-        }
+        onChange={e => {
+          // if (name === "bulletHeadlines"){
+          if (overview[0]["bulletHeadlines"] > e.target.value) {
+            let bulletObject = { ...overview[0]["bulletHeadlinesDetails"] };
+            range(e.target.value + 1, overview[0][`bulletHeadlines`]).map(
+              bullet => delete bulletObject[`bulletHeadline${bullet}`]
+            );
+            handleValueChange({
+              bulletHeadlinesDetails: bulletObject,
+              [e.target.name]: e.target.value
+            });
+          } else {
+            handleValueChange({
+              [e.target.name]: e.target.value
+            });
+          }
+        }}
         input={
           <Input name={name} style={{ width: "100%" }} id={`${name}-helper`} />
         }

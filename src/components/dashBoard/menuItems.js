@@ -77,6 +77,7 @@ class MenuItems extends Component {
                     onClick={() => {
                       context.logout();
                     }}
+                    style={{ textDecoration: "none", color: "grey" }}
                   >
                     <ListItemIcon>
                       <Icon />

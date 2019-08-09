@@ -15,12 +15,12 @@ import Paper from "@material-ui/core/Paper";
 import ImageDialog from "../../imageDialog/imageDialog";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import _ from "lodash";
 
 const ArticleOverview = props => {
   const [loading, setLoading] = useState(false);
   const { handleSend, overview, classes } = props;
   const [imageDialog, setImageDialog] = useState(false);
-
   const handleOnChange = value => {
     handleSend({
       overview: [
@@ -61,6 +61,52 @@ const ArticleOverview = props => {
     );
   };
 
+  const bullets = (item, index) => {
+    const bulletNo = overview[0].bulletHeadlines;
+
+    const bulletHeaders = _.range(bulletNo).map((val, index) => {
+      return { ...item.schema, bulletNumber: index + 1 };
+    });
+
+    return bulletHeaders.map((bullet, index) => {
+      const bulletName = `${bullet.name}${bullet.bulletNumber}`;
+      const bulletLabel = `${bullet.label} ${bullet.bulletNumber}`;
+      return (
+        <div
+          style={{
+            margin: 20,
+            display: bullet.layout,
+            width: bullet.width
+          }}
+          key={index}
+        >
+          <TextField
+            autoFocus
+            autoComplete="off"
+            name={bulletName}
+            value={overview[0]["bulletHeadlinesDetails"][bulletName]}
+            onChange={e => {
+              handleOnChange({
+                bulletHeadlinesDetails: {
+                  ...overview[0]["bulletHeadlinesDetails"],
+                  [e.target.name]: e.target.value
+                }
+              });
+            }}
+            margin="dense"
+            id={bulletName}
+            label={bulletLabel}
+            type="text"
+            style={{
+              width: "100%",
+              marginBottom: 5
+            }}
+          />
+        </div>
+      );
+    });
+  };
+
   const checkBox = (item, index) => {
     return (
       <FormControlLabel
@@ -93,6 +139,7 @@ const ArticleOverview = props => {
         handleValueChange={handleOnChange}
         text={item.label}
         helperText={item.helper}
+        overview={overview}
       />
     );
   };
@@ -145,6 +192,8 @@ const ArticleOverview = props => {
           switch (item.type) {
             case "select":
               return select(item, index);
+            case "bullets":
+              return bullets(item, index);
             case "image":
               return image(item, index);
             case "text":

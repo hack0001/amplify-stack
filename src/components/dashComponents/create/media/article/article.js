@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Send from "@material-ui/icons/Send";
 import { Content, Overview } from "./index";
 import { articleStyles } from "./styles/articleStyles";
-import { initialValue, TabContainer } from "./editorSettings";
+import { initialValue, updateValue, TabContainer } from "./editorSettings";
 import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
 import SimpleStorage, { clearStorage } from "react-simple-storage";
@@ -18,18 +18,22 @@ import { INITIAL_ARTICLE_OVERVIEW } from "./overview/layout/initialState";
 
 class Article extends Component {
   state = {
-    value: 0,
+    tab: 1,
     age: 0,
     categories: ["Overview", "Article"],
     overview: [INITIAL_ARTICLE_OVERVIEW],
-    content: initialValue
+    value: initialValue
   };
+
+  // http://carsandyachts.com/trending/51-celebrities-their-phenomenal-weight-loss-transformation-tb/
+  // ?utm_source=taboola&utm_medium=dailymail-uk&utm_campaign=2517695&utm_term=Anne+Hegerty+
+  // is+So+Skinny+Now+and+Looks+Gorgeous%21+%28Photos%29&utm_content=http%3A%2F%2Fcdn.taboola.com%2Flibtrc%2Fstatic%2Fthumbnails%2Febc8d06177e8eadd089a4fc732ed79fd.jpg
 
   clearArticleValues = () => {
     this.setState({
       ...this.state,
       overview: [INITIAL_ARTICLE_OVERVIEW],
-      content: initialValue,
+      value: updateValue,
       clearDialog: false
     });
   };
@@ -45,18 +49,18 @@ class Article extends Component {
     this.setState(values);
   };
 
-  handleChange = (event, value) => {
+  handleChange = ({ value }) => {
+    // console.log("EDITOR CHANGE", JSON.stringify(value.toJSON()));
+    // localStorage.setItem('content', content)
     this.setState({ value });
+  };
+
+  handleTab = (event, value) => {
+    this.setState({ tab: value });
   };
 
   handleClose = event => {
     this.setState({ reduceDialog: false });
-  };
-
-  editorChange = ({ value }) => {
-    // console.log("EDITOR CHANGE", JSON.stringify(value.toJSON()));
-    // localStorage.setItem('content', content)
-    this.setState({ content: value });
   };
 
   handleSubmit = e => {
@@ -67,7 +71,11 @@ class Article extends Component {
   render() {
     console.log("handleValues", this.state);
     const { classes, theme } = this.props;
-    const { value } = this.state;
+    const { tab } = this.state;
+    const header = this.state.overview[0].articleHeadline
+      ? this.state.overview[0].articleHeadline
+      : this.state.overview[0].headline;
+
     return (
       <div className={classes.root}>
         {/* <SimpleStorage parent={this} prefix={"ArticleParent"} /> */}
@@ -78,8 +86,8 @@ class Article extends Component {
         >
           <AppBar position="static" color="default">
             <Tabs
-              value={value}
-              onChange={this.handleChange}
+              value={tab}
+              onChange={this.handleTab}
               indicatorColor="primary"
               textColor="primary"
               scrollButtons="auto"
@@ -115,7 +123,6 @@ class Article extends Component {
                 style={{ float: "right" }}
                 className={classes.button}
                 onClick={e => {
-                  console.log("VALUES", this.state);
                   this.setState({ clearDialog: true });
                   clearStorage("ArticleParent");
                 }}
@@ -127,7 +134,7 @@ class Article extends Component {
           </Paper>
           <SwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={this.state.value}
+            index={this.state.tab}
             onChangeIndex={this.handleChangeIndex}
           >
             <Paper className={classes.articleWrap}>
@@ -137,8 +144,14 @@ class Article extends Component {
               />
             </Paper>
             <Paper className={classes.articleWrap}>
-              {/* <Content /> */}
-              shabba
+              <Content
+                value={this.state.value}
+                handleChange={this.handleChange}
+                headline={header}
+				bulletHeaders={this.state.overview[0].bulletHeadlinesDetails}
+				bulletHeadlines={this.state.overview[0].bulletHeadlines}
+              />
+
               {this.state.clearDialog && (
                 <ClearDialog
                   open={this.state.clearDialog}

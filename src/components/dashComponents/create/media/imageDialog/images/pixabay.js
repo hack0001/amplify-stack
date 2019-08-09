@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import { imageStyles } from "./dialogStyles";
+import { imageStyles } from "../dialogStyles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Paper from "@material-ui/core/Paper";
@@ -12,10 +12,10 @@ import axios from "axios";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { API, graphqlOperation, Storage } from "aws-amplify";
-import { formatBytes } from "./upload/formatBytes";
-import config from "../../../../../aws-exports";
-import { createImage } from "./graphql/uploadImages";
-import { clean, cleanup, getMark } from "./clean";
+import { formatBytes } from "../upload/formatBytes";
+import config from "../../../../../../aws-exports";
+import { createImage } from "../graphql/uploadImages";
+import { clean, cleanup, getMark } from "../clean";
 const {
   aws_user_files_s3_bucket_region: region,
   aws_user_files_s3_bucket: bucket
@@ -76,7 +76,7 @@ const PixaBay = props => {
       await API.graphql(
         graphqlOperation(createImage, { input: uploadImageApi })
       );
-      handleOnChange({
+      await handleOnChange({
         [value]: imageUpdate,
         [imageAlt]: pixabayUrl,
         [imageAttribution]: tile.user ? tile.user : "Pixbay",

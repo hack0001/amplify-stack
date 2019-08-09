@@ -6,13 +6,9 @@ import Tab from "@material-ui/core/Tab";
 import { withStyles } from "@material-ui/core/styles";
 import { imageStyles } from "./dialogStyles";
 import SwipeableViews from "react-swipeable-views";
-import Url from "./url";
 import Upload from "./upload/upload";
-import Giphy from "./giphy";
-import Bucket from "./bucket";
-import Unsplash from "./unsplash";
-import Pixabay from "./pixabay";
-import Youtube from "./youtube";
+import { Url, Giphy, Bucket, Unsplash, Pixabay, Youtube } from "./images";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const ImageDialog = props => {
   const {
@@ -27,7 +23,7 @@ const ImageDialog = props => {
   } = props;
   const [tab, setTab] = useState(0);
   const [url, setUrl] = useState("");
-
+  const [loading, setLoading] = useState(false);
   return (
     <div>
       <Dialog
@@ -35,8 +31,9 @@ const ImageDialog = props => {
         fullWidth={true}
         onClose={e => setImageDialog(false)}
         aria-labelledby="form-dialog-title"
-        maxWidth={"md"}
+        maxWidth={"lg"}
       >
+        {loading && <LinearProgress />}
         <AppBar position="static" color="default">
           <Tabs
             value={tab}
@@ -100,7 +97,7 @@ const ImageDialog = props => {
             imageAttribution={imageAttribution}
             imageAttributionLink={imageAttributionLink}
           />
-          {/* <Pixabay
+          <Pixabay
             s3Directory={"allImages"}
             setImageDialog={setImageDialog}
             handleOnChange={handleOnChange}
@@ -108,13 +105,14 @@ const ImageDialog = props => {
             imageAlt={imageAlt}
             imageAttribution={imageAttribution}
             imageAttributionLink={imageAttributionLink}
-          /> */}
+          />
           <Youtube
             s3Directory={"allImages"}
             setImageDialog={setImageDialog}
             handleOnChange={handleOnChange}
             value={value}
             imageAlt={imageAlt}
+            setLoading={setLoading}
             imageAttribution={imageAttribution}
             imageAttributionLink={imageAttributionLink}
           />

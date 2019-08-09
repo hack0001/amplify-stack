@@ -1,0 +1,2 @@
+const imageStyles = {};
+export { imageStyles };

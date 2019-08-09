@@ -12,6 +12,7 @@ import CalendarIcon from "@material-ui/icons/CalendarToday";
 import CollectionsIcon from "@material-ui/icons/Collections";
 import Users from "@material-ui/icons/Group";
 import Web from "@material-ui/icons/Web";
+import Email from "@material-ui/icons/Email";
 
 const sideMenuAdmin = [
   {
@@ -75,6 +76,11 @@ const sideMenuAdmin = [
     label: "Bucket Images",
     path: "bucket-images",
     Icon: CollectionsIcon
+  },
+  {
+    label: "Email List",
+    path: "email-list",
+    Icon: Email
   }
 ];
 

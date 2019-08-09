@@ -109,6 +109,7 @@ const DashDrawer = props => {
       <TextField
         key={index}
         label={`${label}`}
+        autoComplete="off"
         className={classes.textField}
         value={taskValues[type]}
         onChange={handleChange}

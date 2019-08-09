@@ -23,7 +23,7 @@ const onPaste = (event, editor, next) => {
   if (type !== "text" && type !== "html") return next();
   if (!isUrl(text)) return next();
 
-  if (this.hasLinks()) {
+  if (hasLinks()) {
     editor.command(unwrapLink);
   }
   editor.command(wrapLink, text);

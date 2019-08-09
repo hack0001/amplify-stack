@@ -14,11 +14,18 @@ import Emoticon from "@material-ui/icons/InsertEmoticon";
 import NumberedList from "@material-ui/icons/FormatListNumbered";
 import BulletList from "@material-ui/icons/FormatListBulleted";
 import AddDivider from "@material-ui/icons/SwapHoriz";
-import FontFamily from "@material-ui/icons/FontDownload";
 import Link from "@material-ui/icons/Link";
 import AddPhoto from "@material-ui/icons/AddPhotoAlternate";
-import VideoCam from "@material-ui/icons/Videocam";
-
+import Indent from "@material-ui/icons/FormatIndentIncrease";
+import Outdent from "@material-ui/icons/FormatIndentDecrease";
+import FormatCenter from "@material-ui/icons/FormatAlignCenter";
+import FormatRight from "@material-ui/icons/FormatAlignRight";
+import FormatLeft from "@material-ui/icons/FormatAlignLeft";
+import FormatJustify from "@material-ui/icons/FormatAlignJustify";
+import CloudUpload from "@material-ui/icons/CloudUpload";
+import FormatColorText from "@material-ui/icons/FormatColorText";
+import LibraryAdd from "@material-ui/icons/LibraryAdd";
+import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 const editor = [
   {
     type: "bold",
@@ -57,9 +64,9 @@ const editor = [
     editorType: "mark"
   },
   {
-    type: "fontFamily",
-    Icon: FontFamily,
-    tooltip: "Font Family",
+    type: "formatColor",
+    Icon: FormatColorText,
+    tooltip: "Font Color",
     editorType: "mark"
   },
   {
@@ -102,7 +109,43 @@ const editor = [
     type: "emoji",
     Icon: Emoticon,
     tooltip: "Insert Emoticon",
-    editorType: null
+    editorType: "mark"
+  },
+  {
+    type: "format-align-left",
+    Icon: FormatLeft,
+    tooltip: "Left",
+    editorType: "block"
+  },
+  {
+    type: "format-align-center",
+    Icon: FormatCenter,
+    tooltip: "Center",
+    editorType: "block"
+  },
+  {
+    type: "format-align-right",
+    Icon: FormatRight,
+    tooltip: "Right",
+    editorType: "block"
+  },
+  {
+    type: "format-align-justify",
+    Icon: FormatJustify,
+    tooltip: "Justify",
+    editorType: "block"
+  },
+  {
+    type: "indent",
+    Icon: Indent,
+    tooltip: "Indent",
+    editorType: "block"
+  },
+  {
+    type: "outdent",
+    Icon: Outdent,
+    tooltip: "Outdent",
+    editorType: "block"
   },
   {
     type: "numbered-list",
@@ -129,15 +172,27 @@ const editor = [
     editorType: "block"
   },
   {
-    type: "embed-video",
-    Icon: VideoCam,
-    tooltip: "Insert an Video",
+    type: "embed",
+    Icon: CloudUpload,
+    tooltip: "Embed an Url",
     editorType: "block"
   },
   {
     type: "embed-image",
     Icon: AddPhoto,
     tooltip: "Insert an Image",
+    editorType: "block"
+  },
+  {
+    type: "paid-ad",
+    Icon: LibraryAdd,
+    tooltip: "Add Paid Ad Here",
+    editorType: "block"
+  },
+  {
+    type: "site-ad",
+    Icon: PlaylistAdd,
+    tooltip: "Add Site Ad Here",
     editorType: "block"
   }
 ];

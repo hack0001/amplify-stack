@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import { imageStyles } from "./dialogStyles";
+import { imageStyles } from "../dialogStyles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Paper from "@material-ui/core/Paper";
@@ -76,8 +76,8 @@ const GiphyUpload = props => {
     }
   };
 
-  const handleGiphy = tile => {
-    handleOnChange({
+  const handleGiphy = async tile => {
+    await handleOnChange({
       [value]: tile.images.downsized.url,
       [imageAttribution]: "Giphy",
       [imageAttributionLink]: tile.bitly_gif_url

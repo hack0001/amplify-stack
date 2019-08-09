@@ -89,6 +89,7 @@ const CreateTask = props => {
     return (
       <TextField
         key={index}
+        autoComplete="off"
         label={`${label}`}
         className={classes.textField}
         value={taskValues[type]}

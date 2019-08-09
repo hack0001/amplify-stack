@@ -175,6 +175,7 @@ const Upload = props => {
       img.onload = () => {
         const widthRatio = 1.785;
         const MAX_WIDTH = 1065;
+		
         const MAX_HEIGHT = 1065;
         let width = img.width;
         let height = img.height;
