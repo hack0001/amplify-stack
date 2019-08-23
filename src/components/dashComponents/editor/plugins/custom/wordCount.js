@@ -2,7 +2,7 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 
 const WordCounter = {
-  marginTop: "10px",
+  marginTop: "75px",
   padding: "12px",
   display: "inline-block"
 };

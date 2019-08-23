@@ -894,33 +894,13 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1027,33 +1007,13 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1160,33 +1120,13 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1938,30 +1878,12 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
     id
     authorId
     authorName
-    brief
-    category
+    overview
     createdAt
     content
     development
-    headline
-    headlineSummary
-    headlineImage
-    headlineImageAlt
-    headlineImageAttribution
-    headlineImageAttributionLink
-    instantDevelopmentCheck
-    instantPublishCheck
-    kicker
-    longUrl
-    longMobileUrl
     production
     productionId
-    pushDate
-    schedule
-    scheduleTime
-    shareCount
-    shortUrl
-    shortMobileUrl
     site {
       id
       articles {
@@ -1982,9 +1904,7 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
       }
       updatedAt
     }
-    tags
     updatedAt
-    urlDescription
     user {
       id
       userId
@@ -2034,30 +1954,12 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
     id
     authorId
     authorName
-    brief
-    category
+    overview
     createdAt
     content
     development
-    headline
-    headlineSummary
-    headlineImage
-    headlineImageAlt
-    headlineImageAttribution
-    headlineImageAttributionLink
-    instantDevelopmentCheck
-    instantPublishCheck
-    kicker
-    longUrl
-    longMobileUrl
     production
     productionId
-    pushDate
-    schedule
-    scheduleTime
-    shareCount
-    shortUrl
-    shortMobileUrl
     site {
       id
       articles {
@@ -2078,9 +1980,7 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
       }
       updatedAt
     }
-    tags
     updatedAt
-    urlDescription
     user {
       id
       userId
@@ -2130,30 +2030,12 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
     id
     authorId
     authorName
-    brief
-    category
+    overview
     createdAt
     content
     development
-    headline
-    headlineSummary
-    headlineImage
-    headlineImageAlt
-    headlineImageAttribution
-    headlineImageAttributionLink
-    instantDevelopmentCheck
-    instantPublishCheck
-    kicker
-    longUrl
-    longMobileUrl
     production
     productionId
-    pushDate
-    schedule
-    scheduleTime
-    shareCount
-    shortUrl
-    shortMobileUrl
     site {
       id
       articles {
@@ -2174,9 +2056,7 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
       }
       updatedAt
     }
-    tags
     updatedAt
-    urlDescription
     user {
       id
       userId
@@ -2993,33 +2873,13 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -3172,33 +3032,13 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -3351,33 +3191,13 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }

@@ -2,10 +2,10 @@ import { getEventTransfer } from "slate-react";
 import isUrl from "is-url";
 import { hasLinks } from "../hasHelpers/hasHelpers";
 
-const wrapLink = (editor, href) => {
+const wrapLink = (editor, linkUrl) => {
   editor.wrapInline({
     type: "link",
-    data: { href }
+    data: { linkUrl }
   });
 
   editor.moveToEnd();

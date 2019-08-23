@@ -82,9 +82,12 @@ const INITIAL_QUESTIONS_STATE = {
   answerImageAttributionLink: "",
   answerImageAlt: "",
   answer: "",
-  wrongAnswer1: "",
+  answerVotes: "",
+  wrongAnswer1Votes: "",
   wrongAnswer2: "",
+  wrongAnswer2Votes: "",
   wrongAnswer3: "",
+  wrongAnswer3Votes: "",
   longAnswer: "",
   longFalseAnswer: ""
 };

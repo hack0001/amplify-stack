@@ -8,32 +8,46 @@ import Button from "@material-ui/core/Button";
 import Send from "@material-ui/icons/Send";
 import { Content, Overview } from "./index";
 import { articleStyles } from "./styles/articleStyles";
-import { initialValue, updateValue, TabContainer } from "./editorSettings";
+import { initialValue } from "./editorSettings";
 import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
-import SimpleStorage, { clearStorage } from "react-simple-storage";
 import ClearDialog from "../dialog/clearValues";
 import Delete from "@material-ui/icons/Delete";
 import { INITIAL_ARTICLE_OVERVIEW } from "./overview/layout/initialState";
+import { Value } from "slate";
+import { API, graphqlOperation } from "aws-amplify";
+import AuthContext from "../../../../../context/authContext";
+
+// import { createNewMessage, x/onCreateMessage } from "./graphql/chatGraphql";
+
+
 
 class Article extends Component {
-  state = {
-    tab: 1,
-    age: 0,
-    categories: ["Overview", "Article"],
-    overview: [INITIAL_ARTICLE_OVERVIEW],
-    value: initialValue
-  };
+  constructor(props) {
+    super(props);
 
-  // http://carsandyachts.com/trending/51-celebrities-their-phenomenal-weight-loss-transformation-tb/
-  // ?utm_source=taboola&utm_medium=dailymail-uk&utm_campaign=2517695&utm_term=Anne+Hegerty+
-  // is+So+Skinny+Now+and+Looks+Gorgeous%21+%28Photos%29&utm_content=http%3A%2F%2Fcdn.taboola.com%2Flibtrc%2Fstatic%2Fthumbnails%2Febc8d06177e8eadd089a4fc732ed79fd.jpg
+    const contentStorage = localStorage.getItem("content")
+      ? JSON.parse(localStorage.getItem("content"))
+      : null;
+    const overviewStorage = localStorage.getItem("overview")
+      ? JSON.parse(localStorage.getItem("overview"))
+      : null;
+
+    this.state = {
+      tab: 0,
+      age: 0,
+      categories: ["Overview", "Article"],
+      overview: overviewStorage ? overviewStorage : [INITIAL_ARTICLE_OVERVIEW],
+      value: contentStorage ? Value.fromJSON(contentStorage) : initialValue
+    };
+  }
+  static contextType = AuthContext;
 
   clearArticleValues = () => {
     this.setState({
       ...this.state,
       overview: [INITIAL_ARTICLE_OVERVIEW],
-      value: updateValue,
+      value: initialValue,
       clearDialog: false
     });
   };
@@ -46,12 +60,17 @@ class Article extends Component {
   };
 
   handleSend = values => {
+    if (values.overview !== this.state.overview) {
+      localStorage.setItem("overview", JSON.stringify(values.overview));
+    }
     this.setState(values);
   };
 
   handleChange = ({ value }) => {
-    // console.log("EDITOR CHANGE", JSON.stringify(value.toJSON()));
-    // localStorage.setItem('content', content)
+    if (value.document !== this.state.value.document) {
+      const content = JSON.stringify(value.toJSON());
+      localStorage.setItem("content", content);
+    }
     this.setState({ value });
   };
 
@@ -65,11 +84,30 @@ class Article extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
+    const submit = {
+      id: uuid(),
+      authorId: this.context.userId,
+      authorName: this.context.userId,
+      overview: this.state.overview,
+      content: this.state.value,
+      development: true,
+      production: false,
+      articleUserId: this.context.profileId,
+    }
+    console.log("THIS STATE", this);
+    // const message = {
+    //   messageConversationId: conversationId,
+    //   content: textMsg,
+    //   authorId: conversationUserId
+    // };
+    // await API.graphql(graphqlOperation(create, { input: message }));
+    // setTextMsg("");
     console.log("SUBMIT");
   };
 
   render() {
-    console.log("handleValues", this.state);
+    // console.log("handleValues", this.state);
     const { classes, theme } = this.props;
     const { tab } = this.state;
     const header = this.state.overview[0].articleHeadline
@@ -78,7 +116,6 @@ class Article extends Component {
 
     return (
       <div className={classes.root}>
-        {/* <SimpleStorage parent={this} prefix={"ArticleParent"} /> */}
         <form
           className={classes.root}
           autoComplete="off"
@@ -111,7 +148,7 @@ class Article extends Component {
                 color="primary"
                 align="right"
                 className={classes.button}
-                onClick={e => console.log("VALUES", this.state)}
+                onClick={this.handleSubmit.bind(this)}
               >
                 <Send className={classes.rightIcon} />
                 Create
@@ -124,7 +161,8 @@ class Article extends Component {
                 className={classes.button}
                 onClick={e => {
                   this.setState({ clearDialog: true });
-                  clearStorage("ArticleParent");
+                  localStorage.removeItem("content");
+                  localStorage.removeItem("overview");
                 }}
               >
                 <Delete className={classes.rightIcon} />
@@ -148,8 +186,8 @@ class Article extends Component {
                 value={this.state.value}
                 handleChange={this.handleChange}
                 headline={header}
-				bulletHeaders={this.state.overview[0].bulletHeadlinesDetails}
-				bulletHeadlines={this.state.overview[0].bulletHeadlines}
+                bulletHeaders={this.state.overview[0].bulletHeadlinesDetails}
+                bulletHeadlines={this.state.overview[0].bulletHeadlines}
               />
 
               {this.state.clearDialog && (

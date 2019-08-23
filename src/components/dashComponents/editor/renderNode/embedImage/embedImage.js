@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import DEFAULT_IMAGE from "../../../../../default.jpg";
 
 const EmbedImage = props => {
   const { attributes, node, children } = props;
@@ -40,11 +41,24 @@ const EmbedImage = props => {
   }
 
   return (
-    <div {...attributes}>
+    <div
+      {...attributes}
+      style={{
+        display: "block",
+        width: "100%",
+        margin: "0 auto"
+      }}
+    >
       <img
-        src={embedImage.imageUrl}
         className={"embedImage"}
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          height: "360px",
+          margin: 10
+        }}
         alt={embedImage.imageAlt}
+        src={embedImage.imageUrl ? embedImage.imageUrl : DEFAULT_IMAGE}
       />
       {children}
       <span>{embedImage.imageCaption}</span>

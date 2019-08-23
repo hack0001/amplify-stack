@@ -1,10 +1,6 @@
-import React, { Fragment, useRef, useState } from "react";
-import Button from "@material-ui/core/Button";
+import React, { Fragment, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import { Storage, API, graphqlOperation } from "aws-amplify";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { articleStyle } from "../styles/articleStyles";
 import { initialLayout } from "./layout/initialState";
@@ -63,7 +59,6 @@ const ArticleOverview = props => {
 
   const bullets = (item, index) => {
     const bulletNo = overview[0].bulletHeadlines;
-
     const bulletHeaders = _.range(bulletNo).map((val, index) => {
       return { ...item.schema, bulletNumber: index + 1 };
     });

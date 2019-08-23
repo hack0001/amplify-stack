@@ -1,11 +1,10 @@
 {
-    "AppSyncApiName": "dashboardApi",
+    "AppSyncApiName": "amplifyDashboardApi",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "AuthCognitoUserPoolId": {
         "Fn::GetAtt": [
             "authcognitodc1b6d32",
             "Outputs.UserPoolId"
         ]
-    },
-    "APIKeyExpirationEpoch": "0"
+    }
 }

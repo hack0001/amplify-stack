@@ -14,24 +14,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { hasLinks } from "../hasHelpers/hasHelpers";
-
-const wrapLink = (editor, linkUrl) => {
-  editor.wrapInline({
-    type: "link",
-    data: { linkUrl }
-  });
-
-  editor.moveToEnd();
-};
-
-const unwrapLink = editor => {
-  editor.unwrapInline("link");
-};
-
+import { wrapLink, unwrapLink } from "../links/links";
+import isUrl from "is-url";
 const SlateDialog = props => {
   const { editor, embedOpen, embedClose, blockType } = props;
   const currentBlockType = blockType ? blockType : "default";
 
+  const [invalidUrl, setInvalidUrl] = useState("");
   const [dialogData, setDialogData] = useState(
     INITIAL_STATE[blockType] ? INITIAL_STATE[blockType] : {}
   );
@@ -39,19 +28,18 @@ const SlateDialog = props => {
   const add = async () => {
     if (blockType === "link") {
       const { value } = editor;
-      const hasLinksNode = hasLinks(value);
+      const hasLinksNode = hasLinks(value, "link");
       if (hasLinksNode) {
         editor.command(unwrapLink);
       } else if (value.selection.isExpanded) {
-        if (dialogData.linkUrl == null) {
+        if (dialogData.linkUrl === null || !isUrl(dialogData.linkUrl)) {
+          setInvalidUrl("Invalid Url please enter another");
           return;
         }
 
         await editor.command(wrapLink, dialogData.linkUrl);
       }
     } else {
-      console.log("SLASTE HANDLE VHANE", blockType);
-      console.log("SLASTE HANDLE VHANE", dialogData);
       await editor
         .insertBlock({
           type: blockType,
@@ -60,11 +48,10 @@ const SlateDialog = props => {
         })
         .insertBlock("paragraph");
     }
-
     setDialogData({});
     embedClose();
   };
-  console.log("BLOCK", dialogData);
+
   return (
     <Dialog
       open={embedOpen}
@@ -74,6 +61,7 @@ const SlateDialog = props => {
       <DialogTitle id="form-dialog-title">
         {Options[currentBlockType].title}
       </DialogTitle>
+
       <DialogContent>
         <DialogContentText>
           {Options[currentBlockType].content}
@@ -140,6 +128,7 @@ const SlateDialog = props => {
             />
           );
         })}
+        <DialogContentText>{invalidUrl} </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={embedClose} color="primary">

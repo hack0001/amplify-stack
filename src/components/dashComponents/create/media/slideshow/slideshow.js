@@ -161,7 +161,6 @@ class SlideShow extends Component {
     const { value } = this.state;
     return (
       <div className={classes.root}>
-        <SimpleStorage parent={this} prefix={"SlideParent"} />
         <form className={classes.root} autoComplete="off">
           <AppBar position="static" color="default">
             <Tabs

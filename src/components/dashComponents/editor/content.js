@@ -1,348 +1,370 @@
-import React, { Component, Fragment } from "react";
+import React, { useState, useRef, useEffect, Fragment } from "react";
 import { Editor } from "slate-react";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
-import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
-import editorItems from "./editor";
+import {
+  editorItems,
+  hoverEditorItems,
+  hoverEditorHighlightItems
+} from "./editor";
 import { styles } from "./styles";
 import renderMark from "./renderMark/renderMark";
 import renderNode from "./renderNode/renderNode";
+import renderInline from "./renderInline/renderInline";
 import { plugins } from "./plugins/plugins";
 import { onPaste, editorLinks } from "./links/links";
-import { hasBlock, hasMark } from "./hasHelpers/hasHelpers";
+import { hasBlock, hasMark, hasInline } from "./hasHelpers/hasHelpers";
 import SlateDialog from "./dialog/slateDialog";
 import ImageDialog from "./dialog/imageDialog";
-import Embed from "./renderNode/embed/embed";
-import Emoji from "./emojis/emoji";
-const defaultColor = "#3f51b5";
-const DEFAULT_NODE = "paragraph";
+import EmoticonDialog from "./dialog/emoticonDialog";
+import HoverMenu from "./hoverMenu/hoverMenu";
+import { clickBlock, clickMark, clickInline } from "./clickEvent";
+import {
+  MarkButton,
+  BlockButton,
+  blockSwitch,
+  markSwitch,
+  InlineButton,
+  inlineSwitch
+} from "./renderButtons";
 
-class Content extends Component {
-  state = {
+const defaultColor = "#3f51b5";
+
+const Content = ({
+  value,
+  handleChange,
+  classes,
+  headline,
+  bulletHeaders,
+  bulletHeadlines
+}) => {
+  const [content, setContent] = useState({
     color: null,
     inputModal: false,
     slateDialog: false,
     imageDialog: false,
-    type: ""
+    emoticonDialog: false,
+    type: "",
+    value: ""
+  });
+
+  const edit = useRef(null);
+  const hover = useRef(null);
+  const hoverSelect = useRef(null);
+
+  useEffect(() => {
+    handleHover();
+  });
+
+  const hoverClick = () => {
+    const menu = hover.current;
+    if (!menu) return;
+    const editor = edit.current;
+    const { value } = editor;
+    const { startBlock } = value;
+
+    if (startBlock) {
+      if (startBlock.text === "") {
+        if (menu.style.opacity === "1") {
+          menu.style.opacity = 0;
+          menu.style.display = "none";
+        } else {
+          const native = window.getSelection();
+          const range = native.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+          menu.style.opacity = 1;
+
+          menu.style.top = `${rect.top + window.pageYOffset - 60}px`;
+          menu.style.backgroundColor = "#dedede";
+          menu.style.display = "block";
+
+          const marginLeftBuffer =
+            rect.left - menu.offsetWidth / 2 + rect.width / 2 < 100
+              ? 100
+              : rect.left + menu.offsetWidth / 2 + rect.width / 2 > 970
+              ? 405
+              : rect.left - menu.offsetWidth / 2 + rect.width / 2 + 50;
+          menu.style.left = `${marginLeftBuffer}px`;
+        }
+      } else {
+        menu.style.opacity = 0;
+        menu.style.display = "none";
+        return;
+      }
+    }
   };
 
-  onClickMark = (event, type) => {
-    event.preventDefault();
-    this.editor.toggleMark(type);
+  const handleHover = () => {
+    const menu = hoverSelect.current;
+    if (!menu) return;
+    const editor = edit.current;
+    const { value } = editor;
+    const { fragment, selection } = value;
+
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
+      menu.style.opacity = 0;
+      menu.style.display = "none";
+      return;
+    }
+
+    const native = window.getSelection();
+    const range = native.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    menu.style.opacity = 1;
+
+    menu.style.top = `${rect.top + window.pageYOffset - 60}px`;
+    menu.style.backgroundColor = "#dedede";
+    menu.style.display = "block";
+
+    const marginLeftBuffer =
+      rect.left - menu.offsetWidth / 2 + rect.width / 2 < 100
+        ? 100
+        : rect.left + menu.offsetWidth / 2 + rect.width / 2 > 970
+        ? 405
+        : rect.left - menu.offsetWidth / 2 + rect.width / 2 + 50;
+    menu.style.left = `${marginLeftBuffer}px`;
   };
 
-  onDialogClose = e => {
-    this.setState({
+  const onDialogClose = e => {
+    setContent({
       slateDialog: false,
       imageDialog: false,
+      emoticonDialog: false,
       type: ""
     });
   };
 
-  renderMarkButton = (type, Icon, tooltip) => {
-    const { value, classes } = this.props;
-    const isActive = hasMark(value, type);
-    const activeColor = isActive ? defaultColor : "grey";
-    return (
-      <Button>
-        <Tooltip title={tooltip} key={type}>
-          <Grid
-            className={classes.icons}
-            onClick={event => this.onClickMark(event, type)}
-          >
-            <Icon style={{ color: activeColor }} />
-          </Grid>
-        </Tooltip>
-      </Button>
-    );
-  };
-
-  renderBlockButton = (type, Icon, tooltip) => {
-    const { value, classes } = this.props;
+  const renderBlockButton = (type, Icon, tooltip, renderType) => {
     let isActive = hasBlock(value, type);
-
-    const activeColor = isActive ? defaultColor : "grey";
-
-    if (["numbered-list", "bulleted-list"].includes(type)) {
-      const {
-        value: { document, blocks }
-      } = this.props;
-
-      if (blocks.size > 0) {
-        const parent = document.getParent(blocks.first().key);
-        isActive =
-          hasBlock(value, "list-item") && parent && parent.type === type;
-      }
-    }
-
-    if ("embed-image" === type) {
-      return (
-        <Button>
-          <Tooltip title={tooltip} key={type}>
-            <Grid
-              className={classes.icons}
-              onClick={event => this.setState({ imageDialog: true, type })}
-            >
-              <Icon style={{ color: activeColor }} />
-            </Grid>
-          </Tooltip>
-        </Button>
-      );
-    } else if (["embed", "quote", "link"].includes(type)) {
-      return (
-        <Button>
-          <Tooltip title={tooltip} key={type}>
-            <Grid
-              className={classes.icons}
-              onClick={event => this.setState({ slateDialog: true, type })}
-            >
-              <Icon style={{ color: activeColor }} />
-            </Grid>
-          </Tooltip>
-        </Button>
-      );
-    }
+    const editor = edit.current;
+    const switchBlocks = blockSwitch(
+      type,
+      value,
+      setContent,
+      clickBlock,
+      editor,
+      isActive
+    );
+    const { listType, buttonHandler } = switchBlocks;
+    const activeColor = isActive
+      ? defaultColor
+      : listType
+      ? defaultColor
+      : "grey";
 
     return (
-      <Button>
-        <Tooltip title={tooltip} key={type}>
-          <Grid
-            className={classes.icons}
-            onClick={event => this.onClickBlock(event, type)}
-          >
-            <Icon style={{ color: activeColor }} />
-          </Grid>
-        </Tooltip>
-      </Button>
+      <BlockButton
+        Icon={Icon}
+        tooltip={tooltip}
+        classes={classes}
+        type={type}
+        activeColor={activeColor}
+        handleBlock={buttonHandler}
+        editor={editor}
+        renderType={renderType}
+      />
     );
   };
 
-  onClickEmoji = (code, e) => {
-    e.preventDefault();
-    this.editor
-      .insertInline({ type: "emoji", data: { code } })
-      .moveToStartOfNextText()
-      .focus();
-  };
-
-  onClickBlock = (event, type) => {
-    event.preventDefault();
-    const { editor } = this;
-    const { value } = editor;
-    const { document } = value;
-
-    // switch (type){
-    // 	case "link":
-    // 	return editorLinks(editor,value)
-    // 	case "embed":
-    // 	editor.setBlocks(type)
-    // case "emoji":
-    // <Emoji
-    //         key={type}
-    //         tooltip={tooltip}
-    //         type={type}
-    //         classes={classes}
-    //         Icon={Icon}
-    //         onClickMark={this.onClickMark}
-    //         onClickEmoji={this.onClickEmoji}
-    //         emojiAnchor={emojiAnchor}
-    //         handleClose={this.handleClose}
-    //         emoji={this.state.emoji}
-    //       />
-    // 	case !"bulleted-list" && !"numbered-list":
-    // 	return
-    // 	default:
-    // 	return null
-    // }
-
-    // switch (type) {
-    //   case "emoji":
-    //     return (
-    //       <Emoji
-    //         key={type}
-    //         tooltip={tooltip}
-    //         type={type}
-    //         classes={classes}
-    //         Icon={Icon}
-    //         onClickMark={this.onClickMark}
-    //         onClickEmoji={this.onClickEmoji}
-    //         emojiAnchor={emojiAnchor}
-    //         handleClose={this.handleClose}
-    //         emoji={this.state.emoji}
-    //       />
-    //     );
-    //   default:
-    //     return (
-    //       <Tooltip title={tooltip} key={type}>
-    //         <Grid className={classes.icons}>
-    //           <Icon
-    //             style={{ color: "grey" }}
-    //             onClick={event => mark(event, type)}
-    //           />
-    //         </Grid>
-    //       </Tooltip>
-    //     );
-    // }
-
-    // Handle everything but list buttons.
-    if (type !== "bulleted-list" && type !== "numbered-list") {
-      const isActive = hasBlock(value, type);
-      const isList = hasBlock(value, "list-item");
-      const isDivider = hasBlock(value, "horizontal-line");
-      if (isList) {
-        editor
-          .setBlocks(isActive ? DEFAULT_NODE : type)
-          .unwrapBlock("bulleted-list")
-          .unwrapBlock("numbered-list");
-      } else {
-        editor.setBlocks(isActive ? DEFAULT_NODE : type);
-      }
-    } else {
-      // Handle the extra wrapping required for list buttons.
-      const isList = hasBlock(value, "list-item");
-      const isType = value.blocks.some(block => {
-        return !!document.getClosest(block.key, parent => parent.type === type);
-      });
-
-      if (isList && isType) {
-        editor
-          .setBlocks(DEFAULT_NODE)
-          .unwrapBlock("bulleted-list")
-          .unwrapBlock("numbered-list");
-      } else if (isList) {
-        editor
-          .unwrapBlock(
-            type === "bulleted-list" ? "numbered-list" : "bulleted-list"
-          )
-          .wrapBlock(type);
-      } else {
-        editor.setBlocks("list-item").wrapBlock(type);
-      }
-    }
-  };
-
-  ref = editor => {
-    this.editor = editor;
-  };
-
-  handleClose = () => {
-    this.setState({ emoji: false, emojiAnchor: null });
-  };
-
-  onChange = ({ value }) => {
-    // const content = JSON.stringify(value.toJSON());
-    // console.log("CONTENT", content);
-    // localStorage.setItem('content', content)
-    this.setState({ value });
-  };
-
-  render() {
-    const {
+  const renderMarkButton = (type, Icon, tooltip, renderType) => {
+    const isActive = hasMark(value, type);
+    const editor = edit.current;
+    const activeColor = isActive ? defaultColor : "grey";
+    const switchMarks = markSwitch(
+      type,
       value,
-      handleChange,
-      classes,
-      headline,
-      bulletHeaders,
-      bulletHeadlines
-    } = this.props;
+      setContent,
+      clickMark,
+      editor,
+      isActive
+    );
+    const { buttonHandler } = switchMarks;
+    return (
+      <MarkButton
+        Icon={Icon}
+        tooltip={tooltip}
+        classes={classes}
+        type={type}
+        activeColor={activeColor}
+        handleMarkUp={buttonHandler}
+        editor={editor}
+        renderType={renderType}
+      />
+    );
+  };
 
-    console.log("THIS", this.state);
+  const renderInlineButton = (type, Icon, tooltip, renderType) => {
+    const isActive = hasInline(value, type);
+    const editor = edit.current;
+    const activeColor = isActive ? defaultColor : "grey";
+    const switchInline = inlineSwitch(
+      type,
+      value,
+      setContent,
+      clickInline,
+      editor,
+      isActive
+    );
+    const { buttonHandler } = switchInline;
+    return (
+      <InlineButton
+        Icon={Icon}
+        tooltip={tooltip}
+        classes={classes}
+        type={type}
+        activeColor={activeColor}
+        handleInline={buttonHandler}
+        editor={editor}
+        renderType={renderType}
+      />
+    );
+  };
+
+  const renderEditor = (props, editor, next) => {
+    const children = next();
     return (
       <Fragment>
-        <Grid container alignItems="center" style={{ padding: 20 }}>
-          {editorItems.map(({ type, Icon, tooltip, editorType }) => {
-            switch (editorType) {
-              case "mark":
-                return this.renderMarkButton(type, Icon, tooltip);
-              case "block":
-                return this.renderBlockButton(type, Icon, tooltip);
-              default:
-                return <div />;
-            }
-          })}
-        </Grid>
-        <Divider className={classes.editorDivide} variant="middle" />
-        <div
-          style={{
-            maxWidth: "60%",
-            marginLeft: 100,
-            marginTop: 50,
-            marginBottom: 50,
-            paddingBottom: 100
-          }}
-        >
-          {headline && !bulletHeadlines && (
-            <Fragment>
-              <Typography variant="h3" component="h2">
-                {headline}
-              </Typography>
-              <Divider
-                className={classes.editorDivide}
-                style={{ width: "100%", marginTop: 25 }}
-              />
-            </Fragment>
-          )}
-          {headline && bulletHeadlines && (
-            <Fragment>
-              <Typography variant="h3" component="h2">
-                {headline}
-              </Typography>
-            </Fragment>
-          )}
-          {bulletHeadlines && (
-            <Fragment>
-              <ul style={{ marginBottom: 35 }}>
-                {Object.keys(bulletHeaders).map(bullet => {
-                  return (
-                    <li style={{ fontSize: 25 }}>
-                      <Typography variant="h6" gutterBottom>
-                        {bulletHeaders[bullet]}
-                      </Typography>
-                    </li>
-                  );
-                })}
-              </ul>
-              <Divider
-                className={classes.editorDivide}
-                style={{ width: "100%" }}
-              />
-            </Fragment>
-          )}
-          <Editor
-            spellCheck
-            ref={this.ref}
-            value={value}
-            onChange={handleChange}
-            renderMark={renderMark.bind(this)}
-            renderNode={renderNode.bind(this)}
-            plugins={plugins}
-            // onPaste={onPaste.bind(this)}
-          />
-        </div>
-        {this.state.slateDialog && (
-          <SlateDialog
-            blockType={this.state.type}
-            classEmbed={classes.icons}
-            editor={this.editor}
-            embedOpen={this.state.slateDialog}
-            embedClose={this.onDialogClose}
-          />
-        )}
-        {this.state.imageDialog && (
-          <ImageDialog
-            blockType={this.state.type}
-            classEmbed={classes.icons}
-            editor={this.editor}
-            imageOpen={this.state.imageDialog}
-            imageClose={this.onDialogClose}
-          />
-        )}
+        {children}
+        <HoverMenu
+          ref={hover}
+          hoverItems={hoverEditorItems}
+          editor={editor}
+          renderMarkButton={renderMarkButton}
+          renderBlockButton={renderBlockButton}
+          renderInlineButton={renderInlineButton}
+          defaultColor={defaultColor}
+          setContent={setContent}
+          onClickBlock={clickBlock}
+          onClickInline={clickInline}
+          onClickMark={clickMark}
+          classes={classes}
+        />
+        <HoverMenu
+          ref={hoverSelect}
+          hoverItems={hoverEditorHighlightItems}
+          editor={editor}
+          renderMarkButton={renderMarkButton}
+          renderBlockButton={renderBlockButton}
+          renderInlineButton={renderInlineButton}
+          defaultColor={defaultColor}
+          setContent={setContent}
+          onClickBlock={clickBlock}
+          onClickInline={clickInline}
+          onClickMark={clickMark}
+          classes={classes}
+        />
       </Fragment>
     );
-  }
-}
+  };
+
+  return (
+    <Fragment>
+      <Grid container alignItems="center" style={{ padding: 20 }}>
+        {editorItems.map(({ type, Icon, tooltip, editorType }) => {
+          switch (editorType) {
+            case "mark":
+              return renderMarkButton(type, Icon, tooltip, "main");
+            case "block":
+              return renderBlockButton(type, Icon, tooltip, "main");
+            case "inline":
+              return renderInlineButton(type, Icon, tooltip, "main");
+            default:
+              return <div />;
+          }
+        })}
+      </Grid>
+      <Divider className={classes.editorDivide} variant="middle" />
+      <div
+        style={{
+          maxWidth: "60%",
+          marginLeft: 100,
+          marginTop: 50,
+          marginBottom: 50,
+          paddingBottom: 100
+        }}
+      >
+        {headline && !bulletHeadlines && (
+          <Fragment>
+            <Typography variant="h3" component="h2">
+              {headline}
+            </Typography>
+            <Divider
+              className={classes.editorDivide}
+              style={{ width: "100%", marginTop: 25 }}
+            />
+          </Fragment>
+        )}
+        {headline && bulletHeadlines && (
+          <Fragment>
+            <Typography variant="h3" component="h2">
+              {headline}
+            </Typography>
+          </Fragment>
+        )}
+        {bulletHeadlines && (
+          <Fragment>
+            <ul style={{ marginBottom: 35 }}>
+              {Object.keys(bulletHeaders).map(bullet => {
+                return (
+                  <li style={{ fontSize: 25 }}>
+                    <Typography variant="h6" gutterBottom>
+                      {bulletHeaders[bullet]}
+                    </Typography>
+                  </li>
+                );
+              })}
+            </ul>
+            <Divider
+              className={classes.editorDivide}
+              style={{ width: "100%" }}
+            />
+          </Fragment>
+        )}
+        <Editor
+          spellCheck
+          placeholder="Enter text here..."
+          ref={edit}
+          value={value}
+          onChange={handleChange}
+          renderMark={renderMark}
+          renderBlock={renderNode}
+          renderEditor={renderEditor}
+          renderInline={renderInline}
+          plugins={plugins}
+          onClick={hoverClick}
+          // onPaste={onPaste.bind(this)}
+        />
+      </div>
+      {content.slateDialog && (
+        <SlateDialog
+          blockType={content.type}
+          classEmbed={classes.icons}
+          editor={edit.current}
+          embedOpen={content.slateDialog}
+          embedClose={onDialogClose}
+        />
+      )}
+      {content.imageDialog && (
+        <ImageDialog
+          blockType={content.type}
+          classEmbed={classes.icons}
+          editor={edit.current}
+          imageOpen={content.imageDialog}
+          imageClose={onDialogClose}
+        />
+      )}
+      {content.emoticonDialog && (
+        <EmoticonDialog
+          blockType={content.type}
+          openDialog={content.emoticonDialog}
+          closeDialog={onDialogClose}
+          editor={edit.current}
+        />
+      )}
+    </Fragment>
+  );
+};
 
 export default withStyles(styles)(Content);
