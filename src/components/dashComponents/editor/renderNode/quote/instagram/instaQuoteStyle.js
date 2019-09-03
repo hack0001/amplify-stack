@@ -39,8 +39,8 @@ const quoteWordStyle = {
   color: "white",
   background:
     "-webkit-gradient(linear,left top,left bottom,from(#833ab4),to(#fd1d1d))",
-  "-webkit-background-clip": "text",
-  "-webkit-text-fill-color": "transparent"
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent"
 };
 
 export { quoteIconFirst, quoteIconSecond, quoteWordStyle, quoteIconFooter };

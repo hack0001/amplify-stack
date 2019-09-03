@@ -48,32 +48,15 @@ const Quote = props => {
 
   switch (quote.styleQuote) {
     case "instagram":
-      return (
-        <blockquote {...attributes} style={topLevelQuote}>
-          <InstaQuote quote={quote}>{children}</InstaQuote>
-        </blockquote>
-      );
+      return <InstaQuote {...props} quote={quote} />;
     case "electric":
-      return (
-        <blockquote {...attributes} style={topLevelQuote}>
-          <ElectricQuote quote={quote}>{children}</ElectricQuote>
-        </blockquote>
-      );
+      return <ElectricQuote {...props} quote={quote} />;
     case "normal":
-      return (
-        <blockquote {...attributes} style={topLevelQuote}>
-          <ElectricQuote quote={quote}>{children}</ElectricQuote>
-        </blockquote>
-      );
+      return <ElectricQuote {...props} quote={quote} />;
     case "shrimpy":
-      return (
-        <blockquote {...attributes} style={topLevelQuote}>
-          <ShrimpyQuote quote={quote}>{children}</ShrimpyQuote>
-        </blockquote>
-      );
-
+      return <ShrimpyQuote {...props} quote={quote} />;
     default:
-      return <div>{children}</div>;
+      return <div {...attributes}>{children}</div>;
   }
 };
 

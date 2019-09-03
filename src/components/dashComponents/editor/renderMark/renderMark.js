@@ -1,23 +1,14 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
 
 const renderMark = (props, editor, next) => {
   const { children, mark, attributes } = props;
   switch (mark.type) {
     case "bold":
-      return (
-        <Box fontWeight="fontWeightBold" {...attributes}>
-          {children}
-        </Box>
-      );
+      return <strong {...attributes}>{children}</strong>;
     case "code":
       return <code {...attributes}>{children}</code>;
     case "italic":
-      return (
-        <Box fontStyle="italic" {...attributes}>
-          {children}
-        </Box>
-      );
+      return <em {...attributes}>{children}</em>;
     case "strikethrough":
       return <del {...attributes}>{children}</del>;
     case "underline":

@@ -1,0 +1,67 @@
+type Site
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: groups, groups: ["Admin"] }]) {
+  id: ID
+  articles: [Article] @connection(name: "siteArticles", sortField: "updatedAt")
+  createdAt: String
+  description: String
+  tasks: [Task] @connection(name: "siteTasks", sortField: "updatedAt")
+  name: String
+  type: String
+  quiz: [Quiz] @connection(name: "siteQuiz", sortField: "updatedAt")
+  slideShows: [SlideShow]
+    @connection(name: "siteSlideShows", sortField: "updatedAt")
+  updatedAt: String
+}
+
+type Article
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  userId: ID!
+  authorName: String
+  overview: [String]
+  createdAt: String
+  content: String
+  development: Boolean!
+  production: Boolean!
+  productionId: String
+  site: Site @connection(name: "siteArticles")
+  updatedAt: String
+  user: User @connection(name: "userArticles")
+}
+
+type SlideShow
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  category: String
+  createdAt: String!
+  development: Boolean!
+  production: Boolean!
+  productionId: String
+  slides: [String]
+  schedule: Boolean
+  scheduleTime: String
+  site: Site @connection(name: "siteSlideShows")
+  user: User @connection(name: "userSlideShows")
+  updatedAt: String!
+}
+
+type Quiz
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  category: String
+  createdAt: String!
+  development: Boolean!
+  overview: [String]
+  production: Boolean!
+  productionId: String
+  questions: [String]
+  schedule: Boolean
+  scheduleTime: String
+  site: Site @connection(name: "siteQuiz")
+  user: User @connection(name: "userQuiz")
+  updatedAt: String!
+}

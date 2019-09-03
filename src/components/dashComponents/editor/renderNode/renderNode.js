@@ -1,44 +1,20 @@
 import React from "react";
-import Divider from "@material-ui/core/Divider";
-import { quoteStyle, quoteStyleText, blockQuoteStyle } from "./styles/styles";
 import Embed from "./embed/embed";
 import Quote from "./quote/quote";
 import EmbedImage from "./embedImage/embedImage";
+import Paragraph from "./paragraph/paragraph";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-
 const formatSize = 18;
 const lineHeight = 1.75;
+
 const renderNode = (props, editor, next) => {
   const { attributes, children, node } = props;
-  console.log("RENDER", node.type);
   switch (node.type) {
     case "code":
       return <code {...attributes}>{children}</code>;
     case "paragraph":
-      return (
-        <Box
-          variant="body1"
-          gutterBottom
-          fontSize={formatSize}
-          lineHeight={lineHeight}
-          fontStyle="normal"
-          align="justify"
-          {...attributes}
-        >
-          {children}
-        </Box>
-      );
-    case "emoji":
-      const code = node.data.get("code");
-      return (
-        <span {...attributes}>
-          {code}
-          {children}
-        </span>
-      );
-    case "bulleted-list":
-      return <ul {...attributes}>{children}</ul>;
+      return <Paragraph {...props} {...attributes} {...node} {...children} />;
     case "heading-one":
       return (
         <Typography variant="h1" {...attributes}>
@@ -125,23 +101,23 @@ const renderNode = (props, editor, next) => {
           {children}
         </Box>
       );
-    case "bullet-list":
+    case "bulleted-list":
       return (
-        <li style={{ fontSize: formatSize }} {...attributes}>
+        <ul style={{ fontSize: formatSize }} {...attributes}>
           {children}
-        </li>
-      );
-    case "list-item":
-      return (
-        <li style={{ fontSize: formatSize }} {...attributes}>
-          {children}
-        </li>
+        </ul>
       );
     case "numbered-list":
       return (
         <ol style={{ fontSize: formatSize }} {...attributes}>
           {children}
         </ol>
+      );
+    case "list-item":
+      return (
+        <li style={{ fontSize: formatSize }} {...attributes}>
+          {children}
+        </li>
       );
     case "quote":
       return <Quote {...props} {...attributes} {...node} {...children} />;
@@ -158,25 +134,43 @@ const renderNode = (props, editor, next) => {
           {children}
         </span>
       );
-    case "link":
-      const { data } = node;
-      const link = data.get("linkUrl");
-      return (
-        <a
-          {...attributes}
-          href={link}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {children}
-        </a>
-      );
 
     case "embed-image":
       return <EmbedImage {...props} {...attributes} {...node} {...children} />;
     case "embed":
       return <Embed {...props} {...attributes} {...node} {...children} />;
-
+    case "paid-ad":
+      return (
+        <Box
+          variant="body1"
+          gutterBottom
+          fontSize={formatSize}
+          lineHeight={5}
+          fontStyle="normal"
+          align="center"
+          {...attributes}
+          style={{ color: "grey" }}
+        >
+          ____________ADVERT____________
+          {children}
+        </Box>
+      );
+    case "site-ad":
+      return (
+        <Box
+          variant="body1"
+          gutterBottom
+          fontSize={formatSize}
+          lineHeight={5}
+          fontStyle="normal"
+          align="center"
+          {...attributes}
+          style={{ color: "grey" }}
+        >
+          ____________SITE_ADVERT____________
+          {children}
+        </Box>
+      );
     default:
       return next();
   }

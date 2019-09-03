@@ -8,167 +8,203 @@ import Button from "@material-ui/core/Button";
 import Send from "@material-ui/icons/Send";
 import { Content, Overview } from "./index";
 import { articleStyles } from "./styles/articleStyles";
-import { initialValue, updateValue, TabContainer } from "./editorSettings";
+import { initialValue } from "./editorSettings";
 import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
-import SimpleStorage, { clearStorage } from "react-simple-storage";
 import ClearDialog from "../dialog/clearValues";
 import Delete from "@material-ui/icons/Delete";
 import { INITIAL_ARTICLE_OVERVIEW } from "./overview/layout/initialState";
+import { Value } from "slate";
+import { API, graphqlOperation } from "aws-amplify";
+import AuthContext from "../../../../../context/authContext";
+import uuid from "uuid";
+// import { createNewMessage, x/onCreateMessage } from "./graphql/chatGraphql";
 
 class Article extends Component {
-  state = {
-    tab: 1,
-    age: 0,
-    categories: ["Overview", "Article"],
-    overview: [INITIAL_ARTICLE_OVERVIEW],
-    value: initialValue
-  };
+	constructor(props) {
+		super(props);
 
-  // http://carsandyachts.com/trending/51-celebrities-their-phenomenal-weight-loss-transformation-tb/
-  // ?utm_source=taboola&utm_medium=dailymail-uk&utm_campaign=2517695&utm_term=Anne+Hegerty+
-  // is+So+Skinny+Now+and+Looks+Gorgeous%21+%28Photos%29&utm_content=http%3A%2F%2Fcdn.taboola.com%2Flibtrc%2Fstatic%2Fthumbnails%2Febc8d06177e8eadd089a4fc732ed79fd.jpg
+		const contentStorage = localStorage.getItem("content")
+			? JSON.parse(localStorage.getItem("content"))
+			: null;
+		const overviewStorage = localStorage.getItem("overview")
+			? JSON.parse(localStorage.getItem("overview"))
+			: null;
 
-  clearArticleValues = () => {
-    this.setState({
-      ...this.state,
-      overview: [INITIAL_ARTICLE_OVERVIEW],
-      value: updateValue,
-      clearDialog: false
-    });
-  };
+		this.state = {
+			tab: 0,
+			age: 0,
+			categories: ["Overview", "Article"],
+			overview: overviewStorage ? overviewStorage : [INITIAL_ARTICLE_OVERVIEW],
+			value: contentStorage ? Value.fromJSON(contentStorage) : initialValue,
+		};
+	}
+	static contextType = AuthContext;
 
-  cleanup = name => {
-    return name
-      .trim()
-      .replace(/\s/g, "_")
-      .toLowerCase();
-  };
+	clearArticleValues = () => {
+		this.setState({
+			...this.state,
+			overview: [INITIAL_ARTICLE_OVERVIEW],
+			value: initialValue,
+			clearDialog: false,
+		});
+	};
 
-  handleSend = values => {
-    this.setState(values);
-  };
+	cleanup = name => {
+		return name
+			.trim()
+			.replace(/\s/g, "_")
+			.toLowerCase();
+	};
 
-  handleChange = ({ value }) => {
-    // console.log("EDITOR CHANGE", JSON.stringify(value.toJSON()));
-    // localStorage.setItem('content', content)
-    this.setState({ value });
-  };
+	handleSend = values => {
+		if (values.overview !== this.state.overview) {
+			localStorage.setItem("overview", JSON.stringify(values.overview));
+		}
+		this.setState(values);
+	};
 
-  handleTab = (event, value) => {
-    this.setState({ tab: value });
-  };
+	handleChange = ({ value }) => {
+		if (value.document !== this.state.value.document) {
+			const content = JSON.stringify(value.toJSON());
+			localStorage.setItem("content", content);
+		}
+		this.setState({ value });
+	};
 
-  handleClose = event => {
-    this.setState({ reduceDialog: false });
-  };
+	handleTab = (event, value) => {
+		this.setState({ tab: value });
+	};
 
-  handleSubmit = e => {
-    e.preventDefault();
-    console.log("SUBMIT");
-  };
+	handleClose = event => {
+		this.setState({ reduceDialog: false });
+	};
 
-  render() {
-    console.log("handleValues", this.state);
-    const { classes, theme } = this.props;
-    const { tab } = this.state;
-    const header = this.state.overview[0].articleHeadline
-      ? this.state.overview[0].articleHeadline
-      : this.state.overview[0].headline;
+	handleSubmit = e => {
+		e.preventDefault();
 
-    return (
-      <div className={classes.root}>
-        {/* <SimpleStorage parent={this} prefix={"ArticleParent"} /> */}
-        <form
-          className={classes.root}
-          autoComplete="off"
-          onSubmit={this.handleSubmit}
-        >
-          <AppBar position="static" color="default">
-            <Tabs
-              value={tab}
-              onChange={this.handleTab}
-              indicatorColor="primary"
-              textColor="primary"
-              scrollButtons="auto"
-              variant="fullWidth"
-              centered
-            >
-              {this.state.categories.map(category => {
-                return <Tab label={category} key={category} />;
-              })}
-            </Tabs>
-          </AppBar>
-          <Paper className={classes.articleWrap}>
-            <div
-              style={{
-                padding: 8 * 3,
-                margin: "10px 1px 5px 1px"
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                align="right"
-                className={classes.button}
-                onClick={e => console.log("VALUES", this.state)}
-              >
-                <Send className={classes.rightIcon} />
-                Create
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                align="right"
-                style={{ float: "right" }}
-                className={classes.button}
-                onClick={e => {
-                  this.setState({ clearDialog: true });
-                  clearStorage("ArticleParent");
-                }}
-              >
-                <Delete className={classes.rightIcon} />
-                Clear Values
-              </Button>
-            </div>
-          </Paper>
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={this.state.tab}
-            onChangeIndex={this.handleChangeIndex}
-          >
-            <Paper className={classes.articleWrap}>
-              <Overview
-                overview={this.state.overview}
-                handleSend={this.handleSend}
-              />
-            </Paper>
-            <Paper className={classes.articleWrap}>
-              <Content
-                value={this.state.value}
-                handleChange={this.handleChange}
-                headline={header}
-				bulletHeaders={this.state.overview[0].bulletHeadlinesDetails}
-				bulletHeadlines={this.state.overview[0].bulletHeadlines}
-              />
+		const submit = {
+			id: uuid(),
+			authorId: this.context.userId,
+			authorName: this.context.userId,
+			overview: this.state.overview,
+			content: this.state.value,
+			development: true,
+			production: false,
+			articleUserId: this.context.profileId,
+		};
+		console.log("THIS STATE", this);
+		// const message = {
+		//   messageConversationId: conversationId,
+		//   content: textMsg,
+		//   authorId: conversationUserId
+		// };
+		// await API.graphql(graphqlOperation(create, { input: message }));
+		// setTextMsg("");
+		console.log("SUBMIT");
+	};
 
-              {this.state.clearDialog && (
-                <ClearDialog
-                  open={this.state.clearDialog}
-                  onClose={e => this.setState({ clearDialog: false })}
-                  accept={this.clearArticleValues}
-                />
-              )}
-            </Paper>
-          </SwipeableViews>
-        </form>
-      </div>
-    );
-  }
+	render() {
+		// console.log("handleValues", this.state);
+		const { classes, theme } = this.props;
+		const { tab } = this.state;
+		const header = this.state.overview[0].articleHeadline
+			? this.state.overview[0].articleHeadline
+			: this.state.overview[0].headline;
+
+		return (
+			<div className={classes.root}>
+				<form
+					className={classes.root}
+					autoComplete="off"
+					onSubmit={this.handleSubmit}
+				>
+					<AppBar position="static" color="default">
+						<Tabs
+							value={tab}
+							onChange={this.handleTab}
+							indicatorColor="primary"
+							textColor="primary"
+							scrollButtons="auto"
+							variant="fullWidth"
+							centered
+						>
+							{this.state.categories.map(category => {
+								return <Tab label={category} key={category} />;
+							})}
+						</Tabs>
+					</AppBar>
+					<Paper className={classes.articleWrap}>
+						<div
+							style={{
+								padding: 8 * 3,
+								margin: "10px 1px 5px 1px",
+							}}
+						>
+							<Button
+								variant="contained"
+								color="primary"
+								align="right"
+								className={classes.button}
+								onClick={this.handleSubmit.bind(this)}
+							>
+								<Send className={classes.rightIcon} />
+								Create
+							</Button>
+							<Button
+								variant="contained"
+								color="secondary"
+								align="right"
+								style={{ float: "right" }}
+								className={classes.button}
+								onClick={e => {
+									this.setState({ clearDialog: true });
+									localStorage.removeItem("content");
+									localStorage.removeItem("overview");
+								}}
+							>
+								<Delete className={classes.rightIcon} />
+								Clear Values
+							</Button>
+						</div>
+					</Paper>
+					<SwipeableViews
+						axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={this.state.tab}
+						onChangeIndex={this.handleChangeIndex}
+					>
+						<Paper className={classes.articleWrap}>
+							<Overview
+								overview={this.state.overview}
+								handleSend={this.handleSend}
+							/>
+						</Paper>
+						<Paper className={classes.articleWrap}>
+							<Content
+								value={this.state.value}
+								handleChange={this.handleChange}
+								headline={header}
+								bulletHeaders={this.state.overview[0].bulletHeadlinesDetails}
+								bulletHeadlines={this.state.overview[0].bulletHeadlines}
+							/>
+
+							{this.state.clearDialog && (
+								<ClearDialog
+									open={this.state.clearDialog}
+									onClose={e => this.setState({ clearDialog: false })}
+									accept={this.clearArticleValues}
+								/>
+							)}
+						</Paper>
+					</SwipeableViews>
+				</form>
+			</div>
+		);
+	}
 }
 
 Article.propTypes = {
-  classes: PropTypes.object.isRequired
+	classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(articleStyles, { withTheme: true })(Article);

@@ -326,33 +326,13 @@ export const getSite = `query GetSite($id: ID!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -684,30 +664,12 @@ export const getArticle = `query GetArticle($id: ID!) {
     id
     authorId
     authorName
-    brief
-    category
+    overview
     createdAt
     content
     development
-    headline
-    headlineSummary
-    headlineImage
-    headlineImageAlt
-    headlineImageAttribution
-    headlineImageAttributionLink
-    instantDevelopmentCheck
-    instantPublishCheck
-    kicker
-    longUrl
-    longMobileUrl
     production
     productionId
-    pushDate
-    schedule
-    scheduleTime
-    shareCount
-    shortUrl
-    shortMobileUrl
     site {
       id
       articles {
@@ -728,9 +690,7 @@ export const getArticle = `query GetArticle($id: ID!) {
       }
       updatedAt
     }
-    tags
     updatedAt
-    urlDescription
     user {
       id
       userId
@@ -785,30 +745,12 @@ export const listArticles = `query ListArticles(
       id
       authorId
       authorName
-      brief
-      category
+      overview
       createdAt
       content
       development
-      headline
-      headlineSummary
-      headlineImage
-      headlineImageAlt
-      headlineImageAttribution
-      headlineImageAttributionLink
-      instantDevelopmentCheck
-      instantPublishCheck
-      kicker
-      longUrl
-      longMobileUrl
       production
       productionId
-      pushDate
-      schedule
-      scheduleTime
-      shareCount
-      shortUrl
-      shortMobileUrl
       site {
         id
         createdAt
@@ -817,9 +759,7 @@ export const listArticles = `query ListArticles(
         type
         updatedAt
       }
-      tags
       updatedAt
-      urlDescription
       user {
         id
         userId
@@ -1155,33 +1095,13 @@ export const getUser = `query GetUser($id: ID!) {
         id
         authorId
         authorName
-        brief
-        category
+        overview
         createdAt
         content
         development
-        headline
-        headlineSummary
-        headlineImage
-        headlineImageAlt
-        headlineImageAttribution
-        headlineImageAttributionLink
-        instantDevelopmentCheck
-        instantPublishCheck
-        kicker
-        longUrl
-        longMobileUrl
         production
         productionId
-        pushDate
-        schedule
-        scheduleTime
-        shareCount
-        shortUrl
-        shortMobileUrl
-        tags
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1474,30 +1394,12 @@ export const searchArticles = `query SearchArticles(
       id
       authorId
       authorName
-      brief
-      category
+      overview
       createdAt
       content
       development
-      headline
-      headlineSummary
-      headlineImage
-      headlineImageAlt
-      headlineImageAttribution
-      headlineImageAttributionLink
-      instantDevelopmentCheck
-      instantPublishCheck
-      kicker
-      longUrl
-      longMobileUrl
       production
       productionId
-      pushDate
-      schedule
-      scheduleTime
-      shareCount
-      shortUrl
-      shortMobileUrl
       site {
         id
         createdAt
@@ -1506,9 +1408,7 @@ export const searchArticles = `query SearchArticles(
         type
         updatedAt
       }
-      tags
       updatedAt
-      urlDescription
       user {
         id
         userId

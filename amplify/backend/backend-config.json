@@ -7,7 +7,7 @@
 	},
 	"analytics": {},
 	"api": {
-		"dashboardApi": {
+		"amplifyDashboardApi": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {

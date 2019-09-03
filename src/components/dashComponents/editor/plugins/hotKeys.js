@@ -22,7 +22,6 @@ const plugins = [
   MarkHotkey({ key: "i", type: "italic" }),
   MarkHotkey({ key: "p", type: "strikethrough" }),
   MarkHotkey({ key: "u", type: "underline" }),
-  MarkHotkey({ key: "o", type: "quote" })
 ];
 
 export default plugins;
