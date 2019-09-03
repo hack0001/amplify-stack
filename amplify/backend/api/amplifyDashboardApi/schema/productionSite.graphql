@@ -1,0 +1,61 @@
+type ProductionSite @model(subscriptions: null) {
+  id: ID
+  articles: [ProductionArticle]
+    @connection(name: "productionSiteArticles", sortField: "createdAt")
+  createdAt: String
+  description: String
+  name: String
+  type: String
+  quiz: [ProductionQuiz]
+    @connection(name: "productionSiteQuiz", sortField: "createdAt")
+  slideShows: [ProductionSlideShow]
+    @connection(name: "productionSiteSlideShows", sortField: "createdAt")
+  updatedAt: String
+}
+
+type ProductionArticle @model(subscriptions: null) @searchable {
+  id: ID!
+  userId: ID!
+  authorName: String
+  viewCount: String
+  overview: [String]
+  createdAt: String
+  content: String
+  development: Boolean!
+  production: Boolean!
+  productionId: String
+  site: ProductionSite @connection(name: "productionSiteArticles")
+  updatedAt: String
+}
+
+type ProductionSlideShow @model(subscriptions: null) @searchable {
+  id: ID!
+  category: String
+  viewCount: String
+  createdAt: String!
+  development: Boolean!
+  production: Boolean!
+  overview: [String]
+  productionId: String
+  slides: [String]
+  schedule: Boolean
+  scheduleTime: String
+  site: ProductionSite @connection(name: "productionSiteSlideShows")
+  updatedAt: String!
+}
+
+type ProductionQuiz @model(subscriptions: null) @searchable {
+  id: ID!
+  category: String
+  viewCount: String
+  createdAt: String!
+  development: Boolean!
+  overview: [String]
+  production: Boolean!
+  productionId: String
+  questions: [String]
+  schedule: Boolean
+  scheduleTime: String
+  site: ProductionSite @connection(name: "productionSiteQuiz")
+  updatedAt: String!
+}
