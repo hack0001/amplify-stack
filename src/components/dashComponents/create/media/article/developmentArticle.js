@@ -23,22 +23,47 @@ import { getArticle } from "../../../../../graphql/queries";
 class Article extends Component {
 	constructor(props) {
 		super(props);
-
-		const contentStorage = localStorage.getItem("content")
-			? JSON.parse(localStorage.getItem("content"))
-			: null;
-		const overviewStorage = localStorage.getItem("overview")
-			? JSON.parse(localStorage.getItem("overview"))
-			: null;
-
 		this.state = {
 			tab: 0,
 			age: 0,
 			categories: ["Overview", "Article"],
-			overview: overviewStorage ? overviewStorage : [INITIAL_ARTICLE_OVERVIEW],
-			value: contentStorage ? Value.fromJSON(contentStorage) : initialValue,
+			overview: [],
+			value: {},
 		};
 	}
+
+	componentDidMount = async () => {
+		const { id, type } = this.props.match.params;
+		const devStorage = `dev-content-${id}`;
+		const devOverview = `dev-overview-${id}`;
+		if (id) {
+			const devContentStorage = localStorage.getItem(devStorage)
+				? JSON.parse(localStorage.getItem(devStorage))
+				: null;
+			const devOverviewStorage = localStorage.getItem(devOverview)
+				? JSON.parse(localStorage.getItem(devOverview))
+				: null;
+
+			try {
+				const { data } = await API.graphql(
+					graphqlOperation(getArticle, { id }),
+				);
+				console.log("DEV CONTENT", devContentStorage);
+				console.log("DEV CONTENT", data);
+				this.setState({
+					overview: devOverviewStorage
+						? devOverviewStorage
+						: JSON.parse(data.getArticle.overview[0]),
+
+					value: devContentStorage
+						? Value.fromJSON(devContentStorage)
+						: Value.fromJSON(JSON.parse(data.getArticle.content)),
+				});
+			} catch (err) {
+				console.log("Error Occurred", err);
+			}
+		}
+	};
 
 	static contextType = AuthContext;
 
@@ -59,16 +84,20 @@ class Article extends Component {
 	};
 
 	handleSend = values => {
+		const { id, type } = this.props.match.params;
+		const devOverviewStorage = `dev-overview-${id}`;
 		if (values.overview !== this.state.overview) {
-			localStorage.setItem("overview", JSON.stringify(values.overview));
+			localStorage.setItem(devOverviewStorage, JSON.stringify(values.overview));
 		}
 		this.setState(values);
 	};
 
 	handleChange = ({ value }) => {
+		const { id, type } = this.props.match.params;
+		const devContentStorage = `dev-content-${id}`;
 		if (value.document !== this.state.value.document) {
 			const content = JSON.stringify(value.toJSON());
-			localStorage.setItem("content", content);
+			localStorage.setItem(devContentStorage, content);
 		}
 		this.setState({ value });
 	};
@@ -100,17 +129,14 @@ class Article extends Component {
 		} catch (err) {
 			console.log("Error occurred", err);
 		}
-		localStorage.removeItem("content");
-		localStorage.removeItem("overview");
 	};
 
 	render() {
 		// console.log("handleValues", this.state);
 		const { classes, theme } = this.props;
 		const { tab } = this.state;
-		console.log("SHSHS", this.state);
 		if (!this.state.overview[0]) {
-			return <div>shabba</div>;
+			return <div></div>;
 		}
 		const header = this.state.overview[0].articleHeadline
 			? this.state.overview[0].articleHeadline
@@ -153,7 +179,21 @@ class Article extends Component {
 								onClick={this.handleSubmit.bind(this)}
 							>
 								<Send className={classes.rightIcon} />
-								Create
+								Update
+							</Button>
+							<Button
+								variant="contained"
+								style={{
+									backgroundColor: "red",
+									color: "white",
+									marginLeft: 10,
+								}}
+								align="right"
+								className={classes.button}
+								onClick={this.handleSubmit.bind(this)}
+							>
+								<Send className={classes.rightIcon} />
+								Production
 							</Button>
 							<Button
 								variant="contained"
@@ -168,7 +208,7 @@ class Article extends Component {
 								}}
 							>
 								<Delete className={classes.rightIcon} />
-								Clear Values
+								Delete
 							</Button>
 						</div>
 					</Paper>

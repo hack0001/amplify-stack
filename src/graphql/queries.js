@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const getCalendarMonth = `query GetCalendarMonth($id: ID!) {
@@ -103,6 +103,7 @@ export const getConversation = `query GetConversation($id: ID!) {
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -163,6 +164,7 @@ export const getChatUser = `query GetChatUser($id: ID!) {
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -324,7 +326,7 @@ export const getSite = `query GetSite($id: ID!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -361,39 +363,16 @@ export const getSite = `query GetSite($id: ID!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -403,27 +382,14 @@ export const getSite = `query GetSite($id: ID!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -461,208 +427,10 @@ export const listSites = `query ListSites(
   }
 }
 `;
-export const getQuiz = `query GetQuiz($id: ID!) {
-  getQuiz(id: $id) {
-    id
-    category
-    closingTitle
-    closingImage
-    closingImageAlt
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageType
-    createdAt
-    development
-    longQuizUrl
-    longMobileQuizUrl
-    metaTag
-    numberOfQuestions
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
-    production
-    productionId
-    questions {
-      items {
-        id
-        closingImage
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageAltTag
-        closingImageType
-        longAnswer
-        longIncorrectAnswer
-        openingImage
-        openingImageAttribution
-        openingImageAttributionLink
-        openingImageAltTag
-        openingImageType
-        order
-        question
-      }
-      nextToken
-    }
-    schedule
-    scheduleTime
-    scoreCommentOne
-    scoreCommmentTwo
-    scoreCommmentThree
-    shortMobileQuizUrl
-    shortQuizUrl
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      description
-      tasks {
-        nextToken
-      }
-      name
-      type
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    tags
-    title
-    updatedAt
-    user {
-      id
-      userId
-      creator
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
-      chatUser {
-        id
-        username
-        creator
-        createdAt
-        updatedAt
-        alias
-        imageLink
-        profilePic
-      }
-    }
-    userId
-    urlDescription
-  }
-}
-`;
-export const listQuizs = `query ListQuizs(
-  $filter: ModelQuizFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      category
-      closingTitle
-      closingImage
-      closingImageAlt
-      closingImageAttribution
-      closingImageAttributionLink
-      closingImageType
-      createdAt
-      development
-      longQuizUrl
-      longMobileQuizUrl
-      metaTag
-      numberOfQuestions
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      questions {
-        nextToken
-      }
-      schedule
-      scheduleTime
-      scoreCommentOne
-      scoreCommmentTwo
-      scoreCommmentThree
-      shortMobileQuizUrl
-      shortQuizUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      tags
-      title
-      updatedAt
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
-      }
-      userId
-      urlDescription
-    }
-    nextToken
-  }
-}
-`;
 export const getArticle = `query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
-    authorId
+    userId
     authorName
     overview
     createdAt
@@ -743,7 +511,7 @@ export const listArticles = `query ListArticles(
   listArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      authorId
+      userId
       authorName
       overview
       createdAt
@@ -790,37 +558,13 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
     category
     createdAt
     development
-    longSlideUrl
-    longMobileSlideUrl
-    metaTag
-    numberOfSlides
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
+    overview
     production
     productionId
-    slides {
-      items {
-        id
-        media
-        mediaAttribution
-        mediaAttributionLink
-        mediaAltTag
-        slideTitle
-        slideShowId
-        content
-        order
-      }
-      nextToken
-    }
+    slides
+    numSlides
     schedule
     scheduleTime
-    shortMobileSlideUrl
-    shortSlideUrl
     site {
       id
       articles {
@@ -841,10 +585,6 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
       }
       updatedAt
     }
-    tags
-    title
-    updatedAt
-    urlDescription
     user {
       id
       userId
@@ -886,6 +626,7 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
         profilePic
       }
     }
+    updatedAt
   }
 }
 `;
@@ -900,26 +641,13 @@ export const listSlideShows = `query ListSlideShows(
       category
       createdAt
       development
-      longSlideUrl
-      longMobileSlideUrl
-      metaTag
-      numberOfSlides
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
+      overview
       production
       productionId
-      slides {
-        nextToken
-      }
+      slides
+      numSlides
       schedule
       scheduleTime
-      shortMobileSlideUrl
-      shortSlideUrl
       site {
         id
         createdAt
@@ -928,10 +656,6 @@ export const listSlideShows = `query ListSlideShows(
         type
         updatedAt
       }
-      tags
-      title
-      updatedAt
-      urlDescription
       user {
         id
         userId
@@ -951,6 +675,136 @@ export const listSlideShows = `query ListSlideShows(
         numberPosts
         profilePic
       }
+      updatedAt
+    }
+    nextToken
+  }
+}
+`;
+export const getQuiz = `query GetQuiz($id: ID!) {
+  getQuiz(id: $id) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    site {
+      id
+      articles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      profilePic
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const listQuizs = `query ListQuizs(
+  $filter: ModelQuizFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      questions
+      numQuestions
+      schedule
+      scheduleTime
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        lastLoggedIn
+        twitterProfile
+        facebookProfile
+        linkedinProfile
+        instagramProfile
+        siteName
+        updatedAt
+        username
+        alias
+        phoneNumber
+        imageLink
+        numberPosts
+        profilePic
+      }
+      updatedAt
     }
     nextToken
   }
@@ -1093,7 +947,7 @@ export const getUser = `query GetUser($id: ID!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -1132,39 +986,16 @@ export const getUser = `query GetUser($id: ID!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -1175,27 +1006,14 @@ export const getUser = `query GetUser($id: ID!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1288,217 +1106,6 @@ export const listUsers = `query ListUsers(
         updatedAt
         alias
         imageLink
-        profilePic
-      }
-    }
-    nextToken
-  }
-}
-`;
-export const searchQuizs = `query SearchQuizs(
-  $filter: SearchableQuizFilterInput
-  $sort: SearchableQuizSortInput
-  $limit: Int
-  $nextToken: Int
-) {
-  searchQuizs(
-    filter: $filter
-    sort: $sort
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      category
-      closingTitle
-      closingImage
-      closingImageAlt
-      closingImageAttribution
-      closingImageAttributionLink
-      closingImageType
-      createdAt
-      development
-      longQuizUrl
-      longMobileQuizUrl
-      metaTag
-      numberOfQuestions
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      questions {
-        nextToken
-      }
-      schedule
-      scheduleTime
-      scoreCommentOne
-      scoreCommmentTwo
-      scoreCommmentThree
-      shortMobileQuizUrl
-      shortQuizUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      tags
-      title
-      updatedAt
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
-      }
-      userId
-      urlDescription
-    }
-    nextToken
-  }
-}
-`;
-export const searchArticles = `query SearchArticles(
-  $filter: SearchableArticleFilterInput
-  $sort: SearchableArticleSortInput
-  $limit: Int
-  $nextToken: Int
-) {
-  searchArticles(
-    filter: $filter
-    sort: $sort
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      authorId
-      authorName
-      overview
-      createdAt
-      content
-      development
-      production
-      productionId
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      updatedAt
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
-      }
-    }
-    nextToken
-  }
-}
-`;
-export const searchSlideShows = `query SearchSlideShows(
-  $filter: SearchableSlideShowFilterInput
-  $sort: SearchableSlideShowSortInput
-  $limit: Int
-  $nextToken: Int
-) {
-  searchSlideShows(
-    filter: $filter
-    sort: $sort
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      category
-      createdAt
-      development
-      longSlideUrl
-      longMobileSlideUrl
-      metaTag
-      numberOfSlides
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      slides {
-        nextToken
-      }
-      schedule
-      scheduleTime
-      shortMobileSlideUrl
-      shortSlideUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      tags
-      title
-      updatedAt
-      urlDescription
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
         profilePic
       }
     }

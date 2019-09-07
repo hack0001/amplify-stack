@@ -23,23 +23,56 @@ import { getArticle } from "../../../../../graphql/queries";
 class Article extends Component {
 	constructor(props) {
 		super(props);
-
+		this.state = {
+			tab: 0,
+			age: 0,
+			categories: ["Overview", "Article"],
+			overview: [],
+			value: {},
+		};
 		const contentStorage = localStorage.getItem("content")
 			? JSON.parse(localStorage.getItem("content"))
 			: null;
 		const overviewStorage = localStorage.getItem("overview")
 			? JSON.parse(localStorage.getItem("overview"))
 			: null;
-
-		this.state = {
-			tab: 0,
-			age: 0,
-			categories: ["Overview", "Article"],
+		this.setState({
 			overview: overviewStorage ? overviewStorage : [INITIAL_ARTICLE_OVERVIEW],
 			value: contentStorage ? Value.fromJSON(contentStorage) : initialValue,
-		};
+		});
 	}
 
+	componentDidMount = async () => {
+		console.log("HIT");
+		console.log("PROPS", this.props);
+		const { id, type } = this.props.match.params;
+		console.log("ID :", id);
+		if (id && type === "production") {
+			const devContentStorage = localStorage.getItem("prod-content")
+				? JSON.parse(localStorage.getItem("prod-content"))
+				: null;
+			const devOverviewStorage = localStorage.getItem("prod-overview")
+				? JSON.parse(localStorage.getItem("prod-overview"))
+				: null;
+
+			try {
+				const { data } = await API.graphql(
+					graphqlOperation(getArticle, { id }),
+				);
+				console.log("DATA", data);
+				this.setState({
+					overview: data.getArticle.overview
+						? data.getArticle.overview
+						: devContentStorage,
+					value: data.getArticle.content
+						? Value.fromJSON(data.getArticle.content)
+						: devOverviewStorage,
+				});
+			} catch (err) {
+				console.log("Error Occurred", err);
+			}
+		}
+	};
 	static contextType = AuthContext;
 
 	clearArticleValues = () => {
@@ -100,15 +133,12 @@ class Article extends Component {
 		} catch (err) {
 			console.log("Error occurred", err);
 		}
-		localStorage.removeItem("content");
-		localStorage.removeItem("overview");
 	};
 
 	render() {
 		// console.log("handleValues", this.state);
 		const { classes, theme } = this.props;
 		const { tab } = this.state;
-		console.log("SHSHS", this.state);
 		if (!this.state.overview[0]) {
 			return <div>shabba</div>;
 		}

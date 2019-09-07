@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const onCreateConversation = `subscription OnCreateConversation {
@@ -11,6 +11,7 @@ export const onCreateConversation = `subscription OnCreateConversation {
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -44,6 +45,7 @@ export const onUpdateConversation = `subscription OnUpdateConversation {
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -77,6 +79,7 @@ export const onDeleteConversation = `subscription OnDeleteConversation {
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -283,8 +286,8 @@ export const onDeleteMessage = `subscription OnDeleteMessage {
   }
 }
 `;
-export const onCreateConvoLink = `subscription OnCreateConvoLink {
-  onCreateConvoLink {
+export const onCreateConvoLink = `subscription OnCreateConvoLink($owner: String) {
+  onCreateConvoLink(owner: $owner) {
     id
     convoLinkUserId
     conversation {
@@ -340,11 +343,12 @@ export const onCreateConvoLink = `subscription OnCreateConvoLink {
         profilePic
       }
     }
+    owner
   }
 }
 `;
-export const onUpdateConvoLink = `subscription OnUpdateConvoLink {
-  onUpdateConvoLink {
+export const onUpdateConvoLink = `subscription OnUpdateConvoLink($owner: String) {
+  onUpdateConvoLink(owner: $owner) {
     id
     convoLinkUserId
     conversation {
@@ -400,11 +404,12 @@ export const onUpdateConvoLink = `subscription OnUpdateConvoLink {
         profilePic
       }
     }
+    owner
   }
 }
 `;
-export const onDeleteConvoLink = `subscription OnDeleteConvoLink {
-  onDeleteConvoLink {
+export const onDeleteConvoLink = `subscription OnDeleteConvoLink($owner: String) {
+  onDeleteConvoLink(owner: $owner) {
     id
     convoLinkUserId
     conversation {
@@ -460,6 +465,7 @@ export const onDeleteConvoLink = `subscription OnDeleteConvoLink {
         profilePic
       }
     }
+    owner
   }
 }
 `;

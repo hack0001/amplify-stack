@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const createCalendarMonth = `mutation CreateCalendarMonth($input: CreateCalendarMonthInput!) {
@@ -149,6 +149,7 @@ export const createConversation = `mutation CreateConversation($input: CreateCon
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -182,6 +183,7 @@ export const updateConversation = `mutation UpdateConversation($input: UpdateCon
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -215,6 +217,7 @@ export const deleteConversation = `mutation DeleteConversation($input: DeleteCon
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -478,6 +481,7 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLink
         profilePic
       }
     }
+    owner
   }
 }
 `;
@@ -538,6 +542,7 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLink
         profilePic
       }
     }
+    owner
   }
 }
 `;
@@ -598,6 +603,7 @@ export const deleteConvoLink = `mutation DeleteConvoLink($input: DeleteConvoLink
         profilePic
       }
     }
+    owner
   }
 }
 `;
@@ -613,6 +619,7 @@ export const createChatUser = `mutation CreateChatUser($input: CreateChatUserInp
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -688,6 +695,7 @@ export const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInp
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -763,6 +771,7 @@ export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInp
         convoLinkConversationId
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -892,7 +901,7 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -929,39 +938,16 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -971,27 +957,14 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1005,7 +978,7 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -1042,39 +1015,16 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -1084,27 +1034,14 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -1118,7 +1055,7 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -1155,39 +1092,16 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -1197,686 +1111,25 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
     updatedAt
-  }
-}
-`;
-export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
-  createQuiz(input: $input) {
-    id
-    category
-    closingTitle
-    closingImage
-    closingImageAlt
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageType
-    createdAt
-    development
-    longQuizUrl
-    longMobileQuizUrl
-    metaTag
-    numberOfQuestions
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
-    production
-    productionId
-    questions {
-      items {
-        id
-        closingImage
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageAltTag
-        closingImageType
-        longAnswer
-        longIncorrectAnswer
-        openingImage
-        openingImageAttribution
-        openingImageAttributionLink
-        openingImageAltTag
-        openingImageType
-        order
-        question
-      }
-      nextToken
-    }
-    schedule
-    scheduleTime
-    scoreCommentOne
-    scoreCommmentTwo
-    scoreCommmentThree
-    shortMobileQuizUrl
-    shortQuizUrl
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      description
-      tasks {
-        nextToken
-      }
-      name
-      type
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    tags
-    title
-    updatedAt
-    user {
-      id
-      userId
-      creator
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
-      chatUser {
-        id
-        username
-        creator
-        createdAt
-        updatedAt
-        alias
-        imageLink
-        profilePic
-      }
-    }
-    userId
-    urlDescription
-  }
-}
-`;
-export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
-  updateQuiz(input: $input) {
-    id
-    category
-    closingTitle
-    closingImage
-    closingImageAlt
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageType
-    createdAt
-    development
-    longQuizUrl
-    longMobileQuizUrl
-    metaTag
-    numberOfQuestions
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
-    production
-    productionId
-    questions {
-      items {
-        id
-        closingImage
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageAltTag
-        closingImageType
-        longAnswer
-        longIncorrectAnswer
-        openingImage
-        openingImageAttribution
-        openingImageAttributionLink
-        openingImageAltTag
-        openingImageType
-        order
-        question
-      }
-      nextToken
-    }
-    schedule
-    scheduleTime
-    scoreCommentOne
-    scoreCommmentTwo
-    scoreCommmentThree
-    shortMobileQuizUrl
-    shortQuizUrl
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      description
-      tasks {
-        nextToken
-      }
-      name
-      type
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    tags
-    title
-    updatedAt
-    user {
-      id
-      userId
-      creator
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
-      chatUser {
-        id
-        username
-        creator
-        createdAt
-        updatedAt
-        alias
-        imageLink
-        profilePic
-      }
-    }
-    userId
-    urlDescription
-  }
-}
-`;
-export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
-  deleteQuiz(input: $input) {
-    id
-    category
-    closingTitle
-    closingImage
-    closingImageAlt
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageType
-    createdAt
-    development
-    longQuizUrl
-    longMobileQuizUrl
-    metaTag
-    numberOfQuestions
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
-    production
-    productionId
-    questions {
-      items {
-        id
-        closingImage
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageAltTag
-        closingImageType
-        longAnswer
-        longIncorrectAnswer
-        openingImage
-        openingImageAttribution
-        openingImageAttributionLink
-        openingImageAltTag
-        openingImageType
-        order
-        question
-      }
-      nextToken
-    }
-    schedule
-    scheduleTime
-    scoreCommentOne
-    scoreCommmentTwo
-    scoreCommmentThree
-    shortMobileQuizUrl
-    shortQuizUrl
-    site {
-      id
-      articles {
-        nextToken
-      }
-      createdAt
-      description
-      tasks {
-        nextToken
-      }
-      name
-      type
-      quiz {
-        nextToken
-      }
-      slideShows {
-        nextToken
-      }
-      updatedAt
-    }
-    tags
-    title
-    updatedAt
-    user {
-      id
-      userId
-      creator
-      articles {
-        nextToken
-      }
-      createdAt
-      ideas {
-        nextToken
-      }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
-      quiz {
-        nextToken
-      }
-      siteName
-      slideShows {
-        nextToken
-      }
-      updatedAt
-      username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
-      chatUser {
-        id
-        username
-        creator
-        createdAt
-        updatedAt
-        alias
-        imageLink
-        profilePic
-      }
-    }
-    userId
-    urlDescription
-  }
-}
-`;
-export const createQuestion = `mutation CreateQuestion($input: CreateQuestionInput!) {
-  createQuestion(input: $input) {
-    id
-    answer {
-      answer
-      votes
-    }
-    closingImage
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageAltTag
-    closingImageType
-    incorrectAnswers {
-      answer
-      votes
-    }
-    longAnswer
-    longIncorrectAnswer
-    openingImage
-    openingImageAttribution
-    openingImageAttributionLink
-    openingImageAltTag
-    openingImageType
-    order
-    question
-    quiz {
-      id
-      category
-      closingTitle
-      closingImage
-      closingImageAlt
-      closingImageAttribution
-      closingImageAttributionLink
-      closingImageType
-      createdAt
-      development
-      longQuizUrl
-      longMobileQuizUrl
-      metaTag
-      numberOfQuestions
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      questions {
-        nextToken
-      }
-      schedule
-      scheduleTime
-      scoreCommentOne
-      scoreCommmentTwo
-      scoreCommmentThree
-      shortMobileQuizUrl
-      shortQuizUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      tags
-      title
-      updatedAt
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
-      }
-      userId
-      urlDescription
-    }
-  }
-}
-`;
-export const updateQuestion = `mutation UpdateQuestion($input: UpdateQuestionInput!) {
-  updateQuestion(input: $input) {
-    id
-    answer {
-      answer
-      votes
-    }
-    closingImage
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageAltTag
-    closingImageType
-    incorrectAnswers {
-      answer
-      votes
-    }
-    longAnswer
-    longIncorrectAnswer
-    openingImage
-    openingImageAttribution
-    openingImageAttributionLink
-    openingImageAltTag
-    openingImageType
-    order
-    question
-    quiz {
-      id
-      category
-      closingTitle
-      closingImage
-      closingImageAlt
-      closingImageAttribution
-      closingImageAttributionLink
-      closingImageType
-      createdAt
-      development
-      longQuizUrl
-      longMobileQuizUrl
-      metaTag
-      numberOfQuestions
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      questions {
-        nextToken
-      }
-      schedule
-      scheduleTime
-      scoreCommentOne
-      scoreCommmentTwo
-      scoreCommmentThree
-      shortMobileQuizUrl
-      shortQuizUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      tags
-      title
-      updatedAt
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
-      }
-      userId
-      urlDescription
-    }
-  }
-}
-`;
-export const deleteQuestion = `mutation DeleteQuestion($input: DeleteQuestionInput!) {
-  deleteQuestion(input: $input) {
-    id
-    answer {
-      answer
-      votes
-    }
-    closingImage
-    closingImageAttribution
-    closingImageAttributionLink
-    closingImageAltTag
-    closingImageType
-    incorrectAnswers {
-      answer
-      votes
-    }
-    longAnswer
-    longIncorrectAnswer
-    openingImage
-    openingImageAttribution
-    openingImageAttributionLink
-    openingImageAltTag
-    openingImageType
-    order
-    question
-    quiz {
-      id
-      category
-      closingTitle
-      closingImage
-      closingImageAlt
-      closingImageAttribution
-      closingImageAttributionLink
-      closingImageType
-      createdAt
-      development
-      longQuizUrl
-      longMobileQuizUrl
-      metaTag
-      numberOfQuestions
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      questions {
-        nextToken
-      }
-      schedule
-      scheduleTime
-      scoreCommentOne
-      scoreCommmentTwo
-      scoreCommmentThree
-      shortMobileQuizUrl
-      shortQuizUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
-      }
-      tags
-      title
-      updatedAt
-      user {
-        id
-        userId
-        creator
-        createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
-        updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
-      }
-      userId
-      urlDescription
-    }
   }
 }
 `;
 export const createArticle = `mutation CreateArticle($input: CreateArticleInput!) {
   createArticle(input: $input) {
     id
-    authorId
+    userId
     authorName
     overview
     createdAt
@@ -1952,7 +1205,7 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
 export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!) {
   updateArticle(input: $input) {
     id
-    authorId
+    userId
     authorName
     overview
     createdAt
@@ -2028,7 +1281,7 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
 export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!) {
   deleteArticle(input: $input) {
     id
-    authorId
+    userId
     authorName
     overview
     createdAt
@@ -2107,37 +1360,13 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
     category
     createdAt
     development
-    longSlideUrl
-    longMobileSlideUrl
-    metaTag
-    numberOfSlides
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
+    overview
     production
     productionId
-    slides {
-      items {
-        id
-        media
-        mediaAttribution
-        mediaAttributionLink
-        mediaAltTag
-        slideTitle
-        slideShowId
-        content
-        order
-      }
-      nextToken
-    }
+    slides
+    numSlides
     schedule
     scheduleTime
-    shortMobileSlideUrl
-    shortSlideUrl
     site {
       id
       articles {
@@ -2158,10 +1387,6 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
       }
       updatedAt
     }
-    tags
-    title
-    updatedAt
-    urlDescription
     user {
       id
       userId
@@ -2203,6 +1428,7 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
         profilePic
       }
     }
+    updatedAt
   }
 }
 `;
@@ -2212,37 +1438,13 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
     category
     createdAt
     development
-    longSlideUrl
-    longMobileSlideUrl
-    metaTag
-    numberOfSlides
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
+    overview
     production
     productionId
-    slides {
-      items {
-        id
-        media
-        mediaAttribution
-        mediaAttributionLink
-        mediaAltTag
-        slideTitle
-        slideShowId
-        content
-        order
-      }
-      nextToken
-    }
+    slides
+    numSlides
     schedule
     scheduleTime
-    shortMobileSlideUrl
-    shortSlideUrl
     site {
       id
       articles {
@@ -2263,10 +1465,6 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
       }
       updatedAt
     }
-    tags
-    title
-    updatedAt
-    urlDescription
     user {
       id
       userId
@@ -2308,6 +1506,7 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
         profilePic
       }
     }
+    updatedAt
   }
 }
 `;
@@ -2317,37 +1516,13 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
     category
     createdAt
     development
-    longSlideUrl
-    longMobileSlideUrl
-    metaTag
-    numberOfSlides
-    opening
-    openingBlurb
-    openingImage
-    openingImageAlt
-    openingImageAttributionLink
-    openingImageAttribution
-    openingImageType
+    overview
     production
     productionId
-    slides {
-      items {
-        id
-        media
-        mediaAttribution
-        mediaAttributionLink
-        mediaAltTag
-        slideTitle
-        slideShowId
-        content
-        order
-      }
-      nextToken
-    }
+    slides
+    numSlides
     schedule
     scheduleTime
-    shortMobileSlideUrl
-    shortSlideUrl
     site {
       id
       articles {
@@ -2368,10 +1543,6 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
       }
       updatedAt
     }
-    tags
-    title
-    updatedAt
-    urlDescription
     user {
       id
       userId
@@ -2413,219 +1584,241 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
         profilePic
       }
     }
+    updatedAt
   }
 }
 `;
-export const createSlide = `mutation CreateSlide($input: CreateSlideInput!) {
-  createSlide(input: $input) {
+export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
+  createQuiz(input: $input) {
     id
-    media
-    mediaAttribution
-    mediaAttributionLink
-    mediaAltTag
-    slideTitle
-    slideShow {
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    site {
       id
-      category
-      createdAt
-      development
-      longSlideUrl
-      longMobileSlideUrl
-      metaTag
-      numberOfSlides
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      slides {
+      articles {
         nextToken
       }
-      schedule
-      scheduleTime
-      shortMobileSlideUrl
-      shortSlideUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
+      createdAt
+      description
+      tasks {
+        nextToken
       }
-      tags
-      title
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
       updatedAt
-      urlDescription
-      user {
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      profilePic
+      chatUser {
         id
-        userId
+        username
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
-        username
         alias
-        phoneNumber
         imageLink
-        numberPosts
         profilePic
       }
     }
-    slideShowId
-    content
-    order
+    updatedAt
   }
 }
 `;
-export const updateSlide = `mutation UpdateSlide($input: UpdateSlideInput!) {
-  updateSlide(input: $input) {
+export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
+  updateQuiz(input: $input) {
     id
-    media
-    mediaAttribution
-    mediaAttributionLink
-    mediaAltTag
-    slideTitle
-    slideShow {
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    site {
       id
-      category
-      createdAt
-      development
-      longSlideUrl
-      longMobileSlideUrl
-      metaTag
-      numberOfSlides
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      slides {
+      articles {
         nextToken
       }
-      schedule
-      scheduleTime
-      shortMobileSlideUrl
-      shortSlideUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
+      createdAt
+      description
+      tasks {
+        nextToken
       }
-      tags
-      title
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
       updatedAt
-      urlDescription
-      user {
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      profilePic
+      chatUser {
         id
-        userId
+        username
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
-        username
         alias
-        phoneNumber
         imageLink
-        numberPosts
         profilePic
       }
     }
-    slideShowId
-    content
-    order
+    updatedAt
   }
 }
 `;
-export const deleteSlide = `mutation DeleteSlide($input: DeleteSlideInput!) {
-  deleteSlide(input: $input) {
+export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
+  deleteQuiz(input: $input) {
     id
-    media
-    mediaAttribution
-    mediaAttributionLink
-    mediaAltTag
-    slideTitle
-    slideShow {
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    site {
       id
-      category
-      createdAt
-      development
-      longSlideUrl
-      longMobileSlideUrl
-      metaTag
-      numberOfSlides
-      opening
-      openingBlurb
-      openingImage
-      openingImageAlt
-      openingImageAttributionLink
-      openingImageAttribution
-      openingImageType
-      production
-      productionId
-      slides {
+      articles {
         nextToken
       }
-      schedule
-      scheduleTime
-      shortMobileSlideUrl
-      shortSlideUrl
-      site {
-        id
-        createdAt
-        description
-        name
-        type
-        updatedAt
+      createdAt
+      description
+      tasks {
+        nextToken
       }
-      tags
-      title
+      name
+      type
+      quiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
       updatedAt
-      urlDescription
-      user {
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      lastLoggedIn
+      twitterProfile
+      facebookProfile
+      linkedinProfile
+      instagramProfile
+      quiz {
+        nextToken
+      }
+      siteName
+      slideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      alias
+      phoneNumber
+      imageLink
+      numberPosts
+      profilePic
+      chatUser {
         id
-        userId
+        username
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
-        username
         alias
-        phoneNumber
         imageLink
-        numberPosts
         profilePic
       }
     }
-    slideShowId
-    content
-    order
+    updatedAt
   }
 }
 `;
@@ -2871,7 +2064,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -2910,39 +2103,16 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -2953,27 +2123,14 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -3030,7 +2187,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -3069,39 +2226,16 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -3112,27 +2246,14 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }
@@ -3189,7 +2310,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     articles {
       items {
         id
-        authorId
+        userId
         authorName
         overview
         createdAt
@@ -3228,39 +2349,16 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       items {
         id
         category
-        closingTitle
-        closingImage
-        closingImageAlt
-        closingImageAttribution
-        closingImageAttributionLink
-        closingImageType
         createdAt
         development
-        longQuizUrl
-        longMobileQuizUrl
-        metaTag
-        numberOfQuestions
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        questions
+        numQuestions
         schedule
         scheduleTime
-        scoreCommentOne
-        scoreCommmentTwo
-        scoreCommmentThree
-        shortMobileQuizUrl
-        shortQuizUrl
-        tags
-        title
         updatedAt
-        userId
-        urlDescription
       }
       nextToken
     }
@@ -3271,27 +2369,14 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         category
         createdAt
         development
-        longSlideUrl
-        longMobileSlideUrl
-        metaTag
-        numberOfSlides
-        opening
-        openingBlurb
-        openingImage
-        openingImageAlt
-        openingImageAttributionLink
-        openingImageAttribution
-        openingImageType
+        overview
         production
         productionId
+        slides
+        numSlides
         schedule
         scheduleTime
-        shortMobileSlideUrl
-        shortSlideUrl
-        tags
-        title
         updatedAt
-        urlDescription
       }
       nextToken
     }

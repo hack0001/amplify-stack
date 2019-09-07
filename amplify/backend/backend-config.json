@@ -1,13 +1,13 @@
 {
 	"auth": {
-		"cognitodc1b6d32": {
+		"amplifystack3d87a288": {
 			"service": "Cognito",
-			"providerPlugin": "awscloudformation"
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
 		}
 	},
-	"analytics": {},
 	"api": {
-		"amplifyDashboardApi": {
+		"amplifystack": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
@@ -15,15 +15,33 @@
 			}
 		}
 	},
-	"hosting": {
-		"S3AndCloudFront": {
-			"service": "S3AndCloudFront",
-			"providerPlugin": "awscloudformation"
+	"function": {
+		"S3Trigger77e03c8a": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
 		}
 	},
 	"storage": {
-		"dashboardPhotos": {
+		"amplifyImages": {
 			"service": "S3",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "S3Trigger77e03c8a",
+					"attributes": [
+						"Name",
+						"Arn",
+						"LambdaExecutionRole"
+					]
+				}
+			]
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
 			"providerPlugin": "awscloudformation"
 		}
 	}
