@@ -8,19 +8,27 @@ import Button from "@material-ui/core/Button";
 import Send from "@material-ui/icons/Send";
 import { Content, Overview } from "./index";
 import { articleStyles } from "./styles/articleStyles";
-import { initialValue } from "./editorSettings";
 import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
-import ClearDialog from "../dialog/clearValues";
+import DeleteDialog from "../dialog/deleteContent";
 import Delete from "@material-ui/icons/Delete";
-import { INITIAL_ARTICLE_OVERVIEW } from "./overview/layout/initialState";
-import { Value } from "slate";
+import { Slate, Editable, withReact } from "slate-react";
+import { createEditor } from "slate";
 import { API, graphqlOperation } from "aws-amplify";
 import AuthContext from "../../../../../context/authContext";
-import { createArticle } from "../graphql/createGraphql";
-import { getArticle } from "../../../../../graphql/queries";
+import { updateArticle } from "../graphql/createGraphql";
+import ProductionDialog from "../dialog/productionDialog/articleDialog/articleDialog";
+import DuplicateDialog from "../dialog/duplicateDialog";
+import { getProductionArticle } from "../../production/graphql/queries";
+import {
+	deleteProductionArticle,
+	updateProductionArticle,
+} from "../../production/graphql/mutations";
+import { createDuplicateArticle } from "../../../../../graphql/mutations";
+import { requiredValues } from "./overview/layout/initialState";
+import axios from "axios";
 
-class Article extends Component {
+class ProdArticle extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -29,44 +37,56 @@ class Article extends Component {
 			categories: ["Overview", "Article"],
 			overview: [],
 			value: {},
+			errors: {},
 		};
-		const contentStorage = localStorage.getItem("content")
-			? JSON.parse(localStorage.getItem("content"))
-			: null;
-		const overviewStorage = localStorage.getItem("overview")
-			? JSON.parse(localStorage.getItem("overview"))
-			: null;
-		this.setState({
-			overview: overviewStorage ? overviewStorage : [INITIAL_ARTICLE_OVERVIEW],
-			value: contentStorage ? Value.fromJSON(contentStorage) : initialValue,
-		});
 	}
 
 	componentDidMount = async () => {
-		console.log("HIT");
-		console.log("PROPS", this.props);
-		const { id, type } = this.props.match.params;
-		console.log("ID :", id);
-		if (id && type === "production") {
-			const devContentStorage = localStorage.getItem("prod-content")
-				? JSON.parse(localStorage.getItem("prod-content"))
+		const { id } = this.props.match.params;
+		const prodStorage = `prod-content-${id}`;
+		const prodOverview = `prod-overview-${id}`;
+		if (id) {
+			const prodContentStorage = localStorage.getItem(prodStorage)
+				? JSON.parse(localStorage.getItem(prodStorage))
 				: null;
-			const devOverviewStorage = localStorage.getItem("prod-overview")
-				? JSON.parse(localStorage.getItem("prod-overview"))
+			const prodOverviewStorage = localStorage.getItem(prodOverview)
+				? JSON.parse(localStorage.getItem(prodOverview))
 				: null;
 
+			const getProdArticleData = {
+				query: getProductionArticle,
+				operationName: "GetProductionArticle",
+				variables: { id: id },
+			};
 			try {
-				const { data } = await API.graphql(
-					graphqlOperation(getArticle, { id }),
-				);
-				console.log("DATA", data);
+				const { data } = await axios({
+					url: process.env.REACT_APP_PROD_ENDPOINT,
+					method: "POST",
+					data: JSON.stringify(getProdArticleData),
+					headers: {
+						Accept: "application/json",
+						"x-api-key": process.env.REACT_APP_PROD_API_KEY,
+					},
+				});
+
+				const overview = JSON.parse(data.data.getProductionArticle.overview[0]);
+				const finalOverview = [
+					{
+						...overview[0],
+						production: data.data.getProductionArticle.production,
+						development: data.data.getProductionArticle.development,
+						original: data.data.getProductionArticle.original,
+					},
+				];
+
 				this.setState({
-					overview: data.getArticle.overview
-						? data.getArticle.overview
-						: devContentStorage,
-					value: data.getArticle.content
-						? Value.fromJSON(data.getArticle.content)
-						: devOverviewStorage,
+					overview: prodOverviewStorage ? prodOverviewStorage : finalOverview,
+					developmentId: data.data.getProductionArticle.developmentId,
+					value: prodContentStorage
+						? prodContentStorage
+						: JSON.parse(data.data.getProductionArticle.content),
+
+					original: data.data.getProductionArticle.original,
 				});
 			} catch (err) {
 				console.log("Error Occurred", err);
@@ -75,13 +95,49 @@ class Article extends Component {
 	};
 	static contextType = AuthContext;
 
-	clearArticleValues = () => {
-		this.setState({
-			...this.state,
-			overview: [INITIAL_ARTICLE_OVERVIEW],
-			value: initialValue,
-			clearDialog: false,
-		});
+	deleteProductionArticle = async () => {
+		const { id } = this.props.match.params;
+		const deleteProdArticle = {
+			query: deleteProductionArticle,
+			operationName: "DeleteProductionArticle",
+			variables: { input: { id: id } },
+		};
+		try {
+			await axios({
+				url: process.env.REACT_APP_PROD_ENDPOINT,
+				method: "POST",
+				data: JSON.stringify(deleteProdArticle),
+				headers: {
+					Accept: "application/json",
+					"x-api-key": process.env.REACT_APP_PROD_API_KEY,
+				},
+			});
+
+			await API.graphql(
+				graphqlOperation(updateArticle, {
+					input: {
+						id: this.state.developmentId,
+						overview: JSON.stringify([
+							{
+								...this.state.overview[0],
+								productionArticleUserId: "",
+								productionArticleSiteId: "",
+								category: "",
+								articleSiteId: "",
+								site: "",
+								articleUserId: "",
+							},
+						]),
+						production: false,
+						development: true,
+					},
+				}),
+			);
+
+			this.props.history.push("/home");
+		} catch (err) {
+			console.log("Error occurred", err);
+		}
 	};
 
 	cleanup = name => {
@@ -91,17 +147,28 @@ class Article extends Component {
 			.toLowerCase();
 	};
 
+	handleErrors = error => {
+		this.setState({ errors: error });
+	};
+
 	handleSend = values => {
+		const { id } = this.props.match.params;
+		const prodOverviewStorage = `prod-overview-${id}`;
 		if (values.overview !== this.state.overview) {
-			localStorage.setItem("overview", JSON.stringify(values.overview));
+			localStorage.setItem(
+				prodOverviewStorage,
+				JSON.stringify(values.overview),
+			);
 		}
 		this.setState(values);
 	};
 
 	handleChange = ({ value }) => {
+		const { id } = this.props.match.params;
+		const prodContentStorage = `prod-content-${id}`;
 		if (value.document !== this.state.value.document) {
 			const content = JSON.stringify(value.toJSON());
-			localStorage.setItem("content", content);
+			localStorage.setItem(prodContentStorage, content);
 		}
 		this.setState({ value });
 	};
@@ -114,33 +181,127 @@ class Article extends Component {
 		this.setState({ reduceDialog: false });
 	};
 
+	validate = () => {
+		let validateSubmit = {};
+		Object.keys(this.state.overview[0]).map(key => {
+			if (requiredValues.includes(key)) {
+				if (this.state.overview[0][key] === "") {
+					validateSubmit = { ...validateSubmit, [key]: true };
+				}
+			}
+		});
+		this.setState({
+			errors: {
+				...this.state.errors,
+				...validateSubmit,
+			},
+		});
+	};
+
 	handleSubmit = async e => {
+		const { id } = this.props.match.params;
+		const prodStorage = `prod-content-${id}`;
+		const prodOverview = `prod-overview-${id}`;
+
 		e.preventDefault();
-		const submitArticle = {
-			userId: this.context.userId,
-			authorName: this.context.userId,
-			overview: JSON.stringify(this.state.overview),
-			content: JSON.stringify(this.state.value.toJSON()),
-			development: true,
-			production: false,
-			articleUserId: this.context.profileId,
-		};
-		console.log("THIS STATE", submitArticle);
-		try {
-			await API.graphql(
-				graphqlOperation(createArticle, { input: submitArticle }),
-			);
-		} catch (err) {
-			console.log("Error occurred", err);
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const { overview } = this.state;
+			const submitArticle = {
+				id: id,
+				overview: JSON.stringify(this.state.overview),
+				content: JSON.stringify(this.state.value.toJSON()),
+				productionArticleSiteId: overview[0].productionArticleSiteId,
+				tags: overview[0].tags ? overview[0].tags : [" "],
+				category: overview[0].category,
+				mainHeadline: overview[0].mainHeadline,
+				sideHeadline: overview[0].sideHeadline,
+				bottomHeadline: overview[0].bottomHeadline
+					? overview[0].bottomHeadline
+					: false,
+				shareCount: overview[0].shareCount ? overview[0].shareCount : 0,
+			};
+			const submitDevArticle = {
+				id: this.state.developmentId,
+				overview: JSON.stringify(this.state.overview),
+				content: JSON.stringify(this.state.value.toJSON()),
+			};
+
+			const updateProdArticle = {
+				query: updateProductionArticle,
+				operationName: "UpdateProductionArticle",
+				variables: { input: submitArticle },
+			};
+			try {
+				await axios({
+					url: process.env.REACT_APP_PROD_ENDPOINT,
+					method: "POST",
+					data: JSON.stringify(updateProdArticle),
+					headers: {
+						Accept: "application/json",
+						"x-api-key": process.env.REACT_APP_PROD_API_KEY,
+					},
+				});
+				await API.graphql(
+					graphqlOperation(updateArticle, {
+						input: submitDevArticle,
+					}),
+				);
+				localStorage.removeItem(prodStorage);
+				localStorage.removeItem(prodOverview);
+				this.props.history.push("/home");
+			} catch (err) {
+				console.log("Error occurred", err);
+			}
+		}
+	};
+
+	handleDuplicate = async e => {
+		e.preventDefault();
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const duplicateArticle = {
+				overview: JSON.stringify(this.state.overview),
+				content: JSON.stringify(this.state.value.toJSON()),
+				development: true,
+				production: false,
+				original: false,
+				duplicateArticleUserId: this.state.overview[0].articleUserId
+					? this.state.overview[0].articleUserId
+					: "",
+				duplicateArticleOriginalArticleId: this.state.developmentId,
+			};
+
+			try {
+				await API.graphql(
+					graphqlOperation(createDuplicateArticle, {
+						input: duplicateArticle,
+					}),
+				);
+
+				this.props.history.push("/duplicates");
+			} catch (err) {
+				console.log("Error occurred", err);
+			}
 		}
 	};
 
 	render() {
-		// console.log("handleValues", this.state);
 		const { classes, theme } = this.props;
 		const { tab } = this.state;
+		const { id } = this.props.match.params;
+		const prodStorage = `prod-content-${id}`;
+		const prodOverview = `prod-overview-${id}`;
 		if (!this.state.overview[0]) {
-			return <div>shabba</div>;
+			return <div></div>;
 		}
 		const header = this.state.overview[0].articleHeadline
 			? this.state.overview[0].articleHeadline
@@ -180,10 +341,21 @@ class Article extends Component {
 								color="primary"
 								align="right"
 								className={classes.button}
-								onClick={this.handleSubmit.bind(this)}
+								onClick={e => this.setState({ updateDialog: true })}
 							>
 								<Send className={classes.rightIcon} />
-								Create
+								Update
+							</Button>
+							<Button
+								style={{ marginLeft: 5 }}
+								variant="contained"
+								color="secondary"
+								align="right"
+								className={classes.button}
+								onClick={e => this.setState({ duplicateDialog: true })}
+							>
+								<Send className={classes.rightIcon} />
+								Duplicate
 							</Button>
 							<Button
 								variant="contained"
@@ -192,13 +364,13 @@ class Article extends Component {
 								style={{ float: "right" }}
 								className={classes.button}
 								onClick={e => {
-									this.setState({ clearDialog: true });
-									localStorage.removeItem("content");
-									localStorage.removeItem("overview");
+									this.setState({ deleteDialog: true });
+									localStorage.removeItem(prodStorage);
+									localStorage.removeItem(prodOverview);
 								}}
 							>
 								<Delete className={classes.rightIcon} />
-								Clear Values
+								Remove
 							</Button>
 						</div>
 					</Paper>
@@ -211,6 +383,9 @@ class Article extends Component {
 							<Overview
 								overview={this.state.overview}
 								handleSend={this.handleSend}
+								stage={"production"}
+								errors={this.state.errors}
+								setErrors={this.handleErrors}
 							/>
 						</Paper>
 						<Paper className={classes.articleWrap}>
@@ -222,11 +397,30 @@ class Article extends Component {
 								bulletHeadlines={this.state.overview[0].bulletHeadlines}
 							/>
 
-							{this.state.clearDialog && (
-								<ClearDialog
-									open={this.state.clearDialog}
-									onClose={e => this.setState({ clearDialog: false })}
-									accept={this.clearArticleValues}
+							{this.state.deleteDialog && (
+								<DeleteDialog
+									open={this.state.deleteDialog}
+									onClose={e => this.setState({ deleteDialog: false })}
+									accept={this.deleteProductionArticle}
+									prodMarker={true}
+								/>
+							)}
+							{this.state.updateDialog && (
+								<ProductionDialog
+									open={this.state.updateDialog}
+									onClose={e => this.setState({ updateDialog: false })}
+									accept={this.handleSubmit}
+									prodMarker={true}
+									handleSend={this.handleSend}
+									overview={this.state.overview}
+									overviewMarker={"overview"}
+								/>
+							)}
+							{this.state.duplicateDialog && (
+								<DuplicateDialog
+									open={this.state.duplicateDialog}
+									onClose={e => this.setState({ dusplicateDialog: false })}
+									accept={this.handleDuplicate}
 								/>
 							)}
 						</Paper>
@@ -237,8 +431,8 @@ class Article extends Component {
 	}
 }
 
-Article.propTypes = {
+ProdArticle.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(articleStyles, { withTheme: true })(Article);
+export default withStyles(articleStyles, { withTheme: true })(ProdArticle);

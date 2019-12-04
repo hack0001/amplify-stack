@@ -1,25 +1,25 @@
-import { Value } from "slate";
-
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: "block",
-        type: "paragraph",
-        nodes: [
-          {
-            object: "text",
-            leaves: [
-              {
-                text: ""
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-});
+import { Slate, Editable, withReact } from "slate-react";
+import { createEditor } from "slate";
+const initialValue = {
+	document: {
+		nodes: [
+			{
+				object: "block",
+				type: "paragraph",
+				nodes: [
+					{
+						object: "text",
+						leaves: [
+							{
+								text: "",
+							},
+						],
+					},
+				],
+			},
+		],
+	},
+};
 
 // const testValue = Value.fromJSON({
 //   document: {

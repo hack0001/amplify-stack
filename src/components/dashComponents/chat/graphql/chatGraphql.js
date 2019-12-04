@@ -26,21 +26,21 @@ const createNewMessage = `mutation CreateMessage($input: CreateMessageInput!) {
   createMessage(input: $input) {
     id
     authorId
-	content
+	  content
     messageConversationId
     createdAt
     updatedAt
-	conversation {
+	  conversation {
      messages(sortDirection:DESC, limit:5){
-		items{
-			authorId 
-			content
-			id
-			createdAt
-			author{
-				alias
-			}
-		}
+	  	items{
+        authorId 
+        content
+        id
+        createdAt
+        author{
+          alias
+        }
+		    }
       }
     }
   }
@@ -69,18 +69,9 @@ const onCreateMessage = `subscription OnCreateMessage {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
+        overview
       }
     }
     authorId
@@ -157,11 +148,11 @@ const updateConvo = `mutation UpdateConvo($input:UpdateConversationInput!){
 `;
 
 export {
-  createConversation,
-  createConvoLink,
-  createNewMessage,
-  onCreateMessage,
-  getConvo,
-  archiveConvo,
-  updateConvo
+	createConversation,
+	createConvoLink,
+	createNewMessage,
+	onCreateMessage,
+	getConvo,
+	archiveConvo,
+	updateConvo,
 };

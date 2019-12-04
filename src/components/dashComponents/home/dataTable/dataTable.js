@@ -72,7 +72,7 @@ class EnhancedTable extends Component {
 	};
 
 	render() {
-		const { classes, data, type } = this.props;
+		const { classes, data, type, original } = this.props;
 		const { order, orderBy, selected, rowsPerPage, page } = this.state;
 		const emptyRows =
 			rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -94,16 +94,22 @@ class EnhancedTable extends Component {
 								.map(n => {
 									const devColor = this.status(n.development);
 									const prodColor = this.status(n.production);
+									const overview = n.overview[0]
+										? JSON.parse(n.overview[0])
+										: n;
+
 									return (
 										<TableRow hover key={n.id}>
 											<TableCell component="th" scope="row" padding="default">
-												{n.name}
+												{overview[0].headline}
+												{overview[0].title}
 											</TableCell>
 											<TableCell component="th" scope="row" padding="default">
-												{n.description}
+												{overview[0].site}
 											</TableCell>
 											<TableCell component="th" scope="row" padding="default">
-												{n.category}
+												{overview[0].category}
+												{overview[0].quizCategory}
 											</TableCell>
 											<TableCell
 												component="th"
@@ -136,27 +142,65 @@ class EnhancedTable extends Component {
 											<TableCell align="right" style={{ paddingRight: 15 }}>
 												{moment(n.createdAt).fromNow()}
 											</TableCell>
-											<TableCell>
-												<Link
-													style={{ textDecoration: "none" }}
-													to={`home/development/${type}/${n.id}`}
-												>
-													<Button
-														variant="outlined"
-														size="medium"
-														color="primary"
-														className={classes.button}
-													>
-														<EditIcon className={classes.icon} />
-														Dev
-													</Button>
-												</Link>
-											</TableCell>
-											{!n.production && (
+											{n.development && original && (
 												<TableCell>
 													<Link
 														style={{ textDecoration: "none" }}
-														to={`home/production/${type}/${n.id}`}
+														to={`home/development/${type}/${n.id}`}
+													>
+														<Button
+															variant="outlined"
+															size="medium"
+															color="primary"
+															className={classes.button}
+														>
+															<EditIcon className={classes.icon} />
+															Dev
+														</Button>
+													</Link>
+												</TableCell>
+											)}
+											{n.development && !original && (
+												<TableCell>
+													<Link
+														style={{ textDecoration: "none" }}
+														to={`home/development/duplicate/${type}/${n.id}`}
+													>
+														<Button
+															variant="outlined"
+															size="medium"
+															color="primary"
+															className={classes.button}
+														>
+															<EditIcon className={classes.icon} />
+															Dev
+														</Button>
+													</Link>
+												</TableCell>
+											)}
+											{n.production && original && (
+												<TableCell>
+													<Link
+														style={{ textDecoration: "none" }}
+														to={`home/production/${type}/${n.productionId}`}
+													>
+														<Button
+															variant="outlined"
+															size="medium"
+															color="secondary"
+															className={classes.button}
+														>
+															<EditIcon className={classes.icon} />
+															Prod
+														</Button>
+													</Link>
+												</TableCell>
+											)}
+											{n.production && !original && (
+												<TableCell>
+													<Link
+														style={{ textDecoration: "none" }}
+														to={`home/production/duplicate/${type}/${n.productionId}`}
 													>
 														<Button
 															variant="outlined"

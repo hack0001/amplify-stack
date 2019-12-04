@@ -12,147 +12,144 @@ import EnhancedTableHead from "./tableHead";
 import { dataStyles } from "../styles/userStyles";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-
+import moment from "moment";
 const desc = (a, b, orderBy) => {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
+	if (b[orderBy] < a[orderBy]) {
+		return -1;
+	}
+	if (b[orderBy] > a[orderBy]) {
+		return 1;
+	}
+	return 0;
 };
 
 const stableSort = (array, cmp) => {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
+	const stabilizedThis = array.map((el, index) => [el, index]);
+	stabilizedThis.sort((a, b) => {
+		const order = cmp(a[0], b[0]);
+		if (order !== 0) return order;
+		return a[1] - b[1];
+	});
+	return stabilizedThis.map(el => el[0]);
 };
 
 const getSorting = (order, orderBy) => {
-  return order === "desc"
-    ? (a, b) => desc(a, b, "name")
-    : (a, b) => -desc(a, b, "name");
+	return order === "desc"
+		? (a, b) => desc(a, b, "name")
+		: (a, b) => -desc(a, b, "name");
 };
 
 class EnhancedTable extends Component {
-  state = {
-    order: "asc",
-    orderBy: "createdAt",
-    selected: [],
-    page: 0,
-    rowsPerPage: 10
-  };
+	state = {
+		order: "asc",
+		orderBy: "createdAt",
+		selected: [],
+		page: 0,
+		rowsPerPage: 10,
+	};
 
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = "desc";
+	handleRequestSort = (event, property) => {
+		const orderBy = property;
+		let order = "desc";
 
-    if (this.state.orderBy === property && this.state.order === "desc") {
-      order = "asc";
-    }
-    this.setState({ order, orderBy });
-  };
+		if (this.state.orderBy === property && this.state.order === "desc") {
+			order = "asc";
+		}
+		this.setState({ order, orderBy });
+	};
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
+	handleChangePage = (event, page) => {
+		this.setState({ page });
+	};
 
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
+	handleChangeRowsPerPage = event => {
+		this.setState({ rowsPerPage: event.target.value });
+	};
 
-  render() {
-    const { classes, data } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+	render() {
+		const { classes, data } = this.props;
+		const { order, orderBy, selected, rowsPerPage, page } = this.state;
+		const emptyRows =
+			rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
-    return (
-      <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
-            />
-            <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  return (
-                    <TableRow hover key={n.id}>
-                      <TableCell component="th" scope="row" padding="default">
-                        {n.id}
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="default">
-                        {n.alias}
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="default">
-                        {n.username}
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="default">
-                        {n.siteName}
-                      </TableCell>
-                      <TableCell align="right" padding="none">
-                        {n.createdAt}
-                      </TableCell>
-                      <TableCell>
-                        <Link
-                          style={{ textDecoration: "none" }}
-                          to={`users/${n.id}`}
-                        >
-                          <Button
-                            variant="outlined"
-                            size="medium"
-                            color="primary"
-                            className={classes.button}
-                          >
-                            <EditIcon className={classes.icon} />
-                            Edit
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 15, 20, 25]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            "aria-label": "Previous Page"
-          }}
-          nextIconButtonProps={{
-            "aria-label": "Next Page"
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
-      </Paper>
-    );
-  }
+		return (
+			<Paper className={classes.root}>
+				<div className={classes.tableWrapper}>
+					<Table className={classes.table} aria-labelledby="tableTitle">
+						<EnhancedTableHead
+							numSelected={selected.length}
+							order={order}
+							orderBy={orderBy}
+							onRequestSort={this.handleRequestSort}
+							rowCount={data.length}
+						/>
+						<TableBody>
+							{stableSort(data, getSorting(order, orderBy))
+								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								.map(n => {
+									return (
+										<TableRow hover key={n.id}>
+											<TableCell component="th" scope="row" padding="default">
+												{n.alias}
+											</TableCell>
+											<TableCell component="th" scope="row" padding="default">
+												{n.username}
+											</TableCell>
+											<TableCell component="th" scope="row" padding="default">
+												{n.siteName}
+											</TableCell>
+											<TableCell align="right" padding="none">
+												{moment(n.createdAt).fromNow()}
+											</TableCell>
+											<TableCell>
+												<Link
+													style={{ textDecoration: "none" }}
+													to={`users/${n.id}`}
+												>
+													<Button
+														variant="outlined"
+														size="medium"
+														color="primary"
+														className={classes.button}
+													>
+														<EditIcon className={classes.icon} />
+														Edit
+													</Button>
+												</Link>
+											</TableCell>
+										</TableRow>
+									);
+								})}
+							{emptyRows > 0 && (
+								<TableRow style={{ height: 49 * emptyRows }}>
+									<TableCell colSpan={6} />
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</div>
+				<TablePagination
+					rowsPerPageOptions={[5, 10, 15, 20, 25]}
+					component="div"
+					count={data.length}
+					rowsPerPage={rowsPerPage}
+					page={page}
+					backIconButtonProps={{
+						"aria-label": "Previous Page",
+					}}
+					nextIconButtonProps={{
+						"aria-label": "Next Page",
+					}}
+					onChangePage={this.handleChangePage}
+					onChangeRowsPerPage={this.handleChangeRowsPerPage}
+				/>
+			</Paper>
+		);
+	}
 }
 
 EnhancedTable.propTypes = {
-  classes: PropTypes.object.isRequired
+	classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(dataStyles)(EnhancedTable);

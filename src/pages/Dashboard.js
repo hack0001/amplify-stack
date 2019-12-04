@@ -20,13 +20,24 @@ import {
 	Chat,
 	BucketImages,
 	Home,
+	Duplicates,
 } from "../components/dashComponents";
 import {
 	Article,
 	DevArticle,
 	ProdArticle,
 	Quiz,
+	DevQuiz,
+	ProdQuiz,
 	SlideShow,
+	DevSlideShow,
+	ProdSlideShow,
+	DuplicateDevArticle,
+	DuplicateProdArticle,
+	DuplicateDevQuiz,
+	DuplicateProdQuiz,
+	DuplicateDevSlideShow,
+	DuplicateProdSlideShow,
 } from "../components/dashComponents/create/media";
 
 class Dashboard extends React.Component {
@@ -91,6 +102,11 @@ class Dashboard extends React.Component {
 					)}
 					<Route exact path="/home" component={props => <Home {...props} />} />
 					<Route
+						exact
+						path="/duplicates"
+						component={props => <Duplicates {...props} />}
+					/>
+					<Route
 						path="/home/development/article/:id"
 						component={props => <DevArticle {...props} />}
 					/>
@@ -99,13 +115,50 @@ class Dashboard extends React.Component {
 						component={props => <ProdArticle {...props} />}
 					/>
 					<Route
-						path="/home/:type/quiz/:id"
-						component={props => <Quiz {...props} />}
+						path="/home/development/quiz/:id"
+						component={props => <DevQuiz {...props} />}
 					/>
 					<Route
-						path="/home/:type/slideshow/:id"
-						component={props => <SlideShow {...props} />}
+						path="/home/production/quiz/:id"
+						component={props => <ProdQuiz {...props} />}
 					/>
+
+					<Route
+						path="/home/development/slideshow/:id"
+						component={props => <DevSlideShow {...props} />}
+					/>
+					<Route
+						path="/home/production/slideshow/:id"
+						component={props => <ProdSlideShow {...props} />}
+					/>
+
+					<Route
+						path="/home/development/duplicate/article/:id"
+						component={props => <DuplicateDevArticle {...props} />}
+					/>
+					<Route
+						path="/home/production/duplicate/article/:id"
+						component={props => <DuplicateProdArticle {...props} />}
+					/>
+
+					<Route
+						path="/home/development/duplicate/quiz/:id"
+						component={props => <DuplicateDevQuiz {...props} />}
+					/>
+					<Route
+						path="/home/production/duplicate/quiz/:id"
+						component={props => <DuplicateProdQuiz {...props} />}
+					/>
+
+					<Route
+						path="/home/development/duplicate/slideshow/:id"
+						component={props => <DuplicateDevSlideShow {...props} />}
+					/>
+					<Route
+						path="/home/production/duplicate/slideshow/:id"
+						component={props => <DuplicateProdSlideShow {...props} />}
+					/>
+
 					<Route
 						exact
 						path="/calendar"

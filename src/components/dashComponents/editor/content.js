@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect, Fragment } from "react";
-import { Editor } from "slate-react";
+import React, { useState, useRef, useEffect, Fragment, useMemo } from "react";
+import { Slate, Editable, withReact } from "slate-react";
+import { createEditor } from "slate";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
@@ -53,7 +54,7 @@ const Content = ({
 	const edit = useRef(null);
 	const hover = useRef(null);
 	const hoverSelect = useRef(null);
-
+	const editor = useMemo(() => withReact(createEditor()), []);
 	useEffect(() => {
 		handleHover();
 	});
@@ -312,9 +313,9 @@ const Content = ({
 				{bulletHeadlines && (
 					<Fragment>
 						<ul style={{ marginBottom: 35 }}>
-							{Object.keys(bulletHeaders).map(bullet => {
+							{Object.keys(bulletHeaders).map((bullet, index) => {
 								return (
-									<li style={{ fontSize: 25 }}>
+									<li style={{ fontSize: 25 }} key={index}>
 										<Typography variant="h6" gutterBottom>
 											{bulletHeaders[bullet]}
 										</Typography>
@@ -328,20 +329,22 @@ const Content = ({
 						/>
 					</Fragment>
 				)}
-				<Editor
-					spellCheck
-					placeholder="Enter text here..."
-					ref={edit}
-					value={value}
-					onChange={handleChange}
-					renderMark={renderMark}
-					renderBlock={renderNode}
-					renderEditor={renderEditor}
-					renderInline={renderInline}
-					plugins={plugins}
-					onClick={hoverClick}
-					// onPaste={onPaste.bind(this)}
-				/>
+				<Slate editor={editor} value={value}>
+					<Editable
+						spellCheck
+						autoFocus
+						placeholder="Enter text here..."
+						ref={edit}
+						onChange={handleChange}
+						renderMark={renderMark}
+						renderBlock={renderNode}
+						renderEditor={renderEditor}
+						renderInline={renderInline}
+						plugins={plugins}
+						onClick={hoverClick}
+						// onPaste={onPaste.bind(this)}
+					/>
+				</Slate>
 			</div>
 			{content.slateDialog && (
 				<SlateDialog

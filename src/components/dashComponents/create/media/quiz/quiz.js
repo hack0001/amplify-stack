@@ -18,6 +18,7 @@ import {
 	INITIAL_QUESTIONS_STATE,
 	OPENING_QUIZ_STATE,
 	CLOSING_QUIZ_STATE,
+	requiredValues,
 } from "./initialState/initialState";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -25,16 +26,20 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import _ from "lodash";
-import SimpleStorage, { clearStorage } from "react-simple-storage";
 import AuthContext from "../../../../../context/authContext";
 import { API, graphqlOperation } from "aws-amplify";
 import { createQuiz } from "../graphql/createGraphql";
 import ReduceDialog from "../dialog/reduceQuestions";
 import ClearDialog from "../dialog/clearValues";
+import moment from "moment";
 
 class Quiz extends Component {
 	constructor(props) {
 		super(props);
+
+		const overviewStorage = this.getLocal("quiz-overviewValues");
+		const mainQuestions = this.getLocal("quiz-quizQuestions");
+		const numQuestions = this.getLocal("numQuestions");
 
 		const questionsState = _.range(5).map((val, index) => {
 			return { ...INITIAL_QUESTIONS_STATE, questionPosition: index + 1 };
@@ -42,22 +47,44 @@ class Quiz extends Component {
 
 		this.state = {
 			value: 0,
-			numQuizQuestions: 5,
-			overviewValues: [INITIAL_QUIZ_DETAILS],
-			quizQuestions: {
-				opening: [OPENING_QUIZ_STATE],
-				closing: [CLOSING_QUIZ_STATE],
-				questions: questionsState,
-			},
-			production: false,
+			numQuizQuestions: numQuestions ? numQuestions : 5,
+			overviewValues: overviewStorage
+				? overviewStorage
+				: [INITIAL_QUIZ_DETAILS],
+			quizQuestions: mainQuestions
+				? mainQuestions
+				: {
+						opening: [OPENING_QUIZ_STATE],
+						closing: [CLOSING_QUIZ_STATE],
+						questions: questionsState,
+				  },
+			production: null,
+			development: null,
 			devId: "",
 			productionId: "",
 			inputQuizTag: "",
 			targetValue: "",
 			reduceDialog: false,
 			clearDialog: false,
+			errors: {},
 		};
 	}
+
+	getLocal = prefix => {
+		return localStorage.getItem(prefix)
+			? JSON.parse(localStorage.getItem(prefix))
+			: null;
+	};
+
+	clearLocal = prefix => {
+		if (Array.isArray(prefix)) {
+			prefix.map(x => {
+				return localStorage.removeItem(x);
+			});
+		} else {
+			localStorage.removeItem(prefix);
+		}
+	};
 	static contextType = AuthContext;
 
 	clearQuestionValues = () => {
@@ -75,7 +102,17 @@ class Quiz extends Component {
 				questions: questionsState,
 			},
 			clearDialog: false,
+			errors: {},
 		});
+		this.clearLocal([
+			"quiz-overviewValues",
+			"quiz-quizQuestions",
+			"numQuestions",
+		]);
+	};
+
+	handleErrors = error => {
+		this.setState({ errors: error });
 	};
 
 	questionsHandler = e => {
@@ -102,6 +139,7 @@ class Quiz extends Component {
 		} else if (newValue < this.state.numQuizQuestions) {
 			this.setState({ reduceDialog: true, targetValue: newValue });
 		}
+		localStorage.setItem(`numQuestions`, e.target.value);
 	};
 
 	handleAccept = e => {
@@ -129,31 +167,63 @@ class Quiz extends Component {
 	};
 
 	handleSend = values => {
+		if (values.overviewValues !== this.state.overviewValues) {
+			const prefix = Object.keys(values);
+			localStorage.setItem(`quiz-${prefix[0]}`, JSON.stringify(values[prefix]));
+		}
 		this.setState(values);
+	};
+
+	validate = () => {
+		let validateSubmit = {};
+		Object.keys(this.state.overviewValues[0]).map(key => {
+			if (requiredValues.includes(key)) {
+				if (this.state.overviewValues[0][key] === "") {
+					validateSubmit = { ...validateSubmit, [key]: true };
+				}
+			}
+		});
+		this.setState({
+			errors: {
+				...this.state.errors,
+				...validateSubmit,
+			},
+		});
 	};
 
 	handleSubmit = async e => {
 		e.preventDefault();
-		const quizCat = this.state.overviewValues[0].quizCategory
-			? this.state.overviewValues[0].quizCategory
-			: "none";
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const overviewDate = {
+				...this.state.overviewValues,
+				displayDate: moment().format(),
+			};
+			const submitQuiz = {
+				overview: JSON.stringify(overviewDate),
+				questions: [JSON.stringify(this.state.quizQuestions)],
+				development: true,
+				production: false,
+				numQuestions: this.state.numQuizQuestions,
+				quizUserId: this.context.profileId,
+				original: true,
+			};
 
-		const submitQuiz = {
-			category: quizCat,
-			overview: this.state.overviewValues,
-			questions: [this.state.quizQuestions],
-			development: true,
-			production: false,
-			numQuestions: this.state.numQuizQuestions,
-			quizUserId: this.context.profileId,
-		};
-
-		console.log("THIS STATE", this.state);
-		console.log("THIS STATE", submitQuiz);
-		try {
-			await API.graphql(graphqlOperation(createQuiz, { input: submitQuiz }));
-		} catch (err) {
-			console.log("Error occurred", err);
+			try {
+				await API.graphql(graphqlOperation(createQuiz, { input: submitQuiz }));
+				this.clearLocal([
+					"quiz-overviewValues",
+					"quiz-quizQuestions",
+					"numQuestions",
+				]);
+				this.props.history.push("/home");
+			} catch (err) {
+				console.log("Error occurred", err);
+			}
 		}
 	};
 
@@ -187,12 +257,10 @@ class Quiz extends Component {
 	};
 
 	render() {
-		console.log("handleValues,", this.state);
 		const { classes, theme } = this.props;
 		const { value } = this.state;
 		return (
 			<div className={classes.root}>
-				<SimpleStorage parent={this} prefix={"QuizParent"} />
 				<form className={classes.root} autoComplete="off">
 					<AppBar position="static" color="default">
 						<Tabs
@@ -230,9 +298,12 @@ class Quiz extends Component {
 							style={{ float: "right" }}
 							className={classes.button}
 							onClick={e => {
-								console.log("VALUES", this.state);
 								this.setState({ clearDialog: true });
-								clearStorage("QuizParent");
+								this.clearLocal([
+									"quiz-overviewValues",
+									"quiz-quizQuestions",
+									"numQuestions",
+								]);
 							}}
 						>
 							<Delete className={classes.rightIcon} />
@@ -247,7 +318,12 @@ class Quiz extends Component {
 						<Paper className={classes.quizWrap}>
 							<QuizDetails
 								overview={this.state.overviewValues}
+								production={this.state.production}
+								development={this.state.development}
 								handleSend={this.handleSend}
+								stage={"initial"}
+								errors={this.state.errors}
+								setErrors={this.handleErrors}
 							/>
 						</Paper>
 						<Paper className={classes.quizWrap}>

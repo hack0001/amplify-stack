@@ -7,7 +7,7 @@ import { styles } from "./styles/homeStyles";
 const header = ["Site Name", "Created At", "ID"];
 
 const HomeList = props => {
-	const { queryFetch, dataCategory, type } = props;
+	const { queryFetch, dataCategory, type, original } = props;
 	const [content, setContent] = useState([]);
 
 	useEffect(() => {
@@ -22,10 +22,14 @@ const HomeList = props => {
 			console.log("Error occurred", err);
 		}
 	};
-	console.log("TYPE", type);
 	return (
 		<Fragment>
-			<DataTable header={header} data={content} type={type} />
+			<DataTable
+				header={header}
+				data={content}
+				type={type}
+				original={original}
+			/>
 		</Fragment>
 	);
 };

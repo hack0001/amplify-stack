@@ -17,19 +17,7 @@ const listChatUsers = `query ListChatUsers(
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
-        username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-		profilePic
       }
     }
     nextToken

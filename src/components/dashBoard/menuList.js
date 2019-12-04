@@ -13,146 +13,152 @@ import CollectionsIcon from "@material-ui/icons/Collections";
 import Users from "@material-ui/icons/Group";
 import Web from "@material-ui/icons/Web";
 import Email from "@material-ui/icons/Email";
+import DuplicateIcon from "@material-ui/icons/FileCopy";
 
 const sideMenuAdmin = [
-  {
-    label: "Home",
-    path: "home",
-    Icon: HomeIcon
-  },
-  {
-    label: "Whiteboard",
-    path: "whiteboard",
-    Icon: DashboardIcon
-  },
-  {
-    label: "Discussion",
-    path: "discussion",
-    Icon: ChatIcon
-  },
-  {
-    label: "Users",
-    path: "users",
-    Icon: Users
-  },
-  {
-    label: "Sites",
-    path: "sites",
-    Icon: Web
-  },
-  {
-    label: "Calendar",
-    path: "calendar",
-    Icon: CalendarIcon
-  },
-  {
-    label: "Create",
-    path: "create",
-    Icon: CreateIcon,
-    subComponents: [
-      {
-        subLabel: "Article",
-        subPath: "article",
-        SubIcon: NotesIcon
-      },
-      {
-        subLabel: "Quiz",
-        subPath: "quiz",
-        SubIcon: QuizIcon
-      },
-      {
-        subLabel: "Slideshow",
-        subPath: "slideshow",
-        SubIcon: SlideshowIcon
-      }
-    ]
-  },
-  {
-    label: "Settings",
-    path: "settings",
-    Icon: SettingsIcon
-  },
-  {
-    label: "Bucket Images",
-    path: "bucket-images",
-    Icon: CollectionsIcon
-  },
-  {
-    label: "Email List",
-    path: "email-list",
-    Icon: Email
-  }
+	{
+		label: "Home",
+		path: "home",
+		Icon: HomeIcon,
+	},
+	{
+		label: "Duplicates",
+		path: "duplicates",
+		Icon: DuplicateIcon,
+	},
+	{
+		label: "Whiteboard",
+		path: "whiteboard",
+		Icon: DashboardIcon,
+	},
+	{
+		label: "Discussion",
+		path: "discussion",
+		Icon: ChatIcon,
+	},
+	{
+		label: "Users",
+		path: "users",
+		Icon: Users,
+	},
+	{
+		label: "Sites",
+		path: "sites",
+		Icon: Web,
+	},
+	{
+		label: "Calendar",
+		path: "calendar",
+		Icon: CalendarIcon,
+	},
+	{
+		label: "Create",
+		path: "create",
+		Icon: CreateIcon,
+		subComponents: [
+			{
+				subLabel: "Article",
+				subPath: "article",
+				SubIcon: NotesIcon,
+			},
+			{
+				subLabel: "Quiz",
+				subPath: "quiz",
+				SubIcon: QuizIcon,
+			},
+			{
+				subLabel: "Slideshow",
+				subPath: "slideshow",
+				SubIcon: SlideshowIcon,
+			},
+		],
+	},
+	{
+		label: "Settings",
+		path: "settings",
+		Icon: SettingsIcon,
+	},
+	{
+		label: "Bucket Images",
+		path: "bucket-images",
+		Icon: CollectionsIcon,
+	},
+	{
+		label: "Email List",
+		path: "email-list",
+		Icon: Email,
+	},
 ];
 
 const sideMenu = [
-  {
-    label: "Home",
-    path: "home",
-    Icon: HomeIcon
-  },
-  {
-    label: "Whiteboard",
-    path: "whiteboard",
-    Icon: DashboardIcon
-  },
-  {
-    label: "Discussion",
-    path: "discussion",
-    Icon: ChatIcon
-  },
-  {
-    label: "Create",
-    path: "create",
-    Icon: CreateIcon,
+	{
+		label: "Home",
+		path: "home",
+		Icon: HomeIcon,
+	},
+	{
+		label: "Whiteboard",
+		path: "whiteboard",
+		Icon: DashboardIcon,
+	},
+	{
+		label: "Discussion",
+		path: "discussion",
+		Icon: ChatIcon,
+	},
+	{
+		label: "Create",
+		path: "create",
+		Icon: CreateIcon,
 
-    subComponents: [
-      {
-        subLabel: "Article",
-        subPath: "article",
-        SubIcon: NotesIcon
-      },
-      {
-        subLabel: "Quiz",
-        subPath: "quiz",
-        SubIcon: QuizIcon
-      },
-      {
-        subLabel: "Slideshow",
-        subPath: "slideshow",
-        SubIcon: SlideshowIcon
-      }
-    ]
-  },
-  {
-    label: "Settings",
-    path: "settings",
-    Icon: SettingsIcon
-  }
+		subComponents: [
+			{
+				subLabel: "Article",
+				subPath: "article",
+				SubIcon: NotesIcon,
+			},
+			{
+				subLabel: "Quiz",
+				subPath: "quiz",
+				SubIcon: QuizIcon,
+			},
+			{
+				subLabel: "Slideshow",
+				subPath: "slideshow",
+				SubIcon: SlideshowIcon,
+			},
+		],
+	},
+	{
+		label: "Settings",
+		path: "settings",
+		Icon: SettingsIcon,
+	},
 ];
 
 const subMenu = [
-  {
-    label: "User",
-    path: "user",
-    Icon: PersonIcon
-  },
-  {
-    label: "Sign Out",
-    path: "signout",
-    Icon: RadioIcon
-  }
+	{
+		label: "User",
+		path: "user",
+		Icon: PersonIcon,
+	},
+	{
+		label: "Sign Out",
+		path: "signout",
+		Icon: RadioIcon,
+	},
 ];
 
 const subMenuAdmin = [
-  {
-    label: "User",
-    path: "user",
-    Icon: PersonIcon
-  },
-  {
-    label: "Sign Out",
-    path: "signout",
-    Icon: RadioIcon
-  }
+	{
+		label: "User",
+		path: "user",
+		Icon: PersonIcon,
+	},
+	{
+		label: "Sign Out",
+		path: "signout",
+		Icon: RadioIcon,
+	},
 ];
 export { sideMenu, sideMenuAdmin, subMenu, subMenuAdmin };

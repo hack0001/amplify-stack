@@ -10,7 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import styles from "../../styles/Dashboard";
 import AuthContext from "../../context/authContext";
-
+import NetworkStatus from "../dashComponents/networkStatus/networkStatus";
 const Navbar = ({ open, classes, handleDrawer }) => {
   return (
     <AuthContext.Consumer>
@@ -40,11 +40,13 @@ const Navbar = ({ open, classes, handleDrawer }) => {
             >
               {currentTabName}
             </Typography>
+
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <NetworkStatus />
           </Toolbar>
         </AppBar>
       )}

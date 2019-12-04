@@ -9,194 +9,249 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { createStyles } from "./styles/userStyles";
 import useFormValidation from "./form/useFormValidation";
 import validateAuth from "./form/validateForm";
-import { createUser, createChatUser, updateUser } from "./graphql/userGraphql";
+import {
+	createUser,
+	createChatUser,
+	updateUser,
+	createProductionUser,
+} from "./graphql/userGraphql";
 import { TabContainer } from "../../tabs/tabContainer";
 import Dialog from "../../dialog/usernameDialog";
 import AuthContext from "../../../context/authContext";
 import ProfilePic from "../../profilePic/profilePic";
-import { INITIAL_STATE, textFieldTypes } from "./initialState/initialState";
+import { INITIAL_STATE, createTextFields } from "./initialState/initialState";
+import axios from "axios";
+import content from "../editor/content";
 
 const CreateUser = props => {
-  const { classes, theme, push } = props;
-  const [error, setError] = useState(false);
-  const [addChatUser, setAddChatUser] = useState(false);
-  const { handleChange, userValues, handleImageChange } = useFormValidation(
-    INITIAL_STATE,
-    validateAuth
-  );
+	const { classes, theme, push } = props;
+	const [error, setError] = useState(false);
+	const [checkUser, setCheckUser] = useState({
+		createChatUser: false,
+		createProductionUser: false,
+	});
 
-  const clean = values => {
-    Object.keys(values).forEach(key => {
-      (values[key] === null || values[key] === "") && delete values[key];
-    });
-  };
+	const { handleChange, userValues, handleImageChange } = useFormValidation(
+		INITIAL_STATE,
+		validateAuth,
+	);
 
-  const cleanChatUser = values => {
-    Object.keys(values).forEach(key => {
-      (values[key] === null ||
-        values[key] === "" ||
-        values[key] === undefined) &&
-        delete values[key];
-    });
-  };
+	const clean = values => {
+		Object.keys(values).forEach(key => {
+			(values[key] === null || values[key] === "") && delete values[key];
+		});
+	};
 
-  const handleAddUser = async context => {
-    let newUser = {
-      id: userValues.id,
-      twitterProfile: userValues.twitterLink,
-      facebookProfile: userValues.facebookLink,
-      instagramProfile: userValues.instagramLink,
-      siteName: userValues.website,
-      username: userValues.username,
-      userId: userValues.username,
-      alias: userValues.name,
-      numberPosts: userValues.numberPosts ? userValues.numberPosts : 0,
-      updatedAt: userValues.updatedAt,
-      createdAt: userValues.createdAt,
-      lastLoggedIn: userValues.lastLogged,
-      phoneNumber: userValues.phone,
-      imageLink: userValues.imageLink,
-      profilePic: userValues.profilePic
-    };
-    clean(newUser);
+	const cleanUser = values => {
+		Object.keys(values).forEach(key => {
+			(values[key] === null ||
+				values[key] === "" ||
+				values[key] === undefined) &&
+				delete values[key];
+		});
+	};
 
-    try {
-      await Auth.signUp({
-        username: newUser.username,
-        password: "Password1@",
-        attributes: {
-          email: newUser.username
-        }
-      });
+	const handleAddUser = async context => {
+		let newUser = {
+			userId: userValues.overview[0].username,
+			creator: context.username,
+			overview: JSON.stringify(userValues.overview),
+			username: userValues.overview[0].username,
+		};
+		cleanUser(newUser);
 
-      const createdUser = await API.graphql(
-        graphqlOperation(createUser, { input: newUser })
-      );
+		try {
+			await Auth.signUp({
+				username: newUser.username,
+				password: "Password1@",
+				attributes: {
+					email: newUser.username,
+				},
+			});
 
-      //If Chat User Box checked add Chat User too and then reupdate original User
-      if (addChatUser) {
-        let newChatUser = {
-          alias: userValues.name,
-          username: userValues.username,
-          creator: context.username,
-          profilePic: userValues.profilePic,
-          chatUserUserId: createdUser.data.createUser.id
-        };
+			const createdUser = await API.graphql(
+				graphqlOperation(createUser, { input: newUser }),
+			);
 
-        cleanChatUser(newChatUser);
+			const newUserId = createdUser.data.createUser.id;
+			// 	//If Chat User Box checked add Chat User too and then reupdate original User
+			if (checkUser.createChatUser) {
+				let newChatUser = {
+					alias: userValues.overview[0].name,
+					username: userValues.overview[0].username,
+					creator: context.username,
+					profilePic: userValues.overview[0].profilePic,
+					chatUserUserId: newUserId,
+				};
 
-        const chatUser = await API.graphql(
-          graphqlOperation(createChatUser, { input: newChatUser })
-        );
+				cleanUser(newChatUser);
 
-        let updateChatUser = {
-          id: createdUser.data.createUser.id,
-          userChatUserId: chatUser.data.createChatUser.id
-        };
+				const chatUser = await API.graphql(
+					graphqlOperation(createChatUser, { input: newChatUser }),
+				);
 
-        await API.graphql(
-          graphqlOperation(updateUser, { input: updateChatUser })
-        );
-      }
+				let updateChatUser = {
+					id: newUserId,
+					userChatUserId: chatUser.data.createChatUser.id,
+				};
 
-      push("/users");
-    } catch (err) {
-      console.log("Error", err);
-      if (err.code === "UsernameExistsException") {
-        setError(true);
-      }
-    }
-  };
+				await API.graphql(
+					graphqlOperation(updateUser, { input: updateChatUser }),
+				);
+			}
 
-  const textFields = ({ label, name }, index) => {
-    return (
-      <TextField
-        key={index}
-        label={`${label}`}
-        autoComplete="off"
-        className={classes.textField}
-        value={userValues[name]}
-        onChange={handleChange}
-        margin="normal"
-        name={`${name}`}
-      />
-    );
-  };
+			if (checkUser.createProductionUser) {
+				const newProdUser = {
+					id: newUser.username,
+					userId: newUser.userId,
+					creator: context.username,
+					overview: JSON.stringify([
+						{
+							...newUser.overview[0],
+							production: true,
+							developmentId: newUserId,
+						},
+					]),
+				};
 
-  const handleCheckChange = event => {
-    setAddChatUser(!addChatUser);
-  };
+				const mutationData = {
+					query: createProductionUser,
+					operationName: "CreateProductionUser",
+					variables: {
+						input: newProdUser,
+					},
+				};
+				const productionUser = await axios({
+					url: process.env.REACT_APP_PROD_ENDPOINT,
+					method: "POST",
+					data: JSON.stringify(mutationData),
+					headers: {
+						Accept: "application/json",
+						"x-api-key": process.env.REACT_APP_PROD_API_KEY,
+					},
+				});
+				const productionId = productionUser.data.data.createProductionUser.id;
+				const updateDevUser = {
+					id: newUserId,
+					overview: JSON.stringify([
+						{
+							...newUser.overview[0],
+							userProductionId: productionId,
+							productionUser: true,
+						},
+					]),
+				};
 
-  const checkBox = ({ label, type }, index) => {
-    return (
-      <FormControlLabel
-        key={index}
-        name={`${type}`}
-        label={`${label}`}
-        onChange={handleCheckChange}
-        className={classes.textField}
-        control={<Checkbox color="primary" />}
-        labelPlacement="end"
-      />
-    );
-  };
+				await API.graphql(
+					graphqlOperation(updateUser, {
+						input: updateDevUser,
+					}),
+				);
 
-  const image = ({ label, name }, index) => {
-    return (
-      <ProfilePic
-        s3Directory={"profileImages"}
-        userId={userValues.id}
-        handleChange={handleImageChange}
-        itemName={name}
-        imageUrl={userValues[name]}
-      />
-    );
-  };
+				push("/users");
+			}
+		} catch (err) {
+			console.log("Error", err);
+			if (err.code === "UsernameExistsException") {
+				setError(true);
+			}
+		}
+	};
 
-  return (
-    <AuthContext.Consumer>
-      {context => {
-        return (
-          <Fragment>
-            <TabContainer dir={theme.direction}>
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-                  handleAddUser(context);
-                }}
-              >
-                {textFieldTypes.map((field, index) => {
-                  switch (field.type) {
-                    case "text":
-                      return textFields(field, index);
-                    case "image":
-                      return image(field, index);
-                    case "createChatUser":
-                      return checkBox(field, index);
-                    default:
-                      return <div />;
-                  }
-                })}
-                <div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    align="right"
-                    className={classes.button}
-                    type="submit"
-                  >
-                    <SaveIcon className={classes.rightIcon} />
-                    Create
-                  </Button>
-                </div>
-              </form>
-            </TabContainer>
-            <Dialog openDialog={error} closeFunc={setError} />
-          </Fragment>
-        );
-      }}
-    </AuthContext.Consumer>
-  );
+	const textFields = ({ label, name, width }, index) => {
+		return (
+			<TextField
+				key={index}
+				autoComplete="off"
+				style={{ width: width }}
+				label={`${label}`}
+				className={classes.textField}
+				value={userValues["overview"][0][name]}
+				onChange={handleChange}
+				margin="normal"
+				name={`${name}`}
+			/>
+		);
+	};
+
+	const handleCheckChange = e => {
+		setCheckUser({
+			...checkUser,
+			[e.target.name]: !checkUser[e.target.name],
+		});
+	};
+
+	const checkBox = ({ label, type, name }, index) => {
+		return (
+			<FormControlLabel
+				key={index}
+				name={name}
+				label={`${label}`}
+				value={checkUser[name]}
+				onChange={handleCheckChange}
+				className={classes.textField}
+				control={<Checkbox color="primary" />}
+				labelPlacement="end"
+			/>
+		);
+	};
+
+	const image = ({ label, name }, index) => {
+		return (
+			<ProfilePic
+				s3Directory={"profileImages"}
+				userId={userValues.id}
+				handleChange={handleImageChange}
+				itemName={name}
+				imageUrl={userValues[name]}
+			/>
+		);
+	};
+
+	return (
+		<AuthContext.Consumer>
+			{context => {
+				return (
+					<Fragment>
+						<TabContainer dir={theme.direction}>
+							<form
+								onSubmit={e => {
+									e.preventDefault();
+									handleAddUser(context);
+								}}
+							>
+								{createTextFields.map((field, index) => {
+									switch (field.type) {
+										case "text":
+											return textFields(field, index);
+										case "image":
+											return image(field, index);
+										case "checkbox":
+											return checkBox(field, index);
+										default:
+											return <div />;
+									}
+								})}
+								<div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
+									<Button
+										variant="contained"
+										color="primary"
+										align="right"
+										className={classes.button}
+										type="submit"
+									>
+										<SaveIcon className={classes.rightIcon} />
+										Create
+									</Button>
+								</div>
+							</form>
+						</TabContainer>
+						<Dialog openDialog={error} closeFunc={setError} />
+					</Fragment>
+				);
+			}}
+		</AuthContext.Consumer>
+	);
 };
 
 export default withStyles(createStyles, { withTheme: true })(CreateUser);

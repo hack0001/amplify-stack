@@ -49,27 +49,27 @@ const Conversation = props => {
 				const isToken = loadMore && token ? `nextToken:"${token}",` : "";
 				const { data } = await API.graphql(
 					graphqlOperation(`query GetConversationMsgs{
-            getConversation(id:"${conversationId}"){
-              id 
-              conversationCreator
-              subject
-              name				
-              messages(${isToken}sortDirection:DESC, limit:${messageLimit}){
-              items{
-                authorId 
-                content
-                createdAt
-                id
-                author{
-                  alias
-                  profilePic
-                }
-              }
-              nextToken
-              }
-            }
-          }
-        `),
+						getConversation(id:"${conversationId}"){
+						id 
+						conversationCreator
+						subject
+						name				
+						messages(${isToken}sortDirection:DESC, limit:${messageLimit}){
+						items{
+							authorId 
+							content
+							createdAt
+							id
+							author{
+									alias
+									profilePic
+									}	
+								}
+								nextToken
+								}
+							}
+						}
+					`),
 				);
 				if (loadMore) {
 					const newData = messages.concat(data.getConversation.messages.items);

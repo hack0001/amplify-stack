@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { articleStyle } from "../styles/articleStyles";
-import { initialLayout } from "./layout/initialState";
+import { layout } from "./layout/initialState";
 import Select from "./select/select";
 import Tags from "./tags/tags";
 import DEFAULT_IMAGE from "../../../../../../default.jpg";
@@ -15,8 +15,9 @@ import _ from "lodash";
 
 const ArticleOverview = props => {
 	const [loading, setLoading] = useState(false);
-	const { handleSend, overview, classes } = props;
+	const { handleSend, overview, classes, stage, errors, setErrors } = props;
 	const [imageDialog, setImageDialog] = useState(false);
+
 	const handleOnChange = value => {
 		handleSend({
 			overview: [
@@ -26,6 +27,28 @@ const ArticleOverview = props => {
 				},
 			],
 		});
+	};
+
+	const handleBlur = e => {
+		if (!e.target.value) {
+			setErrors({ ...errors, [e.target.name]: true });
+		} else {
+			setErrors({ ...errors, [e.target.name]: false });
+		}
+	};
+
+	const handleUrlBlur = e => {
+		if (!e.target.value) {
+			setErrors({ ...errors, [e.target.name]: true });
+		} else {
+			const cleanUrl = e.target.value
+				.trim()
+				.replace(/\s/g, "-")
+				.toLowerCase();
+
+			handleOnChange({ [e.target.name]: cleanUrl });
+			setErrors({ ...errors, [e.target.name]: false });
+		}
 	};
 
 	const text = (item, index) => {
@@ -39,7 +62,7 @@ const ArticleOverview = props => {
 				key={index}
 			>
 				<TextField
-					autoFocus
+					error={errors[item.name]}
 					autoComplete="off"
 					name={item.name}
 					value={overview[0][item.name]}
@@ -47,6 +70,7 @@ const ArticleOverview = props => {
 					margin="dense"
 					id={item.name}
 					label={item.label}
+					onBlur={item.name === "urlDescription" ? handleUrlBlur : handleBlur}
 					type="text"
 					style={{
 						width: "100%",
@@ -77,6 +101,8 @@ const ArticleOverview = props => {
 				>
 					<TextField
 						autoFocus
+						error={errors[bulletName]}
+						onBlur={handleBlur}
 						autoComplete="off"
 						name={bulletName}
 						value={overview[0]["bulletHeadlinesDetails"][bulletName]}
@@ -109,9 +135,6 @@ const ArticleOverview = props => {
 				name={`${item.name}`}
 				label={`${item.label}`}
 				checked={overview[0][item.name]}
-				onChange={e =>
-					handleOnChange({ [e.target.name]: !overview[0][item.name] })
-				}
 				className={classes.textField}
 				control={<Checkbox color="primary" />}
 				labelPlacement="end"
@@ -145,19 +168,20 @@ const ArticleOverview = props => {
 			<div
 				key={index}
 				style={{
-					display: "block",
-					width: "50%",
+					display: "flex",
+					justifyContent: "center",
+					width: "100%",
 					margin: "0 auto",
 				}}
-				onClick={e => setImageDialog(true)}
 			>
 				<img
 					style={{
 						objectFit: "cover",
-						width: "100%",
+						width: "50%",
 						height: "360px",
 						margin: 10,
 					}}
+					onClick={e => setImageDialog(true)}
 					alt={overview[0]["headlineImageAlt"]}
 					src={overview[0][item.name] ? overview[0][item.name] : DEFAULT_IMAGE}
 				/>
@@ -184,24 +208,32 @@ const ArticleOverview = props => {
 		<Fragment>
 			<Paper style={{ display: "block" }}>
 				{loading && <LinearProgress />}
-				{initialLayout.map((item, index) => {
-					switch (item.type) {
-						case "select":
-							return select(item, index);
-						case "bullets":
-							return bullets(item, index);
-						case "image":
-							return image(item, index);
-						case "text":
-							return text(item, index);
-						case "tags":
-							return tags(item, index);
-						case "checkBox":
-							return checkBox(item, index);
-						default:
-							return <div key={index} />;
-					}
-				})}
+				<div
+					style={{
+						display: "flex", //item.layout,
+						flexDirection: "row",
+						flexWrap: "wrap",
+					}}
+				>
+					{layout[stage].map((item, index) => {
+						switch (item.type) {
+							case "select":
+								return select(item, index);
+							case "bullets":
+								return bullets(item, index);
+							case "image":
+								return image(item, index);
+							case "text":
+								return text(item, index);
+							case "tags":
+								return tags(item, index);
+							case "checkBox":
+								return checkBox(item, index);
+							default:
+								return <div key={index} />;
+						}
+					})}
+				</div>
 			</Paper>
 			<ImageDialog
 				imageDialog={imageDialog}

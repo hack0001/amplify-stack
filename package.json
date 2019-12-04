@@ -27,8 +27,8 @@
     "react-scripts": "2.1.8",
     "react-simple-storage": "^1.4.1",
     "react-swipeable-views": "^0.13.3",
-    "slate": "^0.47.4",
-    "slate-react": "^0.22.4",
+    "slate": "^0.50.8",
+    "slate-react": "^0.50.10",
     "uuid": "^3.3.2"
   },
   "scripts": {

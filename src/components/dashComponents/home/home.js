@@ -13,12 +13,16 @@ import {
 	listSlideShows,
 	listQuizs,
 } from "../../../graphql/queries";
-class Home extends Component {
-	state = {
-		value: 0,
-	};
 
+class Home extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			value: Number(localStorage.getItem("homeTabValue")) || 0,
+		};
+	}
 	handleChange = (event, value) => {
+		localStorage.setItem("homeTabValue", value);
 		this.setState({ value });
 	};
 
@@ -39,8 +43,8 @@ class Home extends Component {
 						variant="fullWidth"
 					>
 						<Tab label="Articles" />
-						<Tab label="SlideShows" />
 						<Tab label="Quizzes" />
+						<Tab label="SlideShows" />
 					</Tabs>
 				</AppBar>
 				<SwipeableViews
@@ -52,16 +56,19 @@ class Home extends Component {
 						queryFetch={listArticles}
 						dataCategory={"listArticles"}
 						type={"article"}
+						original={true}
 					/>
 					<HomeList
 						queryFetch={listQuizs}
 						dataCategory={"listQuizs"}
 						type={"quiz"}
+						original={true}
 					/>
 					<HomeList
 						queryFetch={listSlideShows}
 						dataCategory={"listSlideShows"}
 						type={"slideshow"}
+						original={true}
 					/>
 				</SwipeableViews>
 			</div>

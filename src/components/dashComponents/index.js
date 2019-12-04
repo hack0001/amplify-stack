@@ -9,6 +9,7 @@ import CalendarEvent from "./calendar/eventContent/eventContent";
 import Chat from "./chat/chat";
 import BucketImages from "./bucketImages/bucketImages";
 import Home from "./home/home";
+import Duplicates from "./home/duplicates";
 export {
 	Calendar,
 	CalendarEvent,
@@ -21,4 +22,5 @@ export {
 	Chat,
 	BucketImages,
 	Home,
+	Duplicates,
 };

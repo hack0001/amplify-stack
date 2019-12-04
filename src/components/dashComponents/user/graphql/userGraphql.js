@@ -1,20 +1,12 @@
 const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
-    id
+	id
 	userId
-	alias
-	username
-	phoneNumber
-	lastLoggedIn
-	facebookProfile
-	twitterProfile
-	instagramProfile
-	imageLink
-	numberPosts
-	siteName
-  	createdAt
+	creator
+	createdAt
 	updatedAt
-	profilePic
+	username
+	overview
   }
 }
 `;
@@ -51,7 +43,6 @@ const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInput!) {
   }
 }`;
 
-
 const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInput!) {
   deleteChatUser(input: $input) {
 	id
@@ -61,6 +52,7 @@ const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInput!) {
 	updatedAt
 	alias
 	imageLink
+	profilePic
 	user {
 		id
 	}
@@ -70,21 +62,13 @@ const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInput!) {
 
 const userDetails = `query GetUser($id: ID!) {
   getUser(id: $id) {
-    id
+	id
 	userId
-	alias
-	username
-	phoneNumber
-	lastLoggedIn
-	facebookProfile
-	twitterProfile
-	instagramProfile
-	imageLink
-	numberPosts
-	siteName
-  	createdAt
+	creator
+	createdAt
 	updatedAt
-	profilePic
+	username
+	overview
 	chatUser{
 		id
 	}
@@ -101,19 +85,11 @@ const listUsers = `query ListUsers(
 	  items{
 		id
 		userId
-		alias
-		username
-		phoneNumber
-		lastLoggedIn
-		facebookProfile
-		twitterProfile
-		instagramProfile
-		imageLink
-		numberPosts
-		siteName
+		creator
 		createdAt
 		updatedAt
-		profilePic
+		username
+		overview
 	  }
    }
  }
@@ -121,55 +97,75 @@ const listUsers = `query ListUsers(
 
 const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   deleteUser(input: $input) {
-    id
+	id
 	userId
-	alias
-	username
-	phoneNumber
-	lastLoggedIn
-	facebookProfile
-	twitterProfile
-	instagramProfile
-	imageLink
-	numberPosts
-	siteName
-  	createdAt
+	creator
+	createdAt
 	updatedAt
+	username
+	overview
 	}
   } 
 `;
 
 const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
-    id
+	id
 	userId
-	alias
-	username
-	phoneNumber
-	lastLoggedIn
-	facebookProfile
-	twitterProfile
-	instagramProfile
-	imageLink
-	numberPosts
-	siteName
-  	createdAt
+	creator
+	createdAt
 	updatedAt
-	profilePic
+	username
+	overview
 	chatUser{
 		id
 	}
   }
 }
 `;
+const createProductionUser = `mutation CreateProductionUser($input: CreateProductionUserInput!) {
+	createProductionUser(input: $input) {
+		id
+		userId
+		creator
+		createdAt
+		updatedAt
+		overview
+	}
+  }
+  `;
+const updateProductionUser = `mutation UpdateProductionUser($input: UpdateProductionUserInput!) {
+	updateProductionUser(input: $input) {
+		id
+		userId
+		creator
+		createdAt
+		updatedAt
+		overview
+	}
+  }
+  `;
+
+const deleteProductionUser = `mutation DeleteProductionUser($input: DeleteProductionUserInput!) {
+	deleteProductionUser(input: $input) {
+	  id
+	  userId
+	  creator
+	  updatedAt
+	}
+  }
+  `;
 
 export {
-  createUser,
-  updateUser,
-  deleteUser,
-  userDetails,
-  listUsers,
-  createChatUser,
-  deleteChatUser,
-  updateChatUser
+	createUser,
+	updateUser,
+	deleteUser,
+	userDetails,
+	listUsers,
+	createChatUser,
+	deleteChatUser,
+	createProductionUser,
+	updateProductionUser,
+	updateChatUser,
+	deleteProductionUser,
 };

@@ -1,19 +1,12 @@
 const userDetails = `query GetUser($id: ID!) {
   getUser(id: $id) {
-    id
+	id
 	userId
-	alias
-	username
-	phoneNumber
-	lastLoggedIn
-	facebookProfile
-	twitterProfile
-	instagramProfile
-	imageLink
-	numberPosts
-	siteName
-  	createdAt
+	creator
+	createdAt
 	updatedAt
+	username
+	overview
 	chatUser{
 		id
 	}
@@ -26,18 +19,11 @@ const listUser = `query ListUser($filter:ModelUserFilterInput!) {
 	items{
 		id
 		userId
-		alias
-		username
-		phoneNumber
-		lastLoggedIn
-		facebookProfile
-		twitterProfile
-		instagramProfile
-		imageLink
-		numberPosts
-		siteName
+		creator
 		createdAt
 		updatedAt
+		username
+		overview
 		chatUser{
 		id
 		}
@@ -48,20 +34,11 @@ const listUser = `query ListUser($filter:ModelUserFilterInput!) {
 
 const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
-    id
-	userId
-	alias
-	username
-	phoneNumber
-	lastLoggedIn
-	facebookProfile
-	twitterProfile
-	instagramProfile
-	imageLink
-	numberPosts
-	siteName
-  	createdAt
+	id
+	creator
+	createdAt
 	updatedAt
+	username
   }
 }
 `;
@@ -69,17 +46,30 @@ const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
 const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInput!) {
   updateChatUser(input: $input) {
 	id
-	username
 	creator
 	createdAt
 	updatedAt
-	alias
-	imageLink
-	profilePic
+	username
 	user {
 		id
 	}
   }
 }`;
 
-export { updateUser, userDetails, listUser, updateChatUser };
+const updateProductionUser = `mutation UpdateProductionUser($input: UpdateProductionUserInput!) {
+	updateProductionUser(input: $input) {
+		id
+		creator
+		createdAt
+		updatedAt
+
+	}
+  }
+  `;
+export {
+	updateUser,
+	userDetails,
+	listUser,
+	updateChatUser,
+	updateProductionUser,
+};

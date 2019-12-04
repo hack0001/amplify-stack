@@ -8,26 +8,26 @@ import { styles } from "./styles/userStyles";
 const header = ["Site Name", "Created At", "ID"];
 
 const UserList = props => {
-  const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    handleUser();
-  }, []);
+	useEffect(() => {
+		handleUser();
+	}, []);
 
-  const handleUser = async () => {
-    try {
-      const { data } = await API.graphql(graphqlOperation(listUsers));
-      setUsers(data.listUsers.items);
-    } catch (err) {
-      console.log("Error occurred", err);
-    }
-  };
+	const handleUser = async () => {
+		try {
+			const { data } = await API.graphql(graphqlOperation(listUsers));
+			setUsers(data.listUsers.items);
+		} catch (err) {
+			console.log("Error occurred", err);
+		}
+	};
 
-  return (
-    <Fragment>
-      <DataTable header={header} data={users} />
-    </Fragment>
-  );
+	return (
+		<Fragment>
+			<DataTable header={header} data={users} />
+		</Fragment>
+	);
 };
 
 export default withStyles(styles)(UserList);

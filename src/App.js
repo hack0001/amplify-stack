@@ -35,32 +35,31 @@ class App extends Component {
 			].includes("Admin");
 			const userData = await API.graphql(
 				graphqlOperation(`query listUser{
-        listUsers(filter: {
-          username:{eq:"${user.username}"}
-          }) {
-            items{
-              id
-              userId
-              alias
-              username
-              chatUser{
-                id 
-                creator 
-                alias
-              }
-            }
-          }	
-        }`),
+					listUsers(filter: {
+					username:{eq:"${user.username}"}
+					}) {
+						items{
+						id
+						userId
+						username
+						chatUser{
+							id 
+							creator 
+							alias
+						}
+						}
+					}	
+				}`),
 			);
 			const siteData = await API.graphql(
 				graphqlOperation(`query ListSites{
-          listSites{
-              items{
-                id				
-                name
-              }
-            }	
-          }`),
+					listSites{
+						items{
+							id				
+							name
+						}
+					}	
+				}`),
 			);
 
 			const username = user.username;
@@ -103,7 +102,6 @@ class App extends Component {
 					items{
 						id
 						userId
-						alias
 						username
 						chatUser{
 							id 
@@ -178,7 +176,7 @@ class App extends Component {
 							}}
 						>
 							<Switch>
-								{this.state.token && <Redirect from="/auth" to="/home" exact />}
+								{this.state.token && <Redirect from="/auth" to="/" exact />}
 								{!this.state.token && (
 									<Route path="/auth" exact component={SignIn} />
 								)}

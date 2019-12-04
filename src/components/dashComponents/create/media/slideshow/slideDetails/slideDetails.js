@@ -4,137 +4,192 @@ import Paper from "@material-ui/core/Paper";
 import Selection from "./select/selection";
 import TextField from "@material-ui/core/TextField";
 import Tag from "./tags/tag";
-import { slideLayout } from "./slideLayout";
+import { layout } from "./layout/slideLayout";
 import ImageDialog from "../../imageDialog/imageDialog";
 import DEFAULT_IMAGE from "../../../../../../default.jpg";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const SlideCards = props => {
-  const { handleSend, overview } = props;
-  const classes = useStyles();
-  const [imageDialog, setImageDialog] = useState(false);
+	const { handleSend, overview, stage, errors, setErrors } = props;
+	const classes = useStyles();
+	const [imageDialog, setImageDialog] = useState(false);
 
-  const handleOnChange = value => {
-    handleSend({
-      overviewValues: [
-        {
-          ...overview[0],
-          ...value
-        }
-      ]
-    });
-  };
+	const handleOnChange = value => {
+		handleSend({
+			overviewValues: [
+				{
+					...overview[0],
+					...value,
+				},
+			],
+		});
+	};
 
-  const selection = (val, selectVals, desc, helper, index) => {
-    return (
-      <div
-        key={index}
-        style={{ padding: 30, display: "inline-block", width: "50%" }}
-      >
-        <Selection
-          value={overview[0][val]}
-          name={val}
-          selectValues={selectVals}
-          handleValueChange={handleOnChange}
-          text={desc}
-          helperText={helper}
-        />
-      </div>
-    );
-  };
+	const handleBlur = e => {
+		if (!e.target.value) {
+			setErrors({ ...errors, [e.target.name]: true });
+		} else {
+			setErrors({ ...errors, [e.target.name]: false });
+		}
+	};
 
-  const textField = (label, value, index) => {
-    return (
-      <div
-        style={{ padding: 30, display: "inline-block", width: "50%" }}
-        key={index}
-      >
-        <TextField
-          label={label}
-          name={value}
-          className={classes.textField}
-          value={overview[0][value]}
-          style={{ width: "100%" }}
-          onChange={e => handleOnChange({ [e.target.name]: e.target.value })}
-        />
-      </div>
-    );
-  };
+	const handleUrlBlur = e => {
+		if (!e.target.value) {
+			setErrors({ ...errors, [e.target.name]: true });
+		} else {
+			const cleanUrl = e.target.value
+				.trim()
+				.replace(/\s/g, "-")
+				.toLowerCase();
 
-  const image = (label, index) => {
-    return (
-      <div
-        key={index}
-        style={{
-          display: "block",
-          width: "50%",
-          margin: "0 auto",
-          gridColumn: 2
-        }}
-        onClick={e => setImageDialog(true)}
-      >
-        <img
-          style={{
-            objectFit: "cover",
-            width: "100%",
-            height: "360px",
-            margin: 10
-          }}
-          alt={overview[0]["headlineImageAlt"]}
-          src={overview[0][label] ? overview[0][label] : DEFAULT_IMAGE}
-        />
-      </div>
-    );
-  };
+			handleOnChange({ [e.target.name]: cleanUrl });
+			setErrors({ ...errors, [e.target.name]: false });
+		}
+	};
 
-  const tags = (val, name, array, index) => {
-    return (
-      <Fragment key={index}>
-        <Tag
-          label={name}
-          value={val}
-          handleOnChange={handleOnChange}
-          overview={overview}
-          tagArray={array}
-        />
-      </Fragment>
-    );
-  };
+	const selection = (val, index) => {
+		return (
+			<div
+				key={index}
+				style={{ padding: 30, display: val.layout, width: val.width }}
+			>
+				<Selection
+					value={overview[0][val.name]}
+					name={val.name}
+					selectValues={val.selectVals}
+					handleValueChange={handleOnChange}
+					text={val.placeholder}
+					helperText={val.helper}
+				/>
+			</div>
+		);
+	};
 
-  return (
-    <Fragment>
-      <Paper style={{ display: "block" }}>
-        {slideLayout.map((item, index) => {
-          switch (item.type) {
-            case "textField":
-              return textField(item.placeholder, item.name, index);
-            case "selection":
-              return selection(
-                item.name,
-                item.selectVals,
-                item.placeholder,
-                item.helper,
-                index
-              );
-            case "tags":
-              return tags(item.name, item.placeholder, item.tagArray, index);
-            case "image":
-              return image(item.name, index);
-            default:
-              return <div key={index} />;
-          }
-        })}
-      </Paper>
-      <ImageDialog
-        imageDialog={imageDialog}
-        setImageDialog={setImageDialog}
-        value={"headlineImage"}
-        handleOnChange={handleOnChange}
-        imageAttribution={"headlineImageAttribution"}
-        imageAttributionLink={"headlineImageAttributionLink"}
-        imageAlt={"headlineImageAlt"}
-      />
-    </Fragment>
-  );
+	const textField = (val, index) => {
+		return (
+			<div
+				style={{ padding: 30, display: val.layout, width: val.width }}
+				key={index}
+			>
+				<TextField
+					error={errors[val.name]}
+					label={val.placeholder}
+					name={val.name}
+					className={classes.textField}
+					value={overview[0][val.name]}
+					style={{ width: "100%" }}
+					onBlur={val.name === "slideUrl" ? handleUrlBlur : handleBlur}
+					onChange={e => handleOnChange({ [e.target.name]: e.target.value })}
+				/>
+			</div>
+		);
+	};
+
+	const image = (label, index) => {
+		return (
+			<div
+				key={index}
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					width: "100%",
+					margin: "0 auto",
+				}}
+			>
+				<img
+					style={{
+						objectFit: "cover",
+						width: "50%",
+						height: "360px",
+						margin: 10,
+					}}
+					onClick={e => setImageDialog(true)}
+					alt={overview[0]["headlineImageAlt"]}
+					src={overview[0][label] ? overview[0][label] : DEFAULT_IMAGE}
+				/>
+			</div>
+		);
+	};
+
+	const checkBox = (item, index) => {
+		return (
+			<FormControlLabel
+				key={index}
+				readOnly={item.readOnly}
+				name={`${item.name}`}
+				label={`${item.placeholder}`}
+				checked={overview[0][item.name]}
+				className={classes.textField}
+				control={<Checkbox color="primary" />}
+				labelPlacement="end"
+				onChange={
+					!item.readOnly
+						? e => handleOnChange({ [e.target.name]: !overview[0][item.name] })
+						: null
+				}
+				style={{
+					marginTop: 20,
+					marginRight: 20,
+					marginLeft: 20,
+				}}
+			/>
+		);
+	};
+
+	const tags = (val, index) => {
+		return (
+			<Fragment key={index}>
+				<Tag
+					label={val.placeholder}
+					value={val.name}
+					handleOnChange={handleOnChange}
+					overview={overview}
+					tagArray={val.tagArray}
+				/>
+			</Fragment>
+		);
+	};
+
+	return (
+		<Fragment>
+			<Paper style={{ display: "block" }}>
+				<div
+					style={{
+						display: "flex", //item.layout,
+						flexDirection: "row",
+						flexWrap: "wrap",
+					}}
+				>
+					{layout[stage].map((item, index) => {
+						switch (item.type) {
+							case "textField":
+								return textField(item, index);
+							case "selection":
+								return selection(item, index);
+							case "tags":
+								return tags(item, index);
+							case "checkBox":
+								return checkBox(item, index);
+							case "image":
+								return image(item.name, index);
+							default:
+								return <div key={index} />;
+						}
+					})}
+				</div>
+			</Paper>
+			<ImageDialog
+				imageDialog={imageDialog}
+				setImageDialog={setImageDialog}
+				value={"headlineImage"}
+				handleOnChange={handleOnChange}
+				imageAttribution={"headlineImageAttribution"}
+				imageAttributionLink={"headlineImageAttributionLink"}
+				imageAlt={"headlineImageAlt"}
+			/>
+		</Fragment>
+	);
 };
 
 export default SlideCards;

@@ -9,82 +9,97 @@ import useFormValidation from "./form/useFormValidation";
 import validateAuth from "./form/validateForm";
 import { createSite } from "./graphql/siteGraphql";
 import { TabContainer } from "../../tabs/tabContainer";
-
-const INITIAL_STATE = {
-  name: "",
-  type: "",
-  description: ""
-};
-
-const textFieldTypes = [
-  {
-    label: "Name",
-    type: "name"
-  },
-  {
-    label: "Type",
-    type: "type"
-  },
-  {
-    label: "Description",
-    type: "description"
-  }
-];
+import { INITIAL_STATE, createFieldTypes } from "./initialState/initialState";
+import Tags from "./tags/tags";
 
 const CreateSite = props => {
-  const { classes, theme, push } = props;
-  const { handleChange, values } = useFormValidation(
-    INITIAL_STATE,
-    validateAuth
-  );
+	const { classes, theme, push } = props;
+	const { handleChange, values, handleTagChange } = useFormValidation(
+		INITIAL_STATE,
+		validateAuth,
+	);
 
-  const handleAddProject = async event => {
-    event.preventDefault();
-    try {
-      await API.graphql(graphqlOperation(createSite, { input: values }));
-      push("/sites");
-    } catch (err) {
-      console.log("Error", err);
-    }
-  };
+	const handleAddProject = async event => {
+		event.preventDefault();
+		const createSiteValues = {
+			name: values.name,
+			type: values.type,
+			description: values.description,
+			categories: values.tagArray,
+			production: false,
+			development: true,
+		};
 
-  const textFields = ({ label, type }, index) => {
-    return (
-      <TextField
-        key={index}
-        label={`${label}`}
-        className={classes.textField}
-        value={values[type]}
-        onChange={handleChange}
-        margin="normal"
-        name={`${type}`}
-      />
-    );
-  };
+		try {
+			await API.graphql(
+				graphqlOperation(createSite, { input: createSiteValues }),
+			);
+			push("/sites");
+		} catch (err) {
+			console.log("Error", err);
+		}
+	};
 
-  return (
-    <Fragment>
-      <TabContainer dir={theme.direction}>
-        <form onSubmit={handleAddProject}>
-          {textFieldTypes.map((field, index) => {
-            return textFields(field, index);
-          })}
-          <div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              align="right"
-              className={classes.button}
-              type="submit"
-            >
-              <SaveIcon className={classes.rightIcon} />
-              Create
-            </Button>
-          </div>
-        </form>
-      </TabContainer>
-    </Fragment>
-  );
+	const textFields = ({ label, name, type }, index) => {
+		return (
+			<TextField
+				autoComplete="off"
+				key={index}
+				label={`${label}`}
+				className={classes.textField}
+				value={values[name]}
+				onChange={handleChange}
+				margin="normal"
+				name={`${name}`}
+			/>
+		);
+	};
+
+	const tags = (item, index) => {
+		return (
+			<Fragment key={index}>
+				<Tags
+					label={item.label}
+					value={item.name}
+					handleOnChange={handleTagChange}
+					values={values}
+					tagArray={item.name}
+					width={item.width}
+				/>
+			</Fragment>
+		);
+	};
+
+	return (
+		<Fragment>
+			<TabContainer dir={theme.direction}>
+				<div style={{ width: "50%" }}>
+					{createFieldTypes.map((field, index) => {
+						switch (field.type) {
+							case "text":
+								return textFields(field, index);
+							case "tags":
+								return tags(field, index);
+							default:
+								return <div key={index} />;
+						}
+					})}
+				</div>
+				<div style={{ padding: 8 * 3, margin: "10px 1px 5px 1px" }}>
+					<Button
+						variant="contained"
+						color="primary"
+						align="right"
+						className={classes.button}
+						onClick={e => handleAddProject(e)}
+					>
+						<SaveIcon className={classes.rightIcon} />
+						Create
+					</Button>
+				</div>
+			</TabContainer>
+		</Fragment>
+	);
 };
 
 export default withStyles(createStyles, { withTheme: true })(CreateSite);

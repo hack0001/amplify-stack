@@ -16,6 +16,8 @@ const siteDetails = `query GetSite($id: ID!) {
     name
     type
     updatedAt
+    production
+    development
    }
  }
 `;

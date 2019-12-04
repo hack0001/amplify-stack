@@ -18,6 +18,7 @@ import {
 	INITIAL_SLIDES_STATE,
 	OPENING_SLIDESHOW_STATE,
 	CLOSING_SLIDESHOW_STATE,
+	requiredValues,
 } from "./initialState/initialState";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -25,16 +26,20 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import _ from "lodash";
-import SimpleStorage, { clearStorage } from "react-simple-storage";
 import AuthContext from "../../../../../context/authContext";
 import { API, graphqlOperation } from "aws-amplify";
 import { createSlideShow } from "../graphql/createGraphql";
 import ReduceDialog from "../dialog/reduceQuestions";
 import ClearDialog from "../dialog/clearValues";
+import moment from "moment";
 
 class SlideShow extends Component {
 	constructor(props) {
 		super(props);
+
+		const overviewStorage = this.getLocal("slide-overviewValues");
+		const mainSlides = this.getLocal("slide-mainSlides");
+		const numSlides = this.getLocal("numSlides");
 
 		const slidesState = _.range(5).map((val, index) => {
 			return { ...INITIAL_SLIDES_STATE, slidePosition: index + 1 };
@@ -42,22 +47,41 @@ class SlideShow extends Component {
 
 		this.state = {
 			value: 0,
-			numSlides: 5,
-			overviewValues: [INITIAL_SLIDESHOW_DETAILS],
-			mainSlides: {
-				opening: [OPENING_SLIDESHOW_STATE],
-				closing: [CLOSING_SLIDESHOW_STATE],
-				slides: slidesState,
-			},
-			production: false,
-			devId: "",
-			productionId: "",
+			numSlides: numSlides ? numSlides : 5,
+			overviewValues: overviewStorage
+				? overviewStorage
+				: [INITIAL_SLIDESHOW_DETAILS],
+			mainSlides: mainSlides
+				? mainSlides
+				: {
+						opening: [OPENING_SLIDESHOW_STATE],
+						closing: [CLOSING_SLIDESHOW_STATE],
+						slides: slidesState,
+				  },
 			inputSlideTag: "",
 			targetValue: "",
 			reduceDialog: false,
 			clearDialog: false,
+			errors: {},
 		};
 	}
+
+	getLocal = prefix => {
+		return localStorage.getItem(prefix)
+			? JSON.parse(localStorage.getItem(prefix))
+			: null;
+	};
+
+	clearLocal = prefix => {
+		if (Array.isArray(prefix)) {
+			prefix.map(x => {
+				return localStorage.removeItem(x);
+			});
+		} else {
+			localStorage.removeItem(prefix);
+		}
+	};
+
 	static contextType = AuthContext;
 
 	clearSlideValues = () => {
@@ -73,7 +97,14 @@ class SlideShow extends Component {
 				slides: slidesState,
 			},
 			clearDialog: false,
+			errors: {},
+			numSlides: 5,
 		});
+		this.clearLocal(["slide-overviewValues", "slide-mainSlides", "numSlides"]);
+	};
+
+	handleErrors = error => {
+		this.setState({ errors: error });
 	};
 
 	slidesHandler = e => {
@@ -100,6 +131,7 @@ class SlideShow extends Component {
 		} else if (newValue < this.state.numSlides) {
 			this.setState({ reduceDialog: true, targetValue: newValue });
 		}
+		localStorage.setItem(`numSlides`, e.target.value);
 	};
 
 	handleAccept = e => {
@@ -127,31 +159,72 @@ class SlideShow extends Component {
 	};
 
 	handleSend = values => {
+		if (values.overviewValues !== this.state.overviewValues) {
+			const prefix = Object.keys(values);
+			localStorage.setItem(
+				`slide-${prefix[0]}`,
+				JSON.stringify(values[prefix]),
+			);
+		}
 		this.setState(values);
+	};
+
+	validate = () => {
+		let validateSubmit = {};
+		Object.keys(this.state.overviewValues[0]).map(key => {
+			if (requiredValues.includes(key)) {
+				if (this.state.overviewValues[0][key] === "") {
+					validateSubmit = { ...validateSubmit, [key]: true };
+				}
+			}
+		});
+		this.setState({
+			errors: {
+				...this.state.errors,
+				...validateSubmit,
+			},
+		});
 	};
 
 	handleSubmit = async e => {
 		e.preventDefault();
-		const slideCat = this.state.overviewValues[0].quizCategory
-			? this.state.overviewValues[0].quizCategory
-			: "none";
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const slideCat = this.state.overviewValues[0].quizCategory
+				? this.state.overviewValues[0].quizCategory
+				: "none";
 
-		const submitSlideshow = {
-			category: slideCat,
-			overview: this.state.overviewValues,
-			slides: [this.state.mainSlides],
-			development: true,
-			production: false,
-			numSlides: this.state.numSlides,
-			slideShowUserId: this.context.profileId,
-		};
-		console.log("THIS STATE", submitSlideshow);
-		try {
-			await API.graphql(
-				graphqlOperation(createSlideShow, { input: submitSlideshow }),
-			);
-		} catch (err) {
-			console.log("Error occurred", err);
+			const overviewDate = {
+				...this.state.overviewValues,
+				displayDate: moment().format(),
+			};
+			const submitSlideshow = {
+				category: slideCat,
+				overview: JSON.stringify(overviewDate),
+				slides: JSON.stringify(this.state.mainSlides),
+				development: true,
+				production: false,
+				numSlides: this.state.numSlides,
+				slideShowUserId: this.context.profileId,
+				original: true,
+			};
+			try {
+				await API.graphql(
+					graphqlOperation(createSlideShow, { input: submitSlideshow }),
+				);
+				this.clearLocal([
+					"slide-overviewValues",
+					"slide-mainSlides",
+					"numSlides",
+				]);
+				this.props.history.push("/home");
+			} catch (err) {
+				console.log("Error occurred", err);
+			}
 		}
 	};
 
@@ -185,7 +258,6 @@ class SlideShow extends Component {
 	};
 
 	render() {
-		console.log("handleValues,", this.state);
 		const { classes, theme } = this.props;
 		const { value } = this.state;
 		return (
@@ -228,7 +300,11 @@ class SlideShow extends Component {
 							className={classes.button}
 							onClick={e => {
 								this.setState({ clearDialog: true });
-								clearStorage("SlideParent");
+								this.clearLocal([
+									"slide-overviewValues",
+									"slide-mainSlides",
+									"numSlides",
+								]);
 							}}
 						>
 							<Delete className={classes.rightIcon} />
@@ -244,6 +320,11 @@ class SlideShow extends Component {
 							<SlideDetails
 								overview={this.state.overviewValues}
 								handleSend={this.handleSend}
+								stage={"initial"}
+								production={this.state.production}
+								development={this.state.development}
+								errors={this.state.errors}
+								setErrors={this.handleErrors}
 							/>
 						</Paper>
 						<Paper className={classes.quizWrap}>

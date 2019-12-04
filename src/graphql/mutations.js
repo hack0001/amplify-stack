@@ -264,19 +264,9 @@ export const createMessage = `mutation CreateMessage($input: CreateMessageInput!
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     authorId
@@ -325,19 +315,9 @@ export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     authorId
@@ -386,19 +366,9 @@ export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     authorId
@@ -466,19 +436,9 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLink
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     owner
@@ -527,19 +487,9 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLink
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     owner
@@ -588,19 +538,9 @@ export const deleteConvoLink = `mutation DeleteConvoLink($input: DeleteConvoLink
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     owner
@@ -646,29 +586,28 @@ export const createChatUser = `mutation CreateChatUser($input: CreateChatUserInp
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -722,29 +661,28 @@ export const updateChatUser = `mutation UpdateChatUser($input: UpdateChatUserInp
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -798,29 +736,28 @@ export const deleteChatUser = `mutation DeleteChatUser($input: DeleteChatUserInp
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -909,6 +846,25 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -934,6 +890,10 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
     }
     name
     type
+    categories
+    development
+    production
+    productionId
     quiz {
       items {
         id
@@ -943,6 +903,25 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         overview
         production
         productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
         questions
         numQuestions
         schedule
@@ -962,6 +941,25 @@ export const createSite = `mutation CreateSite($input: CreateSiteInput!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -986,6 +984,25 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -1011,6 +1028,10 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
     }
     name
     type
+    categories
+    development
+    production
+    productionId
     quiz {
       items {
         id
@@ -1020,6 +1041,25 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         overview
         production
         productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
         questions
         numQuestions
         schedule
@@ -1039,6 +1079,25 @@ export const updateSite = `mutation UpdateSite($input: UpdateSiteInput!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -1063,6 +1122,25 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -1088,6 +1166,10 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
     }
     name
     type
+    categories
+    development
+    production
+    productionId
     quiz {
       items {
         id
@@ -1097,6 +1179,25 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         overview
         production
         productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
         questions
         numQuestions
         schedule
@@ -1116,6 +1217,25 @@ export const deleteSite = `mutation DeleteSite($input: DeleteSiteInput!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -1137,9 +1257,31 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
     development
     production
     productionId
+    schedule
+    scheduleTime
+    original
+    duplicates {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1149,10 +1291,20 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1165,29 +1317,28 @@ export const createArticle = `mutation CreateArticle($input: CreateArticleInput!
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1213,9 +1364,31 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
     development
     production
     productionId
+    schedule
+    scheduleTime
+    original
+    duplicates {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1225,10 +1398,20 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1241,29 +1424,28 @@ export const updateArticle = `mutation UpdateArticle($input: UpdateArticleInput!
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1289,9 +1471,31 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
     development
     production
     productionId
+    schedule
+    scheduleTime
+    original
+    duplicates {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1301,10 +1505,20 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1317,29 +1531,412 @@ export const deleteArticle = `mutation DeleteArticle($input: DeleteArticleInput!
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+  }
+}
+`;
+export const createDuplicateArticle = `mutation CreateDuplicateArticle($input: CreateDuplicateArticleInput!) {
+  createDuplicateArticle(input: $input) {
+    id
+    overview
+    createdAt
+    content
+    development
+    production
+    productionId
+    schedule
+    scheduleTime
+    original
+    originalArticle {
+      id
+      userId
+      authorName
+      overview
+      createdAt
+      content
+      development
+      production
+      productionId
+      schedule
+      scheduleTime
+      original
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      updatedAt
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+  }
+}
+`;
+export const updateDuplicateArticle = `mutation UpdateDuplicateArticle($input: UpdateDuplicateArticleInput!) {
+  updateDuplicateArticle(input: $input) {
+    id
+    overview
+    createdAt
+    content
+    development
+    production
+    productionId
+    schedule
+    scheduleTime
+    original
+    originalArticle {
+      id
+      userId
+      authorName
+      overview
+      createdAt
+      content
+      development
+      production
+      productionId
+      schedule
+      scheduleTime
+      original
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      updatedAt
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+  }
+}
+`;
+export const deleteDuplicateArticle = `mutation DeleteDuplicateArticle($input: DeleteDuplicateArticleInput!) {
+  deleteDuplicateArticle(input: $input) {
+    id
+    overview
+    createdAt
+    content
+    development
+    production
+    productionId
+    schedule
+    scheduleTime
+    original
+    originalArticle {
+      id
+      userId
+      authorName
+      overview
+      createdAt
+      content
+      development
+      production
+      productionId
+      schedule
+      scheduleTime
+      original
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      updatedAt
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
       chatUser {
         id
         username
@@ -1365,11 +1962,33 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
     productionId
     slides
     numSlides
+    original
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1379,10 +1998,20 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1394,29 +2023,28 @@ export const createSlideShow = `mutation CreateSlideShow($input: CreateSlideShow
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1443,11 +2071,33 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
     productionId
     slides
     numSlides
+    original
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1457,10 +2107,20 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1472,29 +2132,28 @@ export const updateSlideShow = `mutation UpdateSlideShow($input: UpdateSlideShow
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1521,11 +2180,33 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
     productionId
     slides
     numSlides
+    original
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1535,10 +2216,20 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1550,29 +2241,418 @@ export const deleteSlideShow = `mutation DeleteSlideShow($input: DeleteSlideShow
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const createDuplicateSlideShow = `mutation CreateDuplicateSlideShow($input: CreateDuplicateSlideShowInput!) {
+  createDuplicateSlideShow(input: $input) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    slides
+    numSlides
+    original
+    originalSlideShow {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      slides
+      numSlides
+      original
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    schedule
+    scheduleTime
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const updateDuplicateSlideShow = `mutation UpdateDuplicateSlideShow($input: UpdateDuplicateSlideShowInput!) {
+  updateDuplicateSlideShow(input: $input) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    slides
+    numSlides
+    original
+    originalSlideShow {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      slides
+      numSlides
+      original
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    schedule
+    scheduleTime
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const deleteDuplicateSlideShow = `mutation DeleteDuplicateSlideShow($input: DeleteDuplicateSlideShowInput!) {
+  deleteDuplicateSlideShow(input: $input) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    slides
+    numSlides
+    original
+    originalSlideShow {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      slides
+      numSlides
+      original
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    schedule
+    scheduleTime
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
       chatUser {
         id
         username
@@ -1597,13 +2677,35 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
     overview
     production
     productionId
+    original
     questions
     numQuestions
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1613,10 +2715,20 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1628,29 +2740,28 @@ export const createQuiz = `mutation CreateQuiz($input: CreateQuizInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1675,13 +2786,35 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
     overview
     production
     productionId
+    original
     questions
     numQuestions
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1691,10 +2824,20 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1706,29 +2849,28 @@ export const updateQuiz = `mutation UpdateQuiz($input: UpdateQuizInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1753,13 +2895,35 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
     overview
     production
     productionId
+    original
     questions
     numQuestions
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -1769,10 +2933,20 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1784,29 +2958,418 @@ export const deleteQuiz = `mutation DeleteQuiz($input: DeleteQuizInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const createDuplicateQuiz = `mutation CreateDuplicateQuiz($input: CreateDuplicateQuizInput!) {
+  createDuplicateQuiz(input: $input) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    original
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    originalQuiz {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      original
+      questions
+      numQuestions
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const updateDuplicateQuiz = `mutation UpdateDuplicateQuiz($input: UpdateDuplicateQuizInput!) {
+  updateDuplicateQuiz(input: $input) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    original
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    originalQuiz {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      original
+      questions
+      numQuestions
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const deleteDuplicateQuiz = `mutation DeleteDuplicateQuiz($input: DeleteDuplicateQuizInput!) {
+  deleteDuplicateQuiz(input: $input) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    original
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    originalQuiz {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      original
+      questions
+      numQuestions
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
       chatUser {
         id
         username
@@ -1833,6 +3396,9 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -1840,10 +3406,20 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1863,29 +3439,28 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1911,6 +3486,9 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -1918,10 +3496,20 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -1941,29 +3529,28 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -1989,6 +3576,9 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -1996,10 +3586,20 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -2019,29 +3619,28 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -2072,6 +3671,25 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -2094,11 +3712,6 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
       }
       nextToken
     }
-    lastLoggedIn
-    twitterProfile
-    facebookProfile
-    linkedinProfile
-    instagramProfile
     quiz {
       items {
         id
@@ -2108,6 +3721,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         overview
         production
         productionId
+        original
         questions
         numQuestions
         schedule
@@ -2116,7 +3730,24 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
       }
       nextToken
     }
-    siteName
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     slideShows {
       items {
         id
@@ -2128,6 +3759,25 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -2136,11 +3786,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     }
     updatedAt
     username
-    alias
-    phoneNumber
-    imageLink
-    numberPosts
-    profilePic
+    overview
     chatUser {
       id
       username
@@ -2161,19 +3807,9 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
   }
@@ -2195,6 +3831,25 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -2217,11 +3872,6 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
       }
       nextToken
     }
-    lastLoggedIn
-    twitterProfile
-    facebookProfile
-    linkedinProfile
-    instagramProfile
     quiz {
       items {
         id
@@ -2231,6 +3881,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         overview
         production
         productionId
+        original
         questions
         numQuestions
         schedule
@@ -2239,7 +3890,24 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
       }
       nextToken
     }
-    siteName
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     slideShows {
       items {
         id
@@ -2251,6 +3919,25 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -2259,11 +3946,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     }
     updatedAt
     username
-    alias
-    phoneNumber
-    imageLink
-    numberPosts
-    profilePic
+    overview
     chatUser {
       id
       username
@@ -2284,19 +3967,9 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
   }
@@ -2318,6 +3991,25 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -2340,11 +4032,6 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       }
       nextToken
     }
-    lastLoggedIn
-    twitterProfile
-    facebookProfile
-    linkedinProfile
-    instagramProfile
     quiz {
       items {
         id
@@ -2354,6 +4041,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         overview
         production
         productionId
+        original
         questions
         numQuestions
         schedule
@@ -2362,7 +4050,24 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       }
       nextToken
     }
-    siteName
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     slideShows {
       items {
         id
@@ -2374,6 +4079,25 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -2382,11 +4106,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     }
     updatedAt
     username
-    alias
-    phoneNumber
-    imageLink
-    numberPosts
-    profilePic
+    overview
     chatUser {
       id
       username
@@ -2407,19 +4127,9 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
   }

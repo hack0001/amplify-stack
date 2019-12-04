@@ -8,19 +8,22 @@ import Button from "@material-ui/core/Button";
 import Send from "@material-ui/icons/Send";
 import { Content, Overview } from "./index";
 import { articleStyles } from "./styles/articleStyles";
-import { initialValue } from "./editorSettings";
 import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
-import ClearDialog from "../dialog/clearValues";
+import DeleteDialog from "../dialog/deleteContent";
+import ProductionDialog from "../dialog/productionDialog/articleDialog/articleDialog";
 import Delete from "@material-ui/icons/Delete";
-import { INITIAL_ARTICLE_OVERVIEW } from "./overview/layout/initialState";
-import { Value } from "slate";
+import { Slate, Editable, withReact } from "slate-react";
+import { createEditor } from "slate";
 import { API, graphqlOperation } from "aws-amplify";
 import AuthContext from "../../../../../context/authContext";
-import { createArticle } from "../graphql/createGraphql";
+import { deleteArticle, updateArticle } from "../graphql/createGraphql";
 import { getArticle } from "../../../../../graphql/queries";
+import { createProductionArticle } from "../../production/graphql/mutations";
+import { requiredValues } from "./overview/layout/initialState";
+import axios from "axios";
 
-class Article extends Component {
+class DevArticle extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -29,6 +32,7 @@ class Article extends Component {
 			categories: ["Overview", "Article"],
 			overview: [],
 			value: {},
+			errors: {},
 		};
 	}
 
@@ -48,16 +52,23 @@ class Article extends Component {
 				const { data } = await API.graphql(
 					graphqlOperation(getArticle, { id }),
 				);
-				console.log("DEV CONTENT", devContentStorage);
-				console.log("DEV CONTENT", data);
-				this.setState({
-					overview: devOverviewStorage
-						? devOverviewStorage
-						: JSON.parse(data.getArticle.overview[0]),
 
+				const overview = JSON.parse(data.getArticle.overview[0]);
+				const finalOverview = [
+					{
+						...overview[0],
+						production: data.getArticle.production,
+						development: data.getArticle.development,
+						original: data.getArticle.original,
+					},
+				];
+				this.setState({
+					overview: devOverviewStorage ? devOverviewStorage : finalOverview,
 					value: devContentStorage
-						? Value.fromJSON(devContentStorage)
-						: Value.fromJSON(JSON.parse(data.getArticle.content)),
+						? devContentStorage
+						: JSON.parse(data.getArticle.content),
+					articleUserId: data.getArticle.userId ? data.getArticle.userId : null,
+					original: data.getArticle.original,
 				});
 			} catch (err) {
 				console.log("Error Occurred", err);
@@ -67,13 +78,14 @@ class Article extends Component {
 
 	static contextType = AuthContext;
 
-	clearArticleValues = () => {
-		this.setState({
-			...this.state,
-			overview: [INITIAL_ARTICLE_OVERVIEW],
-			value: initialValue,
-			clearDialog: false,
-		});
+	deleteArticleValues = async () => {
+		const { id } = this.props.match.params;
+		try {
+			await API.graphql(graphqlOperation(deleteArticle, { input: { id } }));
+			this.props.history.push("/home");
+		} catch (err) {
+			console.log("Error occurred", err);
+		}
 	};
 
 	cleanup = name => {
@@ -81,6 +93,10 @@ class Article extends Component {
 			.trim()
 			.replace(/\s/g, "_")
 			.toLowerCase();
+	};
+
+	handleErrors = error => {
+		this.setState({ errors: error });
 	};
 
 	handleSend = values => {
@@ -110,30 +126,133 @@ class Article extends Component {
 		this.setState({ reduceDialog: false });
 	};
 
+	validate = () => {
+		let validateSubmit = {};
+		Object.keys(this.state.overview[0]).map(key => {
+			if (requiredValues.includes(key)) {
+				if (this.state.overview[0][key] === "") {
+					validateSubmit = { ...validateSubmit, [key]: true };
+				}
+			}
+		});
+		this.setState({
+			errors: {
+				...this.state.errors,
+				...validateSubmit,
+			},
+		});
+	};
+
 	handleSubmit = async e => {
+		const { id } = this.props.match.params;
+		const devStorage = `dev-content-${id}`;
+		const devOverview = `dev-overview-${id}`;
 		e.preventDefault();
-		const submitArticle = {
-			userId: this.context.userId,
-			authorName: this.context.userId,
-			overview: JSON.stringify(this.state.overview),
-			content: JSON.stringify(this.state.value.toJSON()),
-			development: true,
-			production: false,
-			articleUserId: this.context.profileId,
-		};
-		console.log("THIS STATE", submitArticle);
-		try {
-			await API.graphql(
-				graphqlOperation(createArticle, { input: submitArticle }),
-			);
-		} catch (err) {
-			console.log("Error occurred", err);
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const submitArticle = {
+				id: id,
+				overview: JSON.stringify(this.state.overview),
+				content: JSON.stringify(this.state.value.toJSON()),
+				development: true,
+				production: false,
+			};
+			try {
+				await API.graphql(
+					graphqlOperation(updateArticle, { input: submitArticle }),
+				);
+				localStorage.removeItem(devStorage);
+				localStorage.removeItem(devOverview);
+				this.props.history.push("/home");
+			} catch (err) {
+				console.log("Error occurred", err);
+			}
+		}
+	};
+
+	submitProduction = async e => {
+		const { id } = this.props.match.params;
+		const devStorage = `dev-content-${id}`;
+		const devOverview = `dev-overview-${id}`;
+		e.preventDefault();
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const { overview } = this.state;
+
+			const prodArticle = {
+				development: false,
+				production: true,
+				overview: JSON.stringify(this.state.overview),
+				content: JSON.stringify(this.state.value.toJSON()),
+				developmentId: id,
+				original: this.state.original,
+				productionArticleUserId: overview[0].productionArticleUserId,
+				productionArticleSiteId: overview[0].productionArticleSiteId,
+				tags: overview[0].tags ? overview[0].tags : [""],
+				category: overview[0].category,
+				mainHeadline: overview[0].mainHeadline,
+				sideHeadline: overview[0].sideHeadline,
+				bottomHeadline: overview[0].bottomHeadline
+					? overview[0].bottomHeadline
+					: false,
+				shareCount: overview[0].shareCount ? overview[0].shareCount : 0,
+			};
+
+			const devUpdate = {
+				id: id,
+				overview: JSON.stringify(this.state.overview),
+				content: JSON.stringify(this.state.value.toJSON()),
+				development: false,
+				production: true,
+			};
+
+			const mutationData = {
+				query: createProductionArticle,
+				operationName: "CreateProductionArticle",
+				variables: { input: prodArticle },
+			};
+
+			try {
+				const { data } = await axios({
+					url: process.env.REACT_APP_PROD_ENDPOINT,
+					method: "POST",
+					data: JSON.stringify(mutationData),
+					headers: {
+						Accept: "application/json",
+						"x-api-key": process.env.REACT_APP_PROD_API_KEY,
+					},
+				});
+
+				const productionId = data.data.createProductionArticle.id;
+				await API.graphql(
+					graphqlOperation(updateArticle, {
+						input: { ...devUpdate, productionId },
+					}),
+				);
+				localStorage.removeItem(devStorage);
+				localStorage.removeItem(devOverview);
+				this.props.history.push("/home");
+			} catch (err) {
+				console.error(`[ERROR] ${err} `);
+				throw err;
+			}
 		}
 	};
 
 	render() {
-		// console.log("handleValues", this.state);
 		const { classes, theme } = this.props;
+		const { id, type } = this.props.match.params;
+		const devStorage = `dev-content-${id}`;
+		const devOverview = `dev-overview-${id}`;
+
 		const { tab } = this.state;
 		if (!this.state.overview[0]) {
 			return <div></div>;
@@ -184,13 +303,12 @@ class Article extends Component {
 							<Button
 								variant="contained"
 								style={{
-									backgroundColor: "red",
-									color: "white",
 									marginLeft: 10,
 								}}
+								color="secondary"
 								align="right"
 								className={classes.button}
-								onClick={this.handleSubmit.bind(this)}
+								onClick={e => this.setState({ productionDialog: true })}
 							>
 								<Send className={classes.rightIcon} />
 								Production
@@ -202,9 +320,9 @@ class Article extends Component {
 								style={{ float: "right" }}
 								className={classes.button}
 								onClick={e => {
-									this.setState({ clearDialog: true });
-									localStorage.removeItem("content");
-									localStorage.removeItem("overview");
+									this.setState({ deleteDialog: true });
+									localStorage.removeItem(devStorage);
+									localStorage.removeItem(devOverview);
 								}}
 							>
 								<Delete className={classes.rightIcon} />
@@ -221,6 +339,9 @@ class Article extends Component {
 							<Overview
 								overview={this.state.overview}
 								handleSend={this.handleSend}
+								stage={"development"}
+								errors={this.state.errors}
+								setErrors={this.handleErrors}
 							/>
 						</Paper>
 						<Paper className={classes.articleWrap}>
@@ -232,11 +353,24 @@ class Article extends Component {
 								bulletHeadlines={this.state.overview[0].bulletHeadlines}
 							/>
 
-							{this.state.clearDialog && (
-								<ClearDialog
-									open={this.state.clearDialog}
-									onClose={e => this.setState({ clearDialog: false })}
-									accept={this.clearArticleValues}
+							{this.state.deleteDialog && (
+								<DeleteDialog
+									open={this.state.deleteDialog}
+									onClose={e => this.setState({ deleteDialog: false })}
+									accept={this.deleteArticleValues}
+									prodMarker={false}
+								/>
+							)}
+							{this.state.productionDialog && (
+								<ProductionDialog
+									open={this.state.productionDialog}
+									onClose={e => this.setState({ productionDialog: false })}
+									accept={this.submitProduction}
+									prodMarker={false}
+									handleSend={this.handleSend}
+									overview={this.state.overview}
+									userId={this.state.overview[0].articleUserId}
+									overviewMarker={"overview"}
 								/>
 							)}
 						</Paper>
@@ -247,8 +381,8 @@ class Article extends Component {
 	}
 }
 
-Article.propTypes = {
+DevArticle.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(articleStyles, { withTheme: true })(Article);
+export default withStyles(articleStyles, { withTheme: true })(DevArticle);

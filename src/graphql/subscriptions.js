@@ -126,19 +126,9 @@ export const onCreateMessage = `subscription OnCreateMessage {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     authorId
@@ -187,19 +177,9 @@ export const onUpdateMessage = `subscription OnUpdateMessage {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     authorId
@@ -248,19 +228,9 @@ export const onDeleteMessage = `subscription OnDeleteMessage {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     authorId
@@ -328,19 +298,9 @@ export const onCreateConvoLink = `subscription OnCreateConvoLink($owner: String)
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     owner
@@ -389,19 +349,9 @@ export const onUpdateConvoLink = `subscription OnUpdateConvoLink($owner: String)
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     owner
@@ -450,19 +400,9 @@ export const onDeleteConvoLink = `subscription OnDeleteConvoLink($owner: String)
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     owner
@@ -540,6 +480,9 @@ export const onCreateTask = `subscription OnCreateTask {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -547,10 +490,20 @@ export const onCreateTask = `subscription OnCreateTask {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -570,29 +523,28 @@ export const onCreateTask = `subscription OnCreateTask {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -618,6 +570,9 @@ export const onUpdateTask = `subscription OnUpdateTask {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -625,10 +580,20 @@ export const onUpdateTask = `subscription OnUpdateTask {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -648,29 +613,28 @@ export const onUpdateTask = `subscription OnUpdateTask {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -696,6 +660,9 @@ export const onDeleteTask = `subscription OnDeleteTask {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -703,10 +670,20 @@ export const onDeleteTask = `subscription OnDeleteTask {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -726,29 +703,28 @@ export const onDeleteTask = `subscription OnDeleteTask {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username

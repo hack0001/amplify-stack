@@ -46,30 +46,30 @@ const Conversations = props => {
 		try {
 			const { data } = await API.graphql(
 				graphqlOperation(`query ListChatUserConversations{
-          listChatUsers(filter: {
-            id:{eq:"${chatUser.chatUserId}"}
-            }) {
-            items{
-              id 
-            username
-            creator 
-            alias
-            conversations{
-              items{
-              id
-              convoLinkUserId
-              conversation{
-                id
-                subject
-                name
-                members
-                conversationCreator
-                }
-                }
-              }      
-              }
-            }
-          }`),
+					listChatUsers(filter: {
+						id:{eq:"${chatUser.chatUserId}"}
+						}) {
+						items{
+						id 
+						username
+						creator 
+						alias
+						conversations{
+						items{
+							id
+							convoLinkUserId
+							conversation{
+									id
+									subject
+									name
+									members
+									conversationCreator
+									}
+								}
+							}      
+						}
+					}
+				}`),
 			);
 			setLoading(false);
 			setConversations(data.listChatUsers.items[0].conversations.items);

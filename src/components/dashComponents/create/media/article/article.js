@@ -13,12 +13,16 @@ import SwipeableViews from "react-swipeable-views";
 import Paper from "@material-ui/core/Paper";
 import ClearDialog from "../dialog/clearValues";
 import Delete from "@material-ui/icons/Delete";
-import { INITIAL_ARTICLE_OVERVIEW } from "./overview/layout/initialState";
-import { Value } from "slate";
+import {
+	INITIAL_ARTICLE_OVERVIEW,
+	requiredValues,
+} from "./overview/layout/initialState";
+import { Slate, Editable, withReact } from "slate-react";
+import { createEditor } from "slate";
 import { API, graphqlOperation } from "aws-amplify";
 import AuthContext from "../../../../../context/authContext";
 import { createArticle } from "../graphql/createGraphql";
-import { getArticle } from "../../../../../graphql/queries";
+import moment from "moment";
 
 class Article extends Component {
 	constructor(props) {
@@ -36,7 +40,8 @@ class Article extends Component {
 			age: 0,
 			categories: ["Overview", "Article"],
 			overview: overviewStorage ? overviewStorage : [INITIAL_ARTICLE_OVERVIEW],
-			value: contentStorage ? Value.fromJSON(contentStorage) : initialValue,
+			value: contentStorage ? contentStorage : initialValue,
+			errors: {},
 		};
 	}
 
@@ -56,6 +61,10 @@ class Article extends Component {
 			.trim()
 			.replace(/\s/g, "_")
 			.toLowerCase();
+	};
+
+	handleErrors = error => {
+		this.setState({ errors: error });
 	};
 
 	handleSend = values => {
@@ -81,36 +90,64 @@ class Article extends Component {
 		this.setState({ reduceDialog: false });
 	};
 
+	validate = () => {
+		let validateSubmit = {};
+		Object.keys(this.state.overview[0]).map(key => {
+			if (requiredValues.includes(key)) {
+				if (this.state.overview[0][key] === "") {
+					validateSubmit = { ...validateSubmit, [key]: true };
+				}
+			}
+		});
+		this.setState({
+			errors: {
+				...this.state.errors,
+				...validateSubmit,
+			},
+		});
+	};
+
 	handleSubmit = async e => {
 		e.preventDefault();
-		const submitArticle = {
-			userId: this.context.userId,
-			authorName: this.context.userId,
-			overview: JSON.stringify(this.state.overview),
-			content: JSON.stringify(this.state.value.toJSON()),
-			development: true,
-			production: false,
-			articleUserId: this.context.profileId,
-		};
-		console.log("THIS STATE", submitArticle);
-		try {
-			await API.graphql(
-				graphqlOperation(createArticle, { input: submitArticle }),
-			);
-		} catch (err) {
-			console.log("Error occurred", err);
+		await this.validate();
+		if (
+			Object.values(this.state.errors).every(
+				x => x === "" || x === null || x === false,
+			)
+		) {
+			const overviewDate = {
+				...this.state.overview,
+				displayDate: moment().format(),
+			};
+			const submitArticle = {
+				userId: this.context.userId,
+				authorName: this.context.userId,
+				overview: JSON.stringify(overviewDate),
+				content: JSON.stringify(this.state.value.toJSON()),
+				development: true,
+				production: false,
+				articleUserId: this.context.profileId,
+				original: true,
+			};
+
+			try {
+				await API.graphql(
+					graphqlOperation(createArticle, { input: submitArticle }),
+				);
+			} catch (err) {
+				console.log("Error occurred", err);
+			}
+			localStorage.removeItem("content");
+			localStorage.removeItem("overview");
+			this.props.history.push("/home");
 		}
-		localStorage.removeItem("content");
-		localStorage.removeItem("overview");
 	};
 
 	render() {
-		// console.log("handleValues", this.state);
 		const { classes, theme } = this.props;
 		const { tab } = this.state;
-		console.log("SHSHS", this.state);
 		if (!this.state.overview[0]) {
-			return <div>shabba</div>;
+			return <div></div>;
 		}
 		const header = this.state.overview[0].articleHeadline
 			? this.state.overview[0].articleHeadline
@@ -181,6 +218,9 @@ class Article extends Component {
 							<Overview
 								overview={this.state.overview}
 								handleSend={this.handleSend}
+								stage={"initial"}
+								errors={this.state.errors}
+								setErrors={this.handleErrors}
 							/>
 						</Paper>
 						<Paper className={classes.articleWrap}>
@@ -191,7 +231,6 @@ class Article extends Component {
 								bulletHeaders={this.state.overview[0].bulletHeadlinesDetails}
 								bulletHeadlines={this.state.overview[0].bulletHeadlines}
 							/>
-
 							{this.state.clearDialog && (
 								<ClearDialog
 									open={this.state.clearDialog}

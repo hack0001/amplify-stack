@@ -191,29 +191,28 @@ export const getChatUser = `query GetChatUser($id: ID!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -254,19 +253,9 @@ export const listChatUsers = `query ListChatUsers(
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     nextToken
@@ -334,6 +323,25 @@ export const getSite = `query GetSite($id: ID!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -359,6 +367,10 @@ export const getSite = `query GetSite($id: ID!) {
     }
     name
     type
+    categories
+    development
+    production
+    productionId
     quiz {
       items {
         id
@@ -368,6 +380,25 @@ export const getSite = `query GetSite($id: ID!) {
         overview
         production
         productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
         questions
         numQuestions
         schedule
@@ -387,6 +418,25 @@ export const getSite = `query GetSite($id: ID!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -408,6 +458,9 @@ export const listSites = `query ListSites(
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -415,10 +468,20 @@ export const listSites = `query ListSites(
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -438,9 +501,31 @@ export const getArticle = `query GetArticle($id: ID!) {
     development
     production
     productionId
+    schedule
+    scheduleTime
+    original
+    duplicates {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -450,10 +535,20 @@ export const getArticle = `query GetArticle($id: ID!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -466,29 +561,28 @@ export const getArticle = `query GetArticle($id: ID!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -519,12 +613,22 @@ export const listArticles = `query ListArticles(
       development
       production
       productionId
+      schedule
+      scheduleTime
+      original
+      duplicates {
+        nextToken
+      }
       site {
         id
         createdAt
         description
         name
         type
+        categories
+        development
+        production
+        productionId
         updatedAt
       }
       updatedAt
@@ -533,19 +637,196 @@ export const listArticles = `query ListArticles(
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
+        overview
+      }
+    }
+    nextToken
+  }
+}
+`;
+export const getDuplicateArticle = `query GetDuplicateArticle($id: ID!) {
+  getDuplicateArticle(id: $id) {
+    id
+    overview
+    createdAt
+    content
+    development
+    production
+    productionId
+    schedule
+    scheduleTime
+    original
+    originalArticle {
+      id
+      userId
+      authorName
+      overview
+      createdAt
+      content
+      development
+      production
+      productionId
+      schedule
+      scheduleTime
+      original
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      updatedAt
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
         alias
-        phoneNumber
         imageLink
-        numberPosts
         profilePic
+      }
+    }
+  }
+}
+`;
+export const listDuplicateArticles = `query ListDuplicateArticles(
+  $filter: ModelDuplicateArticleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDuplicateArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      overview
+      createdAt
+      content
+      development
+      production
+      productionId
+      schedule
+      scheduleTime
+      original
+      originalArticle {
+        id
+        userId
+        authorName
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      updatedAt
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
       }
     }
     nextToken
@@ -563,11 +844,33 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
     productionId
     slides
     numSlides
+    original
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -577,10 +880,20 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -592,29 +905,28 @@ export const getSlideShow = `query GetSlideShow($id: ID!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -646,6 +958,205 @@ export const listSlideShows = `query ListSlideShows(
       productionId
       slides
       numSlides
+      original
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    nextToken
+  }
+}
+`;
+export const getDuplicateSlideShow = `query GetDuplicateSlideShow($id: ID!) {
+  getDuplicateSlideShow(id: $id) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    slides
+    numSlides
+    original
+    originalSlideShow {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      slides
+      numSlides
+      original
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    schedule
+    scheduleTime
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
+        alias
+        imageLink
+        profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const listDuplicateSlideShows = `query ListDuplicateSlideShows(
+  $filter: ModelDuplicateSlideShowFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDuplicateSlideShows(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      slides
+      numSlides
+      original
+      originalSlideShow {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
       schedule
       scheduleTime
       site {
@@ -654,6 +1165,10 @@ export const listSlideShows = `query ListSlideShows(
         description
         name
         type
+        categories
+        development
+        production
+        productionId
         updatedAt
       }
       user {
@@ -661,19 +1176,9 @@ export const listSlideShows = `query ListSlideShows(
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
       updatedAt
     }
@@ -690,13 +1195,35 @@ export const getQuiz = `query GetQuiz($id: ID!) {
     overview
     production
     productionId
+    original
     questions
     numQuestions
     schedule
     scheduleTime
+    duplicates {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     site {
       id
       articles {
+        nextToken
+      }
+      duplicateArticles {
         nextToken
       }
       createdAt
@@ -706,10 +1233,20 @@ export const getQuiz = `query GetQuiz($id: ID!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -721,29 +1258,28 @@ export const getQuiz = `query GetQuiz($id: ID!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -773,16 +1309,24 @@ export const listQuizs = `query ListQuizs(
       overview
       production
       productionId
+      original
       questions
       numQuestions
       schedule
       scheduleTime
+      duplicates {
+        nextToken
+      }
       site {
         id
         createdAt
         description
         name
         type
+        categories
+        development
+        production
+        productionId
         updatedAt
       }
       user {
@@ -790,19 +1334,200 @@ export const listQuizs = `query ListQuizs(
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
+        overview
+      }
+      updatedAt
+    }
+    nextToken
+  }
+}
+`;
+export const getDuplicateQuiz = `query GetDuplicateQuiz($id: ID!) {
+  getDuplicateQuiz(id: $id) {
+    id
+    category
+    createdAt
+    development
+    overview
+    production
+    productionId
+    original
+    questions
+    numQuestions
+    schedule
+    scheduleTime
+    originalQuiz {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      original
+      questions
+      numQuestions
+      schedule
+      scheduleTime
+      duplicates {
+        nextToken
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
+      }
+      updatedAt
+    }
+    site {
+      id
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      description
+      tasks {
+        nextToken
+      }
+      name
+      type
+      categories
+      development
+      production
+      productionId
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      userId
+      creator
+      articles {
+        nextToken
+      }
+      duplicateArticles {
+        nextToken
+      }
+      createdAt
+      ideas {
+        nextToken
+      }
+      quiz {
+        nextToken
+      }
+      duplicateQuiz {
+        nextToken
+      }
+      slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
+        nextToken
+      }
+      updatedAt
+      username
+      overview
+      chatUser {
+        id
+        username
+        creator
+        createdAt
+        updatedAt
         alias
-        phoneNumber
         imageLink
-        numberPosts
         profilePic
+      }
+    }
+    updatedAt
+  }
+}
+`;
+export const listDuplicateQuizs = `query ListDuplicateQuizs(
+  $filter: ModelDuplicateQuizFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDuplicateQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      category
+      createdAt
+      development
+      overview
+      production
+      productionId
+      original
+      questions
+      numQuestions
+      schedule
+      scheduleTime
+      originalQuiz {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      site {
+        id
+        createdAt
+        description
+        name
+        type
+        categories
+        development
+        production
+        productionId
+        updatedAt
+      }
+      user {
+        id
+        userId
+        creator
+        createdAt
+        updatedAt
+        username
+        overview
       }
       updatedAt
     }
@@ -821,6 +1546,9 @@ export const getTask = `query GetTask($id: ID!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       description
       tasks {
@@ -828,10 +1556,20 @@ export const getTask = `query GetTask($id: ID!) {
       }
       name
       type
+      categories
+      development
+      production
+      productionId
       quiz {
         nextToken
       }
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
@@ -851,29 +1589,28 @@ export const getTask = `query GetTask($id: ID!) {
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
@@ -905,6 +1642,10 @@ export const listTasks = `query ListTasks(
         description
         name
         type
+        categories
+        development
+        production
+        productionId
         updatedAt
       }
       siteId
@@ -920,19 +1661,9 @@ export const listTasks = `query ListTasks(
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
     nextToken
@@ -955,6 +1686,25 @@ export const getUser = `query GetUser($id: ID!) {
         development
         production
         productionId
+        schedule
+        scheduleTime
+        original
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateArticles {
+      items {
+        id
+        overview
+        createdAt
+        content
+        development
+        production
+        productionId
+        schedule
+        scheduleTime
+        original
         updatedAt
       }
       nextToken
@@ -977,11 +1727,6 @@ export const getUser = `query GetUser($id: ID!) {
       }
       nextToken
     }
-    lastLoggedIn
-    twitterProfile
-    facebookProfile
-    linkedinProfile
-    instagramProfile
     quiz {
       items {
         id
@@ -991,6 +1736,7 @@ export const getUser = `query GetUser($id: ID!) {
         overview
         production
         productionId
+        original
         questions
         numQuestions
         schedule
@@ -999,7 +1745,24 @@ export const getUser = `query GetUser($id: ID!) {
       }
       nextToken
     }
-    siteName
+    duplicateQuiz {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        original
+        questions
+        numQuestions
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
     slideShows {
       items {
         id
@@ -1011,6 +1774,25 @@ export const getUser = `query GetUser($id: ID!) {
         productionId
         slides
         numSlides
+        original
+        schedule
+        scheduleTime
+        updatedAt
+      }
+      nextToken
+    }
+    duplicateSlideShows {
+      items {
+        id
+        category
+        createdAt
+        development
+        overview
+        production
+        productionId
+        slides
+        numSlides
+        original
         schedule
         scheduleTime
         updatedAt
@@ -1019,11 +1801,7 @@ export const getUser = `query GetUser($id: ID!) {
     }
     updatedAt
     username
-    alias
-    phoneNumber
-    imageLink
-    numberPosts
-    profilePic
+    overview
     chatUser {
       id
       username
@@ -1044,19 +1822,9 @@ export const getUser = `query GetUser($id: ID!) {
         userId
         creator
         createdAt
-        lastLoggedIn
-        twitterProfile
-        facebookProfile
-        linkedinProfile
-        instagramProfile
-        siteName
         updatedAt
         username
-        alias
-        phoneNumber
-        imageLink
-        numberPosts
-        profilePic
+        overview
       }
     }
   }
@@ -1075,29 +1843,28 @@ export const listUsers = `query ListUsers(
       articles {
         nextToken
       }
+      duplicateArticles {
+        nextToken
+      }
       createdAt
       ideas {
         nextToken
       }
-      lastLoggedIn
-      twitterProfile
-      facebookProfile
-      linkedinProfile
-      instagramProfile
       quiz {
         nextToken
       }
-      siteName
+      duplicateQuiz {
+        nextToken
+      }
       slideShows {
+        nextToken
+      }
+      duplicateSlideShows {
         nextToken
       }
       updatedAt
       username
-      alias
-      phoneNumber
-      imageLink
-      numberPosts
-      profilePic
+      overview
       chatUser {
         id
         username
